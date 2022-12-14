@@ -6,7 +6,7 @@ const EslingPlugin = require("eslint-webpack-plugin");
 // const CopyPlugin = require('copy-webpack-plugin');
 
 const baseConfig = {
-  entry: path.resolve(__dirname, "./src/index"),
+  entry: path.resolve(__dirname, "./src/index.ts"),
   mode: "development",
   module: {
     rules: [
@@ -23,14 +23,40 @@ const baseConfig = {
         test: /\.css$/i,
         use: ["style-loader", "css-loader"],
       },
+      {
+          test: /\.(scss)$/,
+          use: [
+              {
+                  loader: 'style-loader',
+              },
+              {
+                  loader: 'css-loader',
+              },
+              {
+                  loader: 'postcss-loader',
+                  options: {
+                      postcssOptions: {
+                          plugins: () => [require('autoprefixer')],
+                      },
+                  },
+              },
+              {
+                  loader: 'sass-loader',
+              },
+          ],
+      },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader'
+      },
     ],
   },
   resolve: {
-    extensions: [".ts", ".js"],
+    extensions: [".ts", ".js", ""],
   },
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "./dist"),
+    filename: "index.js",
+    path: path.resolve(__dirname, "../dist"),
     assetModuleFilename: "assets/[name][ext]",
   },
   plugins: [
