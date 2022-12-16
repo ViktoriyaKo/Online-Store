@@ -6,7 +6,7 @@ export interface IComponents extends IConfigComponent {
   header: Header;
 }
 export interface IConfig {
-  components: Array<IComponents>;
+  components: Array<IConfigComponent>;
   routes: Array<IRoutes>;
 }
 export interface IRoutes {

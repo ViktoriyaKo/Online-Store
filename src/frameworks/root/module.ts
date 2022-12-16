@@ -1,10 +1,10 @@
 import { routerSlicer } from "../tools/routerSlicer";
-import { queryElement } from "../../types";
+import { IConfigComponent, queryElement } from "../../types";
 import { Component } from "../root/component";
 import { IRoutes, IComponents, IConfig } from "../../types";
 
 export class Module {
-  public components: Array<IComponents>;
+  public components: Array<IConfigComponent>;
   public routes: Array<IRoutes>;
 
   constructor(config: IConfig) {
