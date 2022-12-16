@@ -16,7 +16,7 @@ export interface IRoutes {
 export interface IConfigComponent {
   template: string;
   selector: string;
-  el?: null;
+  el?: null | Element;
   render?(): void;
 }
 

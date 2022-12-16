@@ -18,8 +18,10 @@ export class Module {
   }
   init(): void {
     for (const component of this.components) {
-      console.log("comp to render: ", component);
-      this.renderComponent(component); // missed!! error
+      if (component instanceof Component) {
+        console.log("comp to render: ", component);
+        this.renderComponent(component); // missed!! error
+      }
     }
     if (this.routes) {
       window.addEventListener("hashchange", this.renderRoute.bind(this));
