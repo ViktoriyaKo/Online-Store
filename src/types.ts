@@ -1,7 +1,4 @@
-import { bucket } from "./app/views/bucket";
-import { shop } from "./app/views/shop";
 import { home } from "./app/views/home";
-import { notExists } from "./app/base/notExists";
 import { Header } from "./app/base/header";
 import { AppComponent } from "./app/appComponent";
 export interface IComponents extends IConfigComponent {
@@ -14,7 +11,7 @@ export interface IConfig {
 }
 export interface IRoutes {
   path: string;
-  components: typeof home | typeof bucket | typeof shop | typeof notExists;
+  components: typeof home;
 }
 export interface IConfigComponent {
   template: string;
