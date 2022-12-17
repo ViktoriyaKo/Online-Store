@@ -1,12 +1,12 @@
 {
     "plugins": ["@typescript-eslint", "prettier", "import"], 
     "extends": [
-        //"plugin:prettier/recommended",
-        //"prettier",
-        //"eslint:recommended"//
-        //"plugin:@typescript-eslint/recommended"
+        "plugin:prettier/recommended",
+        "prettier",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
-    //"parser": "@typescript-eslint/parser",
+    "parser": "@typescript-eslint/parser",
     "root": true,
     "ignorePatterns": ["webpack.dev.config.js", "webpack.config.js"],
     "parserOptions": {
@@ -21,7 +21,7 @@
     "rules": {
         "no-debugger": "off",
         "no-console": 0,
-        "class-methods-use-this": "off"//,
-        //"@typescript-eslint/no-explicit-any": 2
+        "class-methods-use-this": "off",
+        "@typescript-eslint/no-explicit-any": 2
     }
 }

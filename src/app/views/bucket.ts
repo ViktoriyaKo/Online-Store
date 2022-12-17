@@ -1,14 +1,15 @@
 import { Component } from "../../frameworks/root/component";
+import { IConfigComponent } from "../../types";
 
 class Bucket extends Component {
-  constructor(config) {
+  constructor(config: IConfigComponent) {
     super(config);
   }
 }
 
-export const bucket = new Bucket({
+export const bucket: Bucket = new Bucket({
   selector: "polimorph",
   template: `
   <div>Bucket content</div>
-  `
-})
+  `,
+});
