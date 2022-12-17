@@ -11,6 +11,6 @@ export class App extends Module {
 }
 
 export const app: App = new App({
-  components: [appComponent, header], //error!
+  components: [appComponent, header],
   routes,
 });

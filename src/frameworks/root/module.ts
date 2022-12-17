@@ -1,7 +1,7 @@
 import { routerSlicer } from "../tools/routerSlicer";
 import { IConfigComponent, queryElement } from "../../types";
 import { Component } from "../root/component";
-import { IRoutes, IComponents, IConfig } from "../../types";
+import { IRoutes, IConfig } from "../../types";
 
 export class Module {
   public components: Array<IConfigComponent>;
@@ -20,7 +20,7 @@ export class Module {
     for (const component of this.components) {
       if (component instanceof Component) {
         console.log("comp to render: ", component);
-        this.renderComponent(component); // missed!! error
+        this.renderComponent(component);
       }
     }
     if (this.routes) {
