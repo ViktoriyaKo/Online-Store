@@ -44,6 +44,10 @@ export class Module {
   }
 
   renderComponent(component: Component) {
+    //probably we call function 2 times, not shure how to resolve it
+    if (component.onInit() !== undefined) component.onInit();
     component.render();
+    //probably we call function 2 times, not shure how to resolve it
+    if (component.afterInit() !== undefined) component.afterInit();
   }
 }
