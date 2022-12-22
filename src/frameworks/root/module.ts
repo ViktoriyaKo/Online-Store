@@ -1,6 +1,6 @@
 import { routerSlicer } from "../tools/routerSlicer";
 import { IConfigComponent, queryElement } from "../../types";
-import { Component } from "../root/component";
+import { Component } from "./component/component";
 import { IRoutes, IConfig } from "../../types";
 
 export class Module {

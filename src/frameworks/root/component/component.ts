@@ -1,4 +1,4 @@
-import { EventsManager, IConfigComponent } from "../../types";
+import { EventsManager, IConfigComponent } from "../../../types";
 
 export class Component {
   public template: string;

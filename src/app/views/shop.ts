@@ -1,4 +1,4 @@
-import { Component } from "../../frameworks/root/component";
+import { Component } from "../../frameworks/root/component/component";
 import { IConfigComponent } from "../../types";
 
 class Shop extends Component {

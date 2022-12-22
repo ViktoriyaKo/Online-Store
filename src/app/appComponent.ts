@@ -1,4 +1,4 @@
-import { Component } from "../frameworks/root/component";
+import { Component } from "../frameworks/exporter";
 import { IConfigComponent } from "../types";
 
 export class AppComponent extends Component {

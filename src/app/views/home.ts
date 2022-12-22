@@ -1,4 +1,4 @@
-import { Component } from "../../frameworks/root/component";
+import { Component } from "../../frameworks/root/component/component";
 import { EventsManager, EventTypes, IConfigComponent } from "../../types";
 
 class Home extends Component {

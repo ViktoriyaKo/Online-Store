@@ -53,6 +53,9 @@ const baseConfig = {
   },
   resolve: {
     extensions: [".ts", ".js", ""],
+    alias: {
+        frameworks: path.resolve(__dirname, 'src/frameworks/')
+    }
   },
   output: {
     filename: "index.js",
