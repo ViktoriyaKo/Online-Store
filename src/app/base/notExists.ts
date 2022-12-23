@@ -10,6 +10,9 @@ class NotExists extends Component {
 export const notExists: NotExists = new NotExists({
   selector: "error",
   template: `
-    <div>PAGE NOT EXISTS 404</div>
+  <div class="container text-center">  
+    <p class="text-danger fs-2">404</p>
+    <p class="fs-2 text-secondary">Page not found</p>
+  </div>
   `,
 });

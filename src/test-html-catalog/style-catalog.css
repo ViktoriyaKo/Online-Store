@@ -10771,7 +10771,7 @@ textarea.form-control-lg {
 }
 body {
   box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
+  font-family: cursive;
   font-weight: 500;
   min-width: 320px;
 }
@@ -10860,7 +10860,7 @@ body {
   margin-left: 10px;
 }
 
-/* Product card */
+/* Card */
 .fa-shopping-cart {
   color: rgba(0, 0, 0, 0.45);
 }
@@ -10870,6 +10870,103 @@ body {
 
 .fa-heart {
   color: #ee6e73;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background-color: #ee6e73;
+  width: 20px;
+  height: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  right: -8px;
+}
+
+.name-filter::after {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 3px;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+.left-aside {
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.7)), url("../test-html-home/assets/img-books3.jpg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.filter-block {
+  overflow-y: auto;
+  height: 200px;
+  font-size: 20px;
+}
+
+::-webkit-scrollbar {
+  background-color: rgba(179, 186, 192, 0.537);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(41, 103, 147, 0.153);
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #f3faf7;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #253861;
+}
+
+input[type=checkbox] {
+  display: none;
+}
+
+.item-checkbox label {
+  cursor: pointer;
+  padding: 10px 0;
+}
+
+.item-checkbox label:before {
+  content: " ";
+  color: rgba(41, 103, 147, 0.867);
+  display: inline-block;
+  font: 20px/30px Arial;
+  font-weight: 700;
+  margin-right: 15px;
+  position: relative;
+  text-align: center;
+  text-indent: 0px;
+  width: 30px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid rgba(41, 103, 147, 0.867);
+  border-image: initial;
+  vertical-align: middle;
+  border-radius: 5px;
+}
+
+/* checked */
+input:checked + label:before {
+  content: "x";
+}
+
+/* disabled */
+input:disabled + label:before {
+  background: #eee;
+  color: #aaa;
+}
+
+.btn-set {
+  opacity: 0.8;
+}
+.btn-set:hover {
+  opacity: 1;
 }
 
 /*# sourceMappingURL=style-catalog.css.map */

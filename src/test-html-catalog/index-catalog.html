@@ -13,11 +13,11 @@
   </head>
   <body>
     <!-- header -->
-    <header class="header">
+    <header class="header sticky-top">
       <nav
         class="navbar navbar-expand-lg bg-secondary bg-gradient rounded-bottom"
       >
-        <div class="container-fluid">
+        <div class="container-fluid align-items-baseline">
           <a class="navbar-brand" href="#">Online-Store</a>
           <button
             class="navbar-toggler"
@@ -30,23 +30,29 @@
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 top-menu">
+          <div
+            class="collapse navbar-collapse justify-content-between"
+            id="navbarSupportedContent"
+          >
+            <ul class="navbar-nav top-menu">
               <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="#">Главная</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Catalog</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Contacts</a>
+                <a class="nav-link" href="#">Каталог</a>
               </li>
             </ul>
 
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <p class="sum-card text-uppercase mb-lg-0">
+              Общая сумма заказа:
+              <span>0 <i class="fas fa-light fa-ruble-sign"></i></span>
+            </p>
+            <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="#"
-                  ><i class="fas fa-shopping-cart"></i
+                <a class="nav-link position-relative d-block" href="#"
+                  ><div class="circle"><div class="number-book">0</div></div>
+
+                  <i class="fas fa-shopping-cart"></i
                 ></a>
               </li>
               <li class="nav-item">
@@ -58,57 +64,147 @@
       </nav>
     </header>
 
+    <!-- main -->
     <main>
-      <section class="search my-5">
-        <div class="container-fluid">
-          <div class="row justify-content-end">
-            <div class="dropdown col-lg-2">
-              <a
-                class="btn btn-secondary dropdown-toggle"
-                href="#"
-                role="button"
-              >
-                Сортировать по
-              </a>
-
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Цене</a></li>
-                <li><a class="dropdown-item" href="#">Году издания</a></li>
-                <li>
-                  <a class="dropdown-item" href="#">Количеству на складе</a>
-                </li>
-              </ul>
-            </div>
-
-            <form
-              action="#"
-              role="search"
-              class="d-flex align-items-center col-lg-6"
-            >
-              <input
-                type="search"
-                class="form-control input-search"
-                placeholder="Найти книгу..."
-              />
-              <button type="submit" class="btn">
-                <i class="fas fa-search"></i>
-              </button>
-            </form>
-            <div class="view-book col-lg-1 d-flex">
-              <button class="btn">3</button>
-              <button class="btn">4</button>
-            </div>
-          </div>
-          <div class="found-book col-lg-12 text-center py-3">
-            Найдено: <span>100</span>
-          </div>
-        </div>
-      </section>
-
-      <section class="main-content">
+      <section class="main my-3">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-lg-3 col-sm-6 mb-3">
+            <div class="col-lg-3 mt-2">
+              <aside class="left-aside rounded-2 py-2 px-3">
+                <div class="d-flex justify-content-evenly">
+                  <button class="btn btn-secondary">Сброс фильтров</button>
+                  <button class="btn btn-secondary">Копия поиска</button>
+                </div>
+                <!-- filter -->
+                <div
+                  class="filter-section my-3 bg-secondary bg-gradient rounded-2"
+                >
+                  <fieldset class="filter-block p-3">
+                    <legend class="name-filter position-relative text-center">
+                      Категория
+                    </legend>
+
+                    <div class="item-checkbox">
+                      <input type="checkbox" id="scales" name="scales" />
+                      <label for="scales">пример1</label>
+                    </div>
+
+                    <div class="item-checkbox">
+                      <input type="checkbox" id="horns" name="horns" />
+                      <label for="horns">пример2</label>
+                    </div>
+                  </fieldset>
+                </div>
+
+                <div
+                  class="filter-section my-3 bg-secondary bg-gradient rounded-2"
+                >
+                  <!-- будет 2 ползунка -->
+                  <fieldset class="filter-block p-3">
+                    <legend class="name-filter position-relative text-center">
+                      Цена
+                    </legend>
+                    <div class="">
+                      <label
+                        for="customRange2"
+                        class="form-label text-center w-100"
+                        ><span class="min-price"
+                          >0 <i class="fas fa-light fa-ruble-sign"></i
+                        ></span>
+                        -
+                        <span class="max-price"
+                          >1000 <i class="fas fa-light fa-ruble-sign"></i
+                        ></span>
+                      </label>
+                      <input
+                        type="range"
+                        class="form-range"
+                        min="0"
+                        max="5"
+                        step="0.5"
+                        id="customRange2"
+                      />
+                    </div>
+                  </fieldset>
+                </div>
+                <div
+                  class="filter-section my-3 bg-secondary bg-gradient rounded-2"
+                >
+                  <!-- будет 2 ползунка -->
+                  <fieldset class="filter-block p-3">
+                    <legend class="name-filter position-relative text-center">
+                      Количество товаров на складе
+                    </legend>
+                    <div>
+                      <label
+                        for="customRange2"
+                        class="form-label text-center w-100"
+                        ><span class="min-price">0</span>
+                        -
+                        <span class="max-price">40</span>
+                      </label>
+                      <input
+                        type="range"
+                        class="form-range"
+                        min="0"
+                        max="5"
+                        step="0.5"
+                        id="customRange2"
+                      />
+                    </div>
+                  </fieldset>
+                </div>
+              </aside>
+            </div>
+            <div class="col-lg-9">
+              <div class="row justify-content-evenly align-items-center">
+                <!-- sort - add js -->
+                <button
+                  class="btn btn-secondary dropdown-toggle col-lg-2"
+                  href="#"
+                  role="button"
+                >
+                  Сортировать по
+                </button>
+
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Цене</a></li>
+                  <li><a class="dropdown-item" href="#">Году издания</a></li>
+                  <li>
+                    <a class="dropdown-item" href="#">Количеству на складе</a>
+                  </li>
+                </ul>
+                <!-- searh -->
+                <form
+                  action="#"
+                  role="search"
+                  class="d-flex align-items-center col-lg-6"
+                >
+                  <input
+                    type="search"
+                    class="form-control input-search"
+                    placeholder="Найти книгу..."
+                  />
+                  <button type="submit" class="btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </form>
+                <!-- view window -->
+                <div class="view-book d-flex col-lg-2">
+                  <button class="btn">
+                    <img class="btn-set" src="./assets/icons3-3.png" alt="" />
+                  </button>
+                  <button class="btn">
+                    <img class="btn-set" src="./assets/icons4-4.png" alt="" />
+                  </button>
+                </div>
+              </div>
+
+              <p class="found-book text-center py-3 text-uppercase">
+                Найдено: <span>0</span>
+              </p>
+
+              <!-- card -->
               <div class="product-card">
                 <div class="product-thumb">
                   <a href="#"
@@ -118,6 +214,7 @@
                       alt=""
                   /></a>
                 </div>
+
                 <div class="product-details">
                   <h4>
                     <a href="#" class="title-book text-black">1984</a>
@@ -126,7 +223,11 @@
                   <div
                     class="product-bottom-details d-flex justify-content-between"
                   >
-                    <div class="price-book"><small>$230.99</small> $99</div>
+                    <div class="price-book">
+                      <small
+                        >230<i class="fas fa-light fa-ruble-sign"></i></small
+                      >99 <i class="fas fa-light fa-ruble-sign"></i>
+                    </div>
                     <div class="product-links">
                       <a href="#"><i class="fas fa-shopping-cart"></i></a>
                       <a href="#"><i class="far fa-heart"></i></a>
@@ -135,107 +236,7 @@
                 </div>
               </div>
             </div>
-
-            <div class="container">
-              <div class="col">
-                <div class="card shadow-sm">
-                  <svg
-                    class="bd-placeholder-img card-img-top"
-                    width="100%"
-                    height="225"
-                    xmlns="http://www.w3.org/2000/svg"
-                    role="img"
-                    aria-label="Placeholder: Thumbnail"
-                    preserveAspectRatio="xMidYMid slice"
-                    focusable="false"
-                  >
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#55595c"></rect>
-                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">
-                      Thumbnail
-                    </text>
-                  </svg>
-                  <div class="card-body">
-                    <p class="card-text">
-                      This is a wider card with supporting text below as a
-                      natural lead-in to additional content. This content is a
-                      little bit longer.
-                    </p>
-                    <div
-                      class="d-flex justify-content-between align-items-center"
-                    >
-                      <div class="btn-group">
-                        <button
-                          type="button"
-                          class="btn btn-sm btn-outline-secondary btn_view-event"
-                        >
-                          View
-                        </button>
-                        <button
-                          type="button"
-                          class="btn btn-sm btn-outline-secondary"
-                        >
-                          Edit
-                        </button>
-                      </div>
-                      <small class="text-muted">9 mins</small>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-3 col-sm-6 mb-3">
-              <div class="product-card">
-                <div class="product-thumb">
-                  <a href="#"
-                    ><img src="../books-content/img-books/1.jpeg" alt=""
-                  /></a>
-                </div>
-                <div class="product-details">
-                  <h4><a href="#">Apple Cinema 30"</a></h4>
-                  <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Laudantium, repudiandae?
-                  </p>
-                  <div
-                    class="product-bottom-details d-flex justify-content-between"
-                  >
-                    <div class="product-price">$99</div>
-                    <div class="product-links">
-                      <a href="#"><i class="fas fa-shopping-cart"></i></a>
-                      <a href="#"><i class="far fa-heart"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-3 col-sm-6 mb-3">
-              <div class="product-card">
-                <div class="product-thumb">
-                  <a href="#"
-                    ><img src="../books-content/img-books/1.jpeg" alt=""
-                  /></a>
-                </div>
-                <div class="product-details">
-                  <h4><a href="#">Canon EOS 5D</a></h4>
-                  <p>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Laudantium, repudiandae?
-                  </p>
-                  <div
-                    class="product-bottom-details d-flex justify-content-between"
-                  >
-                    <div class="product-price"><small>$230.99</small> $99</div>
-                    <div class="product-links">
-                      <a href="#"><i class="fas fa-shopping-cart"></i></a>
-                      <a href="#"><i class="far fa-heart"></i></a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <!-- card -->
           </div>
         </div>
       </section>
