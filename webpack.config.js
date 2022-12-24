@@ -49,10 +49,14 @@ const baseConfig = {
         test: /\.svg$/,
         loader: "svg-inline-loader",
       },
+      {
+        test: /\.json$/,
+        type: 'json',
+      }
     ],
   },
   resolve: {
-    extensions: [".ts", ".js", ""],
+    extensions: [".ts", ".js", ".json", ""],
   },
   output: {
     filename: "index.js",
