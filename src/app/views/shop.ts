@@ -23,8 +23,42 @@ class Shop extends Component {
     console.log(this.template);
     console.log(books);
     this.template = this.template.replace(
-      "Shop content",
-      books.map((book) => "<div>" + book.title + "</div>").join("\n")
+      "{{Shop content}}",
+      books
+        .map(
+          (book) => `
+      <div class="product-card">
+        <div class="product-thumb">
+          <a href="#"
+            ><img
+              class="image-book"
+              src="./books-content/img-books/${book.id}.jpeg"
+              alt=""
+          /></a>
+        </div>
+
+        <div class="product-details">
+          <h4>
+            <a href="#" class="title-book text-black">${book.title}</a>
+          </h4>
+          <p class="author-book">${book.author}</p>
+          <div
+            class="product-bottom-details d-flex justify-content-between"
+          >
+            <div class="price-book">
+              <small
+                >${book.price}<i class="fas fa-light fa-ruble-sign"></i></small
+              >99 <i class="fas fa-light fa-ruble-sign"></i>
+            </div>
+            <div class="product-links">
+              <a href="#"><i class="fas fa-shopping-cart"></i></a>
+              <a href="#"><i class="far fa-heart"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>`
+        )
+        .join("\n")
     );
   }
 }
@@ -171,37 +205,7 @@ export const shop: Shop = new Shop({
                 Найдено: <span>0</span>
               </p>
               <div class="d-flex flex-wrap gap-5 justify-content-around">
-                <!-- card -->
-                <div class="product-card">
-                  <div class="product-thumb">
-                    <a href="#"
-                      ><img
-                        class="image-book"
-                        src="./books-content/img-books/1.jpeg"
-                        alt=""
-                    /></a>
-                  </div>
-
-                  <div class="product-details">
-                    <h4>
-                      <a href="#" class="title-book text-black">1984</a>
-                    </h4>
-                    <p class="author-book">Джордж Оруэлл</p>
-                    <div
-                      class="product-bottom-details d-flex justify-content-between"
-                    >
-                      <div class="price-book">
-                        <small
-                          >230<i class="fas fa-light fa-ruble-sign"></i></small
-                        >99 <i class="fas fa-light fa-ruble-sign"></i>
-                      </div>
-                      <div class="product-links">
-                        <a href="#"><i class="fas fa-shopping-cart"></i></a>
-                        <a href="#"><i class="far fa-heart"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                {{Shop content}}
               </div>
               <!-- card -->
             </div>
