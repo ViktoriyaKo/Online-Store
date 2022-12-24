@@ -2,6 +2,7 @@ import { home } from "./app/views/home";
 import { Header } from "./app/base/header";
 import { AppComponent } from "./app/appComponent";
 import { shop } from "./app/views/shop";
+import { bucket } from "./app/views/bucket";
 export interface IComponents extends IConfigComponent {
   appComponent: AppComponent;
   header: Header;
@@ -12,7 +13,7 @@ export interface IConfig {
 }
 export interface IRoutes {
   path: string;
-  components: typeof shop;
+  components: typeof bucket;
   onBtnClick?: (arg: Event) => void;
 }
 export interface IConfigComponent {
@@ -56,6 +57,10 @@ export interface EventsManager {
   eventName: EventTypes;
   target: string;
   event: (arg: Event) => void;
+}
+
+export interface ComponentData {
+  [index: string]: string;
 }
 // export interface Templates {
 //   [keys: string]: TemplateFunc;
