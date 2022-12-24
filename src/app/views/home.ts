@@ -33,7 +33,7 @@ export const home: Home = new Home({
   </section>
   <section class="info-books">
     <div class="container">
-      <img class="capture-books" src="../../assets/text.png" alt="" />
+      <img class="capture-books" src="./assets/text.png" alt="" />
     </div>
   </section>
   <section class="structure py-5">
@@ -50,7 +50,7 @@ export const home: Home = new Home({
               <div class="card">
                 <img
                   class="icon-structure"
-                  src="../../assets/icons1.png"
+                  src="./assets/icons1.png"
                   alt=""
                 />
                 <div class="card-body card-set">
@@ -70,7 +70,7 @@ export const home: Home = new Home({
               <div class="card">
                 <img
                   class="icon-structure"
-                  src="../../assets/icons2.png"
+                  src="./assets/icons2.png"
                   alt=""
                 />
                 <div class="card-body card-set">
@@ -90,7 +90,7 @@ export const home: Home = new Home({
               <div class="card">
                 <img
                   class="icon-structure"
-                  src="../../assets/icons3.png"
+                  src="./assets/icons3.png"
                   alt=""
                 />
                 <div class="card-body card-set">
