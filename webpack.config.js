@@ -3,7 +3,7 @@ const { merge } = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const EslingPlugin = require("eslint-webpack-plugin");
-// const CopyPlugin = require('copy-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 const baseConfig = {
   entry: path.resolve(__dirname, "./src/index.ts"),
@@ -24,30 +24,30 @@ const baseConfig = {
         use: ["style-loader", "css-loader"],
       },
       {
-          test: /\.(scss)$/,
-          use: [
-              {
-                  loader: 'style-loader',
+        test: /\.(scss)$/,
+        use: [
+          {
+            loader: "style-loader",
+          },
+          {
+            loader: "css-loader",
+          },
+          {
+            loader: "postcss-loader",
+            options: {
+              postcssOptions: {
+                plugins: () => [require("autoprefixer")],
               },
-              {
-                  loader: 'css-loader',
-              },
-              {
-                  loader: 'postcss-loader',
-                  options: {
-                      postcssOptions: {
-                          plugins: () => [require('autoprefixer')],
-                      },
-                  },
-              },
-              {
-                  loader: 'sass-loader',
-              },
-          ],
+            },
+          },
+          {
+            loader: "sass-loader",
+          },
+        ],
       },
       {
         test: /\.svg$/,
-        loader: 'svg-inline-loader'
+        loader: "svg-inline-loader",
       },
       {
         test: /\.json$/,
@@ -70,14 +70,18 @@ const baseConfig = {
     }),
     new CleanWebpackPlugin(),
     new EslingPlugin({ extensions: "ts" }),
-    // new CopyPlugin({
-    //     patterns: [
-    //         {
-    //             from: path.resolve(__dirname, 'src', 'img'),
-    //             to: path.resolve(__dirname, 'dist', 'assets'),
-    //         },
-    //     ],
-    // }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "src", "assets"),
+          to: path.resolve(__dirname, "dist", "assets"),
+        },
+        {
+          from: path.resolve(__dirname, "src", "books-content", "img-books"),
+          to: path.resolve(__dirname, "dist", "books-content", "img-books"),
+        },
+      ],
+    }),
   ],
 };
 

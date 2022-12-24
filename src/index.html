@@ -1,12 +1,24 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Bootstrap w/ Webpack</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+    />
   </head>
-  <header class="d-flex justify-content-center py-3"></header>
   <body>
-    <polimorph> Wait... </polimorph>
+    <header class="header sticky-top"></header>
+    <polimorph
+      ><div
+        class="spinner-border text-primary m-auto d-block spinner-set my-5"
+        role="status"
+      >
+        <span class="visually-hidden">Загрузка...</span>
+      </div>
+      <p class="text-center">Loading...</p>
+    </polimorph>
   </body>
 </html>
