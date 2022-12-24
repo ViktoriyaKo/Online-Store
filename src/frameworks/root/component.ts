@@ -1,6 +1,7 @@
-import { EventsManager, IConfigComponent } from "../../types";
+import { ComponentData, EventsManager, IConfigComponent } from "../../types";
 
 export class Component {
+  protected data?: ComponentData;
   public template: string;
   public selector: string;
   public el: null | Element;
@@ -13,7 +14,11 @@ export class Component {
   render(): void {
     this.el = document.querySelector(this.selector);
     if (!this.el) throw new Error(`component ${this.template} not found!`);
-    this.el.innerHTML = this.template;
+    //fixthis!
+    this.el.innerHTML = this.compiledTemplate(
+      this.template,
+      this.data
+    ) as string;
     this._mountEvent();
   }
 
@@ -29,6 +34,17 @@ export class Component {
         );
     }
   }
+
+  private compiledTemplate(template: string, data?: ComponentData) {
+    if (typeof data === "undefined") return template;
+    const regex = /\{{(.*?)}}/g;
+    template = template.replace(regex, (str, d) => {
+      const key = d.trim();
+      return data[key];
+    });
+    return template;
+  }
+
   events() {
     return;
   }
