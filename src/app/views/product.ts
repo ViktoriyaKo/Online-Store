@@ -35,7 +35,7 @@ export const product: Product = new Product({
           </div>
         </div>
         <div class="col-lg-5 col-sm-6">
-          <div class="wrapper-about rounded-4 p-3 bg-light mb-3">
+          <div class="wrapper-about rounded-4 p-3 bg-set mb-3">
             <h3 class="title-book">Цветы для Элджернона</h3>
             <h4 class="author-book product-author-book">Дэниел Киз</h4>
             <p>
@@ -60,7 +60,7 @@ export const product: Product = new Product({
           </div>
         </div>
         <div class="col-lg-4 col-sm-12">
-          <div class="wrapper-right-side rounded-4 p-3 bg-light mb-3">
+          <div class="wrapper-right-side rounded-4 p-3 bg-set mb-3">
             <div class="price-book product-price-book text-center">
               <span>230<i class="fas fa-light fa-ruble-sign"></i></span>
               99<i class="fas fa-light fa-ruble-sign"></i>

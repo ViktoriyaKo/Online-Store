@@ -55,7 +55,7 @@ class Shop extends Component {
               )} <i class="fas fa-light fa-ruble-sign"></i>
             </div>
             <div class="product-links">
-              <a href="#"><i class="fas fa-shopping-cart"></i></a>
+              <a href="#bucket"><i class="fas fa-shopping-cart"></i></a>
               <a href="#"><i class="far fa-heart"></i></a>
             </div>
           </div>

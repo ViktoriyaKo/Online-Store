@@ -57,6 +57,10 @@ $color-pink: #ee6e73;
   padding-top: 50px;
 }
 
+.bg-set {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
 @media (max-width: 992px) {
   .wrapper-right-side {
     margin-top: 0;
