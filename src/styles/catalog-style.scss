@@ -5,6 +5,7 @@ $color-pink: #ee6e73;
 
 //main
 /* Product card */
+
 .product-card {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06);
   transition: all 0.3s;
@@ -38,6 +39,10 @@ $color-pink: #ee6e73;
   text-decoration: none;
 }
 
+.set-fs {
+  font-size: 20px;
+}
+
 .author-book {
   font-size: 15px;
   color: #999;
@@ -55,7 +60,7 @@ $color-pink: #ee6e73;
   font-weight: 600;
 }
 
-.price-book small {
+.price-book span {
   color: #ccc;
   font-weight: 400;
   text-decoration: line-through;

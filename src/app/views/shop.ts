@@ -29,7 +29,7 @@ class Shop extends Component {
           (book) => `
       <div class="product-card">
         <div class="product-thumb">
-          <a href="#"
+          <a href="#product"
             ><img
               class="image-book"
               src="./books-content/img-books/${book.id}.jpeg"
@@ -39,16 +39,20 @@ class Shop extends Component {
 
         <div class="product-details">
           <h4>
-            <a href="#" class="title-book text-black">${book.title}</a>
+            <a href="#product" class="title-book text-black set-fs">${
+              book.title
+            }</a>
           </h4>
           <p class="author-book">${book.author}</p>
           <div
             class="product-bottom-details d-flex justify-content-between"
           >
             <div class="price-book">
-              <small
-                >${book.price}<i class="fas fa-light fa-ruble-sign"></i></small
-              >99 <i class="fas fa-light fa-ruble-sign"></i>
+              <span
+                >${book.price}<i class="fas fa-light fa-ruble-sign"></i></span
+              >${Math.floor(
+                book.price * book.sale
+              )} <i class="fas fa-light fa-ruble-sign"></i>
             </div>
             <div class="product-links">
               <a href="#"><i class="fas fa-shopping-cart"></i></a>
