@@ -16,7 +16,7 @@ class Shop extends Component {
   }
 
   private onBtnClick(event: Event) {
-    console.log(this.el?.querySelector(".products"));
+    console.log(this.el?.find(".products"));
   }
 
   private prepareBooks() {
@@ -161,8 +161,7 @@ export const shop: Shop = new Shop({
               <div class="row justify-content-evenly align-items-center">
                 <!-- sort - add js -->
                 <button
-                  class="btn btn-secondary dropdown-toggle col-lg-2"
-                  href="#"
+                  class="btn btn-secondary dropdown-toggle col-lg-2  btn_test"
                   role="button"
                 >
                   Сортировать по

@@ -1,9 +1,12 @@
-import { EventTypes } from "../../types";
+import { EventTypes, queryElement } from "../../types";
 
-class DomHandler {
+export class DomHandler {
   private el: Element;
   private isDOmHandlerEl: boolean;
   constructor(el: Element) {
+    if (typeof el === "string") {
+      el = queryElement(document, Element, el);
+    }
     this.el = el;
     this.isDOmHandlerEl = true;
   }
@@ -41,6 +44,22 @@ class DomHandler {
     if (el instanceof DomHandler) el = el.el.innerHTML;
     this.el.innerHTML = el;
     return this;
+  }
+  public parent() {
+    return $(this.el.parentNode as Element);
+  }
+  public attr(name: string, value: string | null = null) {
+    if (value === null) {
+      return this.el.getAttribute(name);
+    }
+    this.el.setAttribute(name, value);
+    return this;
+  }
+  public find(selector: string) {
+    return $(this.el.querySelector(selector) as Element);
+  }
+  public findAll(selector: string) {
+    return Array.from(this.el.querySelectorAll(selector)).map((el) => $(el));
   }
 }
 

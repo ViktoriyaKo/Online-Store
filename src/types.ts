@@ -3,6 +3,7 @@ import { Header } from "./app/base/header";
 import { AppComponent } from "./app/appComponent";
 import { shop } from "./app/views/shop";
 import { bucket } from "./app/views/bucket";
+import { DomHandler } from "./frameworks/exporter";
 export interface IComponents extends IConfigComponent {
   appComponent: AppComponent;
   header: Header;
@@ -19,7 +20,7 @@ export interface IRoutes {
 export interface IConfigComponent {
   template: string;
   selector: string;
-  el?: null | Element;
+  el?: null | DomHandler;
   render?(): void;
 }
 
