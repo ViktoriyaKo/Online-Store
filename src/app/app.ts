@@ -7,6 +7,7 @@ import { IConfig } from "../types";
 export class App extends Module {
   constructor(config: IConfig) {
     super(config);
+    console.log("call new APP");
   }
 }
 

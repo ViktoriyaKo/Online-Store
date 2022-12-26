@@ -2,6 +2,7 @@ import { routerSlicer } from "../tools/routerSlicer";
 import { IConfigComponent, queryElement } from "../../types";
 import { Component } from "../root/component";
 import { IRoutes, IConfig } from "../../types";
+import { product } from "../../app/views/product";
 
 export class Module {
   public components: Array<IConfigComponent>;
@@ -10,7 +11,7 @@ export class Module {
   constructor(config: IConfig) {
     this.components = config.components;
     this.routes = config.routes;
-    console.log(this.components);
+    // components: [AppComponent, Header]
   }
 
   start(): void {
@@ -31,7 +32,14 @@ export class Module {
   renderRoute() {
     const url = routerSlicer.getRoute();
     let route = this.routes.find((route) => route.path === url);
-
+    if (
+      !route &&
+      url.split("/")[0] === "product" &&
+      +url.split("/")[1] > 0 &&
+      +url.split("/")[1] <= 101
+    ) {
+      route = { path: `product`, components: product };
+    }
     if (!route) {
       route = this.routes.find((route) => route.path === "error");
     }

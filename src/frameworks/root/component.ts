@@ -23,10 +23,14 @@ export class Component {
   protected _mountEvent() {
     //probably we call function 2 times, not shure how to resolve it
     if (this.events() !== undefined) {
-      const events = (this.events() as unknown) as EventsManager;
-      const elementForListener = this.el?.find(events.target);
-      if (elementForListener)
-        elementForListener.on(events.eventName, events.event.bind(this));
+      const events = (this.events() as unknown) as EventsManager[];
+      events.forEach((event) => {
+        const elementForListener = this.el?.findAll(event.target);
+        if (elementForListener)
+          elementForListener.forEach((el) =>
+            el.on(event.eventName, event.event.bind(this))
+          );
+      });
     }
   }
 

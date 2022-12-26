@@ -1,5 +1,5 @@
 import { Component } from "../../frameworks/root/component";
-import { EventsManager, EventTypes, IConfigComponent } from "../../types";
+import { IConfigComponent } from "../../types";
 import books from "../../books-content/books.json";
 
 class Shop extends Component {
@@ -7,21 +7,8 @@ class Shop extends Component {
     super(config);
     this.prepareBooks();
   }
-  public events(): EventsManager {
-    return {
-      eventName: EventTypes.CLICK,
-      target: ".btn_test",
-      event: this.onBtnClick,
-    };
-  }
-
-  private onBtnClick(event: Event) {
-    console.log(this.el?.find(".products"));
-  }
 
   private prepareBooks() {
-    console.log(this.template);
-    console.log(books);
     this.template = this.template.replace(
       "{{Shop content}}",
       books
@@ -29,7 +16,7 @@ class Shop extends Component {
           (book) => `
       <div class="product-card">
         <div class="product-thumb">
-          <a href="#product"
+          <a class="open-product" href="#product/${book.id}" id="${book.id}"
             ><img
               class="image-book"
               src="./books-content/img-books/${book.id}.jpeg"
@@ -66,6 +53,7 @@ class Shop extends Component {
     );
   }
 }
+
 export const shop: Shop = new Shop({
   selector: "polimorph",
   template: `
@@ -162,13 +150,13 @@ export const shop: Shop = new Shop({
               </aside>
             </div>
             <div class="col-lg-9 col-md-8">
-              <div class="row justify-content-evenly align-items-center">
+              <div class="row justify-content-start align-items-center gap-2">
                 <!-- sort - add js -->
                 <button
-                  class="btn btn-secondary dropdown-toggle col-lg-2  btn_test"
+                  class="btn btn-secondary dropdown-toggle col-lg-2 btn-sort"
                   role="button"
                 >
-                  Сортировать по
+                  Сортировать
                 </button>
 
                 <ul class="dropdown-menu">
@@ -219,8 +207,7 @@ export const shop: Shop = new Shop({
     <footer class="footer col-12 bg-secondary bg-gradient rounded-top">
       <a href="#" class="text-decoration-none text-center d-block py-3 nav-link"
         >Online Store 2022</a
-      >
-      <div class="container"></div>
+      >      
     </footer>
   `,
 });
