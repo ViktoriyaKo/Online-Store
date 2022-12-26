@@ -7,12 +7,14 @@ class Shop extends Component {
     super(config);
     this.prepareBooks();
   }
-  public events(): EventsManager {
-    return {
-      eventName: EventTypes.CLICK,
-      target: ".btn_test",
-      event: this.onBtnClick,
-    };
+  public events(): EventsManager[] {
+    return [
+      {
+        eventName: EventTypes.CLICK,
+        target: ".btn_test",
+        event: this.onBtnClick,
+      },
+    ];
   }
 
   private onBtnClick(event: Event) {

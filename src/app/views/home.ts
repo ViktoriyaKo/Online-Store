@@ -13,13 +13,15 @@ class Home extends Component {
       nameCard: "CARD#1",
     };
   }
-  public events(): EventsManager {
+  public events(): EventsManager[] {
     console.log("proper events");
-    return {
-      eventName: EventTypes.CLICK,
-      target: ".btn_view-event",
-      event: this.onBtnClick,
-    };
+    return [
+      {
+        eventName: EventTypes.CLICK,
+        target: ".btn_view-event",
+        event: this.onBtnClick,
+      },
+    ];
   }
   public onInit(): void {
     console.log("init Page");
