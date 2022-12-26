@@ -3,6 +3,7 @@ import { IConfigComponent, queryElement } from "../../types";
 import { Component } from "../root/component";
 import { IRoutes, IConfig } from "../../types";
 import { product } from "../../app/views/product";
+import books from "../../books-content/books.json";
 
 export class Module {
   public components: Array<IConfigComponent>;
@@ -35,8 +36,9 @@ export class Module {
     if (
       !route &&
       url.split("/")[0] === "product" &&
+      +url.split("/").length === 2 &&
       +url.split("/")[1] > 0 &&
-      +url.split("/")[1] <= 101
+      +url.split("/")[1] <= books.length
     ) {
       route = { path: `product`, components: product };
     }
