@@ -1,10 +1,11 @@
 import { ComponentData, EventsManager, IConfigComponent } from "../../types";
+import { $, DomHandler } from "../exporter";
 
 export class Component {
   protected data?: ComponentData;
   public template: string;
   public selector: string;
-  public el: null | Element;
+  public el: null | DomHandler;
 
   constructor(config: IConfigComponent) {
     this.template = config.template;
@@ -12,13 +13,10 @@ export class Component {
     this.el = null;
   }
   render(): void {
-    this.el = document.querySelector(this.selector);
+    this.el = $(document.querySelector(this.selector) as Element);
     if (!this.el) throw new Error(`component ${this.template} not found!`);
     //fixthis!
-    this.el.innerHTML = this.compiledTemplate(
-      this.template,
-      this.data
-    ) as string;
+    this.el.html(this.compiledTemplate(this.template, this.data) as string);
     this._mountEvent();
   }
 
@@ -26,12 +24,9 @@ export class Component {
     //probably we call function 2 times, not shure how to resolve it
     if (this.events() !== undefined) {
       const events = (this.events() as unknown) as EventsManager;
-      const elementForListener = this.el?.querySelector(events.target);
+      const elementForListener = this.el?.find(events.target);
       if (elementForListener)
-        elementForListener.addEventListener(
-          events.eventName,
-          events.event.bind(this)
-        );
+        elementForListener.on(events.eventName, events.event.bind(this));
     }
   }
 
