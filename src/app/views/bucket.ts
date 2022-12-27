@@ -11,6 +11,105 @@ export const bucket: Bucket = new Bucket({
   selector: "polimorph",
   template: `
   <main>
+  <div class="container wrapper-none">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-sm-10 set-modal p-2 rounded-3 modal-shadow">
+      <button class="btn btn-close bg-white d-block ms-auto"></button>
+      <h2 class="fs-5">Оформление покупки</h2>
+
+      <label for="firstName" class="form-label"
+        >Введите Имя и Фамилию</label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        placeholder=""
+        value=""
+        required
+      />
+      <div class="text-danger"></div>
+
+      <label for="phone" class="form-label">Номер телефона</label>
+      <input
+        type="number"
+        class="form-control"
+        id="phone"
+        placeholder="+7"
+        value=""
+        required
+      />
+      <div class="text-danger"></div>
+
+      <label for="email" class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        placeholder="you@example.com"
+      />
+      <div class="text-danger"></div>
+
+      <label for="address" class="form-label">Адрес доставки</label>
+      <input
+        type="text"
+        class="form-control"
+        id="address"
+        placeholder=""
+        required
+      />
+      <div class="text-danger"></div>
+      <div
+        class="wrapper-card bg-info rounded-3 m-auto col-lg-8 col-sm-12 p-3 my-3"
+      >
+        <h3>Оплата</h3>
+        <div class="d-flex gap-3 flex-wrap align-items-center">
+          <img src="./assets/visa.png" class="d-block set-card" alt="" />
+          <input
+            type="number"
+            class="form-control set-form-width"
+            id="cc-number"
+            placeholder="номер карты"
+            required
+          />
+          <div class="text-danger"></div>
+        </div>
+        <div class="d-flex gap-3">
+          <div class="col-md-4">
+            <label for="cc-expiration" class="form-label">Дата:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="cc-expiration"
+              placeholder=""
+              required
+            />
+            <div class="text-danger"></div>
+          </div>
+          <div class="col-md-4">
+            <label for="cc-cvv" class="form-label">CVV:</label>
+            <input
+              type="number"
+              class="form-control"
+              id="cc-cvv"
+              placeholder=""
+              required
+            />
+            <div class="text-danger"></div>
+          </div>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-secondary d-block m-auto btn-submit"
+      >
+        Оплатить
+      </button>
+    </div>
+  </div>
+</div>
+  
   <section class="content-bucket py-5">
     <div class="container">
       <div class="row">
@@ -92,6 +191,8 @@ export const bucket: Bucket = new Bucket({
       </div>
     </div>
   </section>
+
+  
 </main>
 <footer class="footer col-12 bg-secondary bg-gradient rounded-top">
       <a href="#" class="text-decoration-none text-center d-block py-3 nav-link"

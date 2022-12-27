@@ -1,0 +1,35 @@
+.set-card {
+  width: 40px;
+  height: 30px;
+}
+
+.set-form-width {
+  width: 70%;
+}
+
+.set-modal {
+  position: relative;
+  color: white;
+  background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(255, 255, 255, 0.7)),
+    url("./assets/img-books6.jpg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.modal-shadow {
+  box-shadow: 0 0 0 9999px rgb(0 0 0 / 80%);
+}
+
+.modal-active {
+  transform: translateX(0%);
+  transition: 0.3s all linear;
+}
+
+.wrapper-none {
+  position: fixed;
+  right: 0;
+  // transform: translateX(100%);
+  transition: 0.3s all linear;
+  z-index: 10;
+}

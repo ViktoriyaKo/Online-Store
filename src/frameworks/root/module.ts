@@ -1,8 +1,9 @@
 import { routerSlicer } from "../tools/routerSlicer";
 import { IConfigComponent, queryElement } from "../../types";
 import { Component } from "../root/component";
-import { IRoutes, IConfig } from "../../types";
+import { IRoutes, IConfig, Settings } from "../../types";
 import { product } from "../../app/views/product";
+import { Validation } from "../../app/modal";
 import books from "../../books-content/books.json";
 
 export class Module {
@@ -50,14 +51,28 @@ export class Module {
     <${route.components.selector}></${route.components.selector}>
     `;
       this.renderComponent(route.components);
+      // if (url === "bucket") {
+      //   const settings: Settings = {
+      //     minLengthName: 2,
+      //     minSymbolName: 3,
+      //     minLengthTel: 9,
+      //     minLengthAddress: 3,
+      //     minSymbolAddress: 5,
+      //     cardNumberLength: 16,
+      //     dateLength: 5,
+      //     dateCardMonth: 12,
+      //     cvvLength: 3,
+      //   };
+      //   const startValidation: Validation = new Validation(settings);
+      // }
     }
   }
 
   renderComponent(component: Component) {
     //probably we call function 2 times, not shure how to resolve it
-    if (component.onInit() !== undefined) component.onInit();
+    if (component.onInit !== undefined) component.onInit();
     component.render();
     //probably we call function 2 times, not shure how to resolve it
-    if (component.afterInit() !== undefined) component.afterInit();
+    if (component.afterInit !== undefined) component.afterInit();
   }
 }
