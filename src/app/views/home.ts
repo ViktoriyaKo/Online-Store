@@ -9,9 +9,22 @@ import {
 class Home extends Component {
   constructor(config: IConfigComponent) {
     super(config);
-    // this.data = {
-    //   nameCard: "CARD#1",
-    // };
+    this.data = {
+      nameCard: "CARD#1",
+    };
+  }
+  public events(): EventsManager[] {
+    console.log("proper events");
+    return [
+      {
+        eventName: EventTypes.CLICK,
+        target: ".btn_view-event",
+        event: this.onBtnClick,
+      },
+    ];
+  }
+  public onInit(): void {
+    console.log("init Page");
   }
   // public events(): EventsManager {
   //   console.log("proper events");
