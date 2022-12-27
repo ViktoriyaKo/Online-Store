@@ -36,7 +36,7 @@ export class Module {
     if (
       !route &&
       url.split("/")[0] === "product" &&
-      +url.split("/").length === 2 &&
+      url.split("/").length === 2 &&
       +url.split("/")[1] > 0 &&
       +url.split("/")[1] <= books.length
     ) {

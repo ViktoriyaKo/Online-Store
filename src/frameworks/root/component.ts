@@ -25,7 +25,6 @@ export class Component {
     if (this.events() !== undefined) {
       const events = (this.events() as unknown) as EventsManager[];
       events.forEach((event) => {
-
         const elementForListener = this.el?.findAll(event.target);
         if (elementForListener)
           elementForListener.forEach((el) =>

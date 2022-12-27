@@ -1,12 +1,7 @@
 import { Component } from "../../frameworks/root/component";
 import { routerSlicer } from "../../frameworks/tools/routerSlicer";
 import books from "../../books-content/books.json";
-import {
-  EventsManager,
-  EventTypes,
-  IConfigComponent,
-  ComponentData,
-} from "../../types";
+import { EventsManager, EventTypes, IConfigComponent } from "../../types";
 
 class Product extends Component {
   constructor(config: IConfigComponent) {
