@@ -26,7 +26,7 @@ export interface IConfigComponent {
 
 //function for checking HTML-items:
 function checkedQuerySelector(
-  parent: Element | Document | DocumentFragment,
+  parent: Element | Document | DocumentFragment | HTMLImageElement,
   selector: string
 ): Element {
   const el = parent.querySelector(selector);
@@ -37,7 +37,7 @@ function checkedQuerySelector(
 }
 
 export function queryElement<T extends typeof Element>(
-  container: Document | Element | DocumentFragment,
+  container: Document | Element | DocumentFragment | HTMLImageElement,
   type: T,
   selector: string
 ): InstanceType<T> {
