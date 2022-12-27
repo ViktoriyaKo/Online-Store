@@ -7,7 +7,7 @@ class Shop extends Component {
     super(config);
     this.prepareBooks();
   }
-  
+
   private prepareBooks() {
     this.template = this.template.replace(
       "{{Shop content}}",
