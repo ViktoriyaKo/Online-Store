@@ -1,17 +1,103 @@
 import { Component } from "../../frameworks/root/component";
-import { IConfigComponent } from "../../types";
+import {
+  EventsManager,
+  EventTypes,
+  IConfigComponent,
+  Product,
+  ReduceReturnType,
+} from "../../types";
 import books from "../../books-content/books.json";
+import { ProductsHandler } from "../handlers/ProductsHandler";
+import { routerSlicer, $ } from "../../frameworks/exporter";
 
 class Shop extends Component {
+  private productsHandler: ProductsHandler;
   constructor(config: IConfigComponent) {
     super(config);
+    this.productsHandler = new ProductsHandler();
+  }
+
+  private prepareMenu(params: ReduceReturnType | undefined) {
+    console.log("prepareMenu", params);
+    const genres = params && params["genres"] && params["genres"].split("↕");
+    this.setGenres(genres === "" ? undefined : genres);
+  }
+
+  private setGenres(genresChecked: string[] | undefined) {
+    console.log("genresChecked:", genresChecked);
+    this.template = this.template.replace(
+      "{{genresMenu}}",
+      this.productsHandler
+        .getGenres()
+        .map(
+          (genre, index) => `
+        <div class="item-checkbox">
+        <input class=" clickEventGenres" type="checkbox" id="scales${index}" name="scales${index}" />
+        <label for="scales${index}">${genre}</label>
+        </div>
+        `
+        )
+        .join("\n")
+    );
+  }
+  public events(): EventsManager[] {
+    console.log("eventsCa;;s");
+    return [
+      {
+        eventName: EventTypes.CLICK,
+        target: ".clickEventGenres",
+        event: this.onBtnClick,
+      },
+    ];
+  }
+
+  public onBtnClick(event: Event) {
+    console.log(routerSlicer.routerParserProduct());
+    if (event.target instanceof Element) {
+      const label = $(event?.target);
+      console.log("_____", event?.target.nextElementSibling?.innerHTML);
+      if (event?.target.nextElementSibling?.innerHTML) {
+        // window.location.hash = `shop/?genres=${encodeURIComponent(
+        //   event?.target.nextElementSibling?.innerHTML
+        // )}`;
+        const test = routerSlicer.routerAdd(
+          "genres",
+          event?.target.nextElementSibling?.innerHTML
+        );
+        console.log(test);
+        console.log(routerSlicer.routerGetURIProduct(test));
+        window.location.hash = routerSlicer.routerGetURIProduct(test);
+      }
+    }
+  }
+
+  private setAuthors() {
+    this.template = this.template.replace(
+      "{{authorsMenu}}",
+      this.productsHandler
+        .getGenres()
+        .map(
+          (genre, index) => `
+        INDEX AUTHOR
+        `
+        )
+        .join("\n")
+    );
+  }
+  public onInit(): void {
+    const params = routerSlicer.routerParserProduct();
+    console.log("onInit:", params);
     this.prepareBooks();
+    this.prepareMenu(params);
+    routerSlicer.routerParserProduct();
   }
 
   private prepareBooks() {
+    console.log("testPrepareBooks");
     this.template = this.template.replace(
       "{{Shop content}}",
-      books
+      this.productsHandler
+        .getFilteredSorted()
         .map(
           (book) => `
       <div class="product-card">
@@ -76,16 +162,7 @@ export const shop: Shop = new Shop({
                     <legend class="name-filter position-relative text-center">
                       Категория
                     </legend>
-
-                    <div class="item-checkbox">
-                      <input type="checkbox" id="scales" name="scales" />
-                      <label for="scales">...</label>
-                    </div>
-
-                    <div class="item-checkbox">
-                      <input type="checkbox" id="horns" name="horns" />
-                      <label for="horns">...</label>
-                    </div>
+                    {{genresMenu}}
                   </fieldset>
                 </div>
 

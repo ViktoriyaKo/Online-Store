@@ -16,6 +16,7 @@ export class Component {
     this.el = $(document.querySelector(this.selector) as Element);
     if (!this.el) throw new Error(`component ${this.template} not found!`);
     //fixthis!
+    console.log("RENDER!!!");
     this.el.html(this.compiledTemplate(this.template, this.data) as string);
     this._mountEvent();
   }
@@ -24,6 +25,7 @@ export class Component {
     //probably we call function 2 times, not shure how to resolve it
     if (this.events() !== undefined) {
       const events = (this.events() as unknown) as EventsManager[];
+      console.log(events);
       events.forEach((event) => {
         const elementForListener = this.el?.findAll(event.target);
         if (elementForListener)
@@ -49,12 +51,15 @@ export class Component {
   }
 
   events() {
+    console.log("events_tst");
     return;
   }
   onInit() {
+    console.log("onInit_tst");
     return;
   }
   afterInit() {
+    console.log("afterInit_tst");
     return;
   }
 }
