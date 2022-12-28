@@ -22,12 +22,10 @@ export class Module {
   init(): void {
     for (const component of this.components) {
       if (component instanceof Component) {
-        console.log("_____________comp to render: ", component);
         this.renderComponent(component);
       }
     }
     if (this.routes) {
-      console.log("_____________comp to render: ", this.routes);
       window.addEventListener("hashchange", this.renderRoute.bind(this));
       this.renderRoute();
     }
@@ -59,11 +57,8 @@ export class Module {
   }
 
   renderComponent(component: Component) {
-    //probably we call function 2 times, not shure how to resolve it
-    console.log("renderComponent", component);
     if (component.onInit !== undefined) component.onInit();
     component.render();
-    //probably we call function 2 times, not shure how to resolve it
     if (component.afterInit !== undefined) component.afterInit();
   }
 }

@@ -19,11 +19,16 @@ export const routerSlicer = {
   },
   routerAdd(key: string, value: string) {
     let currentURIObject = this.routerParserProduct();
-    console.log("currentURIObject: ", currentURIObject);
+    console.log("currentURIObject", currentURIObject);
     if (!currentURIObject) {
       currentURIObject = { [key]: value };
     } else if (currentURIObject[key]) {
-      currentURIObject[key] += `↕${value}`;
+      const keys = currentURIObject[key].split("↕");
+      if (keys.includes(value)) {
+        currentURIObject[key] = keys.filter((el) => el !== value).join("↕");
+      } else {
+        currentURIObject[key] += `↕${value}`;
+      }
     } else {
       currentURIObject[key] = value;
     }
@@ -37,7 +42,6 @@ export const routerSlicer = {
     return uri;
   },
   validationHash(hash: string): boolean {
-    console.log(hash);
     if (hash.indexOf("/?") === -1) return false;
     if (hash.split("/?").length !== 2) return false;
     return true;
