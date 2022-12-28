@@ -1,36 +1,103 @@
 import { Settings, ObjectModal } from "../types";
-
-const firstName = document.getElementById("firstName") as HTMLInputElement;
-const phone = document.getElementById("phone") as HTMLInputElement;
-const email = document.getElementById("email") as HTMLInputElement;
-const address = document.getElementById("address") as HTMLInputElement;
-const ccNumber = document.getElementById("cc-number") as HTMLInputElement;
-const ccCvv = document.getElementById("cc-cvv") as HTMLInputElement;
-const ccExpiration = document.getElementById(
-  "cc-expiration"
-) as HTMLInputElement;
-const btnSubmit = document.querySelector(".btn-submit") as HTMLButtonElement;
-
-const EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+import { loader } from "../frameworks/root/loader";
+import { app } from "../app/app";
+import { tools } from "../frameworks/exporter";
 
 export class Validation {
+  firstName = document.getElementById("firstName") as HTMLInputElement;
+  phone = document.getElementById("phone") as HTMLInputElement;
+  email = document.getElementById("email") as HTMLInputElement;
+  address = document.getElementById("address") as HTMLInputElement;
+  ccNumber = document.getElementById("cc-number") as HTMLInputElement;
+  ccCvv = document.getElementById("cc-cvv") as HTMLInputElement;
+  ccExpiration = document.getElementById("cc-expiration") as HTMLInputElement;
+  btnSubmit = document.querySelector(".btn-submit") as HTMLButtonElement;
+  btnClose = document.querySelector(".btn-close") as HTMLButtonElement;
+  wrapperModal = document.querySelector(".wrapper-modal") as HTMLButtonElement;
+  btnPay = document.querySelector(".btn-pay") as HTMLButtonElement;
+  setModal = document.querySelector(".set-modal") as HTMLButtonElement;
+  setCardImg = document.querySelector(".set-card") as HTMLImageElement;
+  messageError = document.querySelectorAll(".text-danger");
+  EMAIL_REGEXP = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+
   obj: ObjectModal = {};
   public options: Settings;
 
   constructor(options: Settings) {
     this.options = options;
     this.getObject();
+    this.closeModal();
+    this.openModal();
+    this.eventKeypress();
+    this.eventChangeCard();
+  }
+
+  public closeModal() {
+    this.btnClose.addEventListener("click", () => {
+      this.wrapperModal.classList.add("modal-none");
+      this.setModal.classList.remove("modal-shadow");
+    });
+  }
+
+  public openModal() {
+    this.btnPay.addEventListener("click", () => {
+      this.wrapperModal.classList.remove("modal-none");
+      this.setModal.classList.add("modal-shadow");
+    });
+  }
+
+  public eventChangeCard() {
+    this.ccNumber.addEventListener("keyup", () => {
+      if (this.ccNumber.value.startsWith("3")) {
+        this.setCardImg.src = "./assets/мир.png";
+      } else if (this.ccNumber.value.startsWith("5")) {
+        this.setCardImg.src = "./assets/master-card.png";
+      } else {
+        this.setCardImg.src = "./assets/visa.png";
+      }
+    });
+  }
+
+  public eventKeypress() {
+    this.phone.addEventListener("keypress", (event) => {
+      if (isNaN(+event.key) && event.key !== "+") {
+        event.preventDefault();
+      }
+    });
+
+    this.ccNumber.addEventListener("keypress", (event) => {
+      if (this.ccNumber.value.length >= this.options.cardNumberLength) {
+        event.preventDefault();
+      }
+    });
+
+    this.ccExpiration.addEventListener("keypress", (event) => {
+      if (this.ccExpiration.value.length === 2) {
+        this.ccExpiration.value += "/";
+      }
+      if (this.ccExpiration.value.length >= 5) {
+        event.preventDefault();
+      }
+      if (isNaN(+event.key) && event.key !== "+") {
+        event.preventDefault();
+      }
+    });
+    this.ccCvv.addEventListener("keypress", (event) => {
+      if (this.ccCvv.value.length >= 3) {
+        event.preventDefault();
+      }
+    });
   }
 
   getObject(): void {
-    btnSubmit.addEventListener("click", () => {
-      this.obj.name = firstName.value;
-      this.obj.number = phone.value;
-      this.obj.email = email.value;
-      this.obj.delivery = address.value;
-      this.obj.cardNumber = ccNumber.value;
-      this.obj.date = ccExpiration.value;
-      this.obj.cvv = ccCvv.value;
+    this.btnSubmit.addEventListener("click", () => {
+      this.obj.name = this.firstName.value;
+      this.obj.number = this.phone.value;
+      this.obj.email = this.email.value;
+      this.obj.delivery = this.address.value;
+      this.obj.cardNumber = this.ccNumber.value;
+      this.obj.date = this.ccExpiration.value;
+      this.obj.cvv = this.ccCvv.value;
       this.validateName();
       this.validationTel();
       this.validationEmail();
@@ -38,6 +105,7 @@ export class Validation {
       this.validationDateCard();
       this.validationCvv();
       this.validationAddress();
+      this.confirmValidation();
     });
   }
 
@@ -48,42 +116,40 @@ export class Validation {
         (item) => item.length < this.options.minSymbolName
       );
       if (valueName.length < this.options.minLengthName) {
-        this.createError(firstName);
+        this.createError(this.firstName);
       } else if (lengthEveryName) {
-        this.createError(firstName);
+        this.createError(this.firstName);
       } else {
-        console.log(valueName);
-        this.successValidation(firstName);
+        this.successValidation(this.firstName);
       }
     } else {
-      this.createError(firstName);
+      this.createError(this.firstName);
     }
   }
 
   validationTel(): void {
     if (this.obj.number) {
-      if (
-        !this.obj.number.startsWith("+") ||
-        this.obj.number.length < this.options.minLengthTel
-      ) {
-        this.createError(phone);
+      if (!this.obj.number.toString().startsWith("+")) {
+        this.createError(this.phone);
+      } else if (this.obj.number.length < this.options.minLengthTel) {
+        this.createError(this.phone);
       } else {
-        this.successValidation(phone);
+        this.successValidation(this.phone);
       }
     } else {
-      this.createError(phone);
+      this.createError(this.phone);
     }
   }
 
   validationEmail(): void {
     if (this.obj.email) {
-      if (!EMAIL_REGEXP.test(this.obj.email)) {
-        this.createError(email);
+      if (!this.EMAIL_REGEXP.test(this.obj.email)) {
+        this.createError(this.email);
       } else {
-        this.successValidation(email);
+        this.successValidation(this.email);
       }
     } else {
-      this.createError(email);
+      this.createError(this.email);
     }
   }
 
@@ -94,26 +160,26 @@ export class Validation {
         (item) => item.length < this.options.minSymbolAddress
       );
       if (valueAddress.length < this.options.minLengthAddress) {
-        this.createError(address);
+        this.createError(this.address);
       } else if (lengthEveryAddress) {
-        this.createError(address);
+        this.createError(this.address);
       } else {
-        this.successValidation(address);
+        this.successValidation(this.address);
       }
     } else {
-      this.createError(address);
+      this.createError(this.address);
     }
   }
 
   validationCardNumber(): void {
     if (this.obj.cardNumber) {
       if (this.obj.cardNumber.length !== this.options.cardNumberLength) {
-        this.createError(ccNumber);
+        this.createError(this.ccNumber);
       } else {
-        this.successValidation(ccNumber);
+        this.successValidation(this.ccNumber);
       }
     } else {
-      this.createError(ccNumber);
+      this.createError(this.ccNumber);
     }
   }
 
@@ -124,31 +190,31 @@ export class Validation {
         +cardMonth > this.options.dateCardMonth ||
         this.obj.date.length !== this.options.dateLength
       ) {
-        console.log(cardMonth);
-        this.createError(ccExpiration);
+        this.createError(this.ccExpiration);
       } else {
-        this.successValidation(ccExpiration);
+        this.successValidation(this.ccExpiration);
       }
     } else {
-      this.createError(ccExpiration);
+      this.createError(this.ccExpiration);
     }
   }
 
   validationCvv(): void {
     if (this.obj.cvv) {
       if (this.obj.cvv.length !== this.options.cvvLength) {
-        this.createError(ccCvv);
+        this.createError(this.ccCvv);
       } else {
-        this.successValidation(ccCvv);
+        this.successValidation(this.ccCvv);
       }
     } else {
-      this.successValidation(ccCvv);
+      this.createError(this.ccCvv);
     }
   }
 
   createError(el: HTMLElement): void {
     const messageError = el.nextElementSibling;
     if (messageError) {
+      el.style.border = "2px solid red";
       messageError.innerHTML = "ERROR";
     }
   }
@@ -159,19 +225,18 @@ export class Validation {
       el.style.border = "none";
     }
   }
+
+  public confirmValidation() {
+    //опустошить корзину!!!
+    const checkError = Array.from(this.messageError).some(
+      (item) => item.textContent === "ERROR"
+    );
+    if (!checkError) {
+      this.setModal.innerHTML = `<h2 class="fs-1 p-5 text-center">Ваш заказ успешно оформлен, спасибо!</h2>`;
+      tools.delay(2000).then(() => {
+        loader(app);
+        window.location.href = "#";
+      });
+    }
+  }
 }
-//перенесла это в module!!
-
-// const settings: Settings = {
-//   minLengthName: 2,
-//   minSymbolName: 3,
-//   minLengthTel: 9,
-//   minLengthAddress: 3,
-//   minSymbolAddress: 5,
-//   cardNumberLength: 16,
-//   dateLength: 5,
-//   dateCardMonth: 12,
-//   cvvLength: 3,
-// };
-
-// const startValidation: Validation = new Validation(settings);

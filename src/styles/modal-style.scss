@@ -3,6 +3,15 @@
   height: 30px;
 }
 
+.form-control {
+  padding: 0.1rem;
+  width: 81%;
+  display: inline-block;
+}
+
+label {
+  display: block;
+}
 .set-form-width {
   width: 70%;
 }
@@ -18,18 +27,24 @@
 }
 
 .modal-shadow {
-  box-shadow: 0 0 0 9999px rgb(0 0 0 / 80%);
+  box-shadow: 0 0 0 9999px rgb(0 0 0 / 85%);
 }
 
-.modal-active {
-  transform: translateX(0%);
-  transition: 0.3s all linear;
-}
-
-.wrapper-none {
+.wrapper-modal {
   position: fixed;
-  right: 0;
-  // transform: translateX(100%);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
   transition: 0.3s all linear;
   z-index: 10;
+}
+
+.modal-none {
+  transform: translateX(100%);
+  transition: 0.3s all linear;
+}
+
+.set-btn-close {
+  position: absolute;
+  right: 4%;
 }

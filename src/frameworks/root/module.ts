@@ -51,20 +51,20 @@ export class Module {
     <${route.components.selector}></${route.components.selector}>
     `;
       this.renderComponent(route.components);
-      // if (url === "bucket") {
-      //   const settings: Settings = {
-      //     minLengthName: 2,
-      //     minSymbolName: 3,
-      //     minLengthTel: 9,
-      //     minLengthAddress: 3,
-      //     minSymbolAddress: 5,
-      //     cardNumberLength: 16,
-      //     dateLength: 5,
-      //     dateCardMonth: 12,
-      //     cvvLength: 3,
-      //   };
-      //   const startValidation: Validation = new Validation(settings);
-      // }
+      if (url === "bucket") {
+        const settings: Settings = {
+          minLengthName: 2,
+          minSymbolName: 3,
+          minLengthTel: 10,
+          minLengthAddress: 3,
+          minSymbolAddress: 5,
+          cardNumberLength: 16,
+          dateLength: 5,
+          dateCardMonth: 12,
+          cvvLength: 3,
+        };
+        const startValidation: Validation = new Validation(settings);
+      }
     }
   }
 

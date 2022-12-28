@@ -11,10 +11,10 @@ export const bucket: Bucket = new Bucket({
   selector: "polimorph",
   template: `
   <main>
-  <div class="container wrapper-none">
+  <div class="container wrapper-modal modal-none">
   <div class="row justify-content-center">
-    <div class="col-lg-6 col-sm-10 set-modal p-2 rounded-3 modal-shadow">
-      <button class="btn btn-close bg-white d-block ms-auto"></button>
+    <div class="col-lg-6 col-sm-10 set-modal p-2 rounded-3">
+      <button class="btn btn-close bg-white set-btn-close"></button>
       <h2 class="fs-5">Оформление покупки</h2>
 
       <label for="firstName" class="form-label"
@@ -28,18 +28,18 @@ export const bucket: Bucket = new Bucket({
         value=""
         required
       />
-      <div class="text-danger"></div>
+      <span class="text-danger"></span>
 
       <label for="phone" class="form-label">Номер телефона</label>
       <input
-        type="number"
+        type="tel"
         class="form-control"
         id="phone"
         placeholder="+7"
         value=""
         required
       />
-      <div class="text-danger"></div>
+      <span class="text-danger"></span>
 
       <label for="email" class="form-label">Email</label>
       <input
@@ -48,7 +48,7 @@ export const bucket: Bucket = new Bucket({
         id="email"
         placeholder="you@example.com"
       />
-      <div class="text-danger"></div>
+      <span class="text-danger"></span>
 
       <label for="address" class="form-label">Адрес доставки</label>
       <input
@@ -58,13 +58,13 @@ export const bucket: Bucket = new Bucket({
         placeholder=""
         required
       />
-      <div class="text-danger"></div>
+      <span class="text-danger"></span>
       <div
-        class="wrapper-card bg-info rounded-3 m-auto col-lg-8 col-sm-12 p-3 my-3"
+        class="wrapper-card bg-info rounded-3 m-auto col-lg-8 col-sm-9 p-3 my-2"
       >
-        <h3>Оплата</h3>
-        <div class="d-flex gap-3 flex-wrap align-items-center">
-          <img src="./assets/visa.png" class="d-block set-card" alt="" />
+        <h3 class="fs-5">Оплата</h3>
+        <div class="d-flex flex-wrap align-items-center">
+          <img src="./assets/visa.png" class="d-block set-card me-3" alt="card" />
           <input
             type="number"
             class="form-control set-form-width"
@@ -72,19 +72,19 @@ export const bucket: Bucket = new Bucket({
             placeholder="номер карты"
             required
           />
-          <div class="text-danger"></div>
+          <span class="text-danger"></span>
         </div>
         <div class="d-flex gap-3">
           <div class="col-md-4">
             <label for="cc-expiration" class="form-label">Дата:</label>
             <input
-              type="number"
+              type="text"
               class="form-control"
               id="cc-expiration"
               placeholder=""
               required
             />
-            <div class="text-danger"></div>
+            <span class="text-danger"></span>
           </div>
           <div class="col-md-4">
             <label for="cc-cvv" class="form-label">CVV:</label>
@@ -95,7 +95,7 @@ export const bucket: Bucket = new Bucket({
               placeholder=""
               required
             />
-            <div class="text-danger"></div>
+            <span class="text-danger"></span>
           </div>
         </div>
       </div>
@@ -184,7 +184,7 @@ export const bucket: Bucket = new Bucket({
                 class="form-control"
                 placeholder="Введите промокод"
               />
-              <button class="btn btn-secondary">Перейти к оплате</button>
+              <button class="btn btn-secondary btn-pay">Перейти к оплате</button>
             </div>
           </div>
         </div>
@@ -198,7 +198,6 @@ export const bucket: Bucket = new Bucket({
       <a href="#" class="text-decoration-none text-center d-block py-3 nav-link"
         >Online Store 2022</a
       >
-      <div class="container"></div>
     </footer>
   `,
 });
