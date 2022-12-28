@@ -6,6 +6,24 @@ export interface IComponents extends IConfigComponent {
   appComponent: AppComponent;
   header: Header;
 }
+export interface ReduceReturnType {
+  [index: string]: string;
+}
+
+export interface Product {
+  id: number;
+  title: string;
+  author: string;
+  image: string[];
+  description: string;
+  pages: number;
+  year: number;
+  terms: string;
+  stock: number;
+  price: number;
+  sale: number;
+}
+
 export interface IConfig {
   components: Array<IConfigComponent>;
   routes: Array<IRoutes>;
