@@ -227,7 +227,7 @@ export const shop: Shop = new Shop({
       <section class="main my-3">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-lg-3 col-md-4 mt-2">
+            <div class="col-lg-4 col-md-5 mt-2">
               <aside class="left-aside rounded-2 py-2 px-3">
                 <div class="d-flex justify-content-evenly gap-2 flex-wrap">
                   <button class="btn btn-secondary">Сброс фильтров</button>
@@ -237,7 +237,7 @@ export const shop: Shop = new Shop({
                 <div
                   class="filter-section my-3 bg-secondary bg-gradient rounded-2"
                 >
-                  <fieldset class="filter-block p-3">
+                  <fieldset class="filter-block p-2">
                     <legend class="name-filter position-relative text-center">
                       Категория
                     </legend>
@@ -246,10 +246,30 @@ export const shop: Shop = new Shop({
                 </div>
 
                 <div
+                class="filter-section my-3 bg-secondary bg-gradient rounded-2"
+              >
+                <fieldset class="filter-block p-3">
+                  <legend class="name-filter position-relative text-center">
+                    Автор
+                  </legend>
+
+                  <div class="item-checkbox">
+                    <input type="checkbox" id="scales" name="scales" />
+                    <label for="scales">пример1</label>
+                  </div>
+
+                  <div class="item-checkbox">
+                    <input type="checkbox" id="horns" name="horns" />
+                    <label for="horns">пример2</label>
+                  </div>
+                </fieldset>
+              </div>
+
+                <div
                   class="filter-section my-3 bg-secondary bg-gradient rounded-2"
                 >
                   <!-- будет 2 ползунка -->
-                  <fieldset class="filter-block p-3">
+                  <fieldset class="filter-block p-2">
                     <legend class="name-filter position-relative text-center">
                       Цена
                     </legend>
@@ -305,7 +325,7 @@ export const shop: Shop = new Shop({
                 </div>
               </aside>
             </div>
-            <div class="col-lg-9 col-md-8">
+            <div class="col-lg-8 col-md-7">
               <div class="row justify-content-start align-items-center gap-2">
                 <!-- sort - add js -->
                 <button
@@ -356,10 +376,30 @@ export const shop: Shop = new Shop({
         </div>
       </section>
     </main>
-    <footer class="footer col-12 bg-secondary bg-gradient rounded-top">
-      <a href="#" class="text-decoration-none text-center d-block py-3 nav-link"
-        >Online Store 2022</a
-      >      
-    </footer>
+    <footer class="footer col-12 bg-secondary bg-gradient rounded-top py-2">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a href="https://rs.school/" class="d-block" target="_blank"
+        ><img
+          src="./assets/logo_rs_text.svg"
+          alt="rs_website"
+          class="logo-rs"
+      /></a>
+
+      <a href="#" class="text-decoration-none d-block nav-link">
+        Online Store 2022</a
+      >
+      <div class="d-flex gap-2">
+        <a
+          href="https://github.com/ViktoriyaKo"
+          class="d-block"
+          target="_blank"
+          ><img src="./assets/github.svg" alt="logo-git" class="git-img1"
+        /></a>
+        <a href="https://github.com/scalette" class="d-block" target="_blank"
+          ><img src="./assets/github.svg" class="git-img2" alt="logo-git"
+        /></a>
+      </div>
+    </div>
+  </footer>
   `,
 });
