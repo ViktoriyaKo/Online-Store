@@ -9,6 +9,6 @@ export const routes: Array<IRoutes> = [
   { path: "", components: home },
   { path: "bucket", components: bucket },
   { path: "shop", components: shop },
-  { path: `product`, components: product },
+  { path: "product", components: product },
   { path: "error", components: notExists },
 ];

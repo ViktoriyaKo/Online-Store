@@ -79,6 +79,27 @@ export interface EventsManager {
 export interface ComponentData {
   [index: string]: string;
 }
+
+export interface Settings {
+  minLengthName: number;
+  minSymbolName: number;
+  minLengthTel: number;
+  minLengthAddress: number;
+  minSymbolAddress: number;
+  cardNumberLength: number;
+  dateLength: number;
+  dateCardMonth: number;
+  cvvLength: number;
+}
+export interface ObjectModal {
+  name?: string;
+  number?: string;
+  email?: string;
+  delivery?: string;
+  cardNumber?: string;
+  date?: string;
+  cvv?: string;
+}
 // export interface Templates {
 //   [keys: string]: TemplateFunc;
 // }
