@@ -235,9 +235,9 @@ export const shop: Shop = new Shop({
                 </div>
                 <!-- filter will add automatically-->
                 <div
-                  class="filter-section my-3 bg-secondary bg-gradient rounded-2"
+                  class="filter-section my-3 bg-secondary bg-gradient rounded-2 p-2"
                 >
-                  <fieldset class="filter-block p-2">
+                  <fieldset class="filter-block">
                     <legend class="name-filter position-relative text-center">
                       Категория
                     </legend>
@@ -246,9 +246,9 @@ export const shop: Shop = new Shop({
                 </div>
 
                 <div
-                class="filter-section my-3 bg-secondary bg-gradient rounded-2"
+                class="filter-section my-3 bg-secondary bg-gradient rounded-2 p-2"
               >
-                <fieldset class="filter-block p-2">
+                <fieldset class="filter-block">
                   <legend class="name-filter position-relative text-center">
                     Автор
                   </legend>
@@ -266,10 +266,10 @@ export const shop: Shop = new Shop({
               </div>
 
                 <div
-                  class="filter-section my-3 bg-secondary bg-gradient rounded-2"
+                  class="filter-section my-3 bg-secondary bg-gradient rounded-2 p-2"
                 >
                   <!-- будет 2 ползунка -->
-                  <fieldset class="filter-block p-2">
+                  <fieldset class="filter-block">
                     <legend class="name-filter position-relative text-center">
                       Цена
                     </legend>
@@ -297,10 +297,10 @@ export const shop: Shop = new Shop({
                   </fieldset>
                 </div>
                 <div
-                  class="filter-section my-3 bg-secondary bg-gradient rounded-2"
+                  class="filter-section my-3 bg-secondary bg-gradient rounded-2 p-2"
                 >
                   <!-- будет 2 ползунка -->
-                  <fieldset class="filter-block p-2">
+                  <fieldset class="filter-block">
                     <legend class="name-filter position-relative text-center">
                       Количество товаров на складе
                     </legend>
