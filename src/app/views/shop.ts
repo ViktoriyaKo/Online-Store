@@ -248,7 +248,7 @@ export const shop: Shop = new Shop({
                 <div
                 class="filter-section my-3 bg-secondary bg-gradient rounded-2"
               >
-                <fieldset class="filter-block p-3">
+                <fieldset class="filter-block p-2">
                   <legend class="name-filter position-relative text-center">
                     Автор
                   </legend>
@@ -300,7 +300,7 @@ export const shop: Shop = new Shop({
                   class="filter-section my-3 bg-secondary bg-gradient rounded-2"
                 >
                   <!-- будет 2 ползунка -->
-                  <fieldset class="filter-block p-3">
+                  <fieldset class="filter-block p-2">
                     <legend class="name-filter position-relative text-center">
                       Количество товаров на складе
                     </legend>
