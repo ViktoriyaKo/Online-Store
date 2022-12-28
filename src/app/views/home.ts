@@ -9,7 +9,6 @@ class Home extends Component {
     };
   }
   public events(): EventsManager[] {
-    console.log("proper events");
     return [
       {
         eventName: EventTypes.CLICK,

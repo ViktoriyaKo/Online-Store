@@ -4,6 +4,7 @@ import { Component } from "../root/component";
 import { IRoutes, IConfig } from "../../types";
 import { product } from "../../app/views/product";
 import books from "../../books-content/books.json";
+import { shop } from "../../app/views/shop";
 
 export class Module {
   public components: Array<IConfigComponent>;
@@ -21,7 +22,6 @@ export class Module {
   init(): void {
     for (const component of this.components) {
       if (component instanceof Component) {
-        console.log("comp to render: ", component);
         this.renderComponent(component);
       }
     }
@@ -42,6 +42,9 @@ export class Module {
     ) {
       route = { path: `product`, components: product };
     }
+    if (!route && url.split("/")[0] === "shop" && url.split("/").length === 2) {
+      route = { path: `shop`, components: shop };
+    }
     if (!route) {
       route = this.routes.find((route) => route.path === "error");
     }
@@ -54,10 +57,8 @@ export class Module {
   }
 
   renderComponent(component: Component) {
-    //probably we call function 2 times, not shure how to resolve it
-    if (component.onInit() !== undefined) component.onInit();
+    if (component.onInit !== undefined) component.onInit();
     component.render();
-    //probably we call function 2 times, not shure how to resolve it
-    if (component.afterInit() !== undefined) component.afterInit();
+    if (component.afterInit !== undefined) component.afterInit();
   }
 }
