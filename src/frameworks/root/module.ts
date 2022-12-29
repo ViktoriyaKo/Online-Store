@@ -33,7 +33,19 @@ export class Module {
   }
   renderRoute() {
     const url = routerSlicer.getRoute();
+    const settings: Settings = {
+      minLengthName: 2,
+      minSymbolName: 3,
+      minLengthTel: 10,
+      minLengthAddress: 3,
+      minSymbolAddress: 5,
+      cardNumberLength: 16,
+      dateLength: 5,
+      dateCardMonth: 12,
+      cvvLength: 3,
+    };
     let route = this.routes.find((route) => route.path === url);
+    console.log(url.split("/")[0]);
     if (
       !route &&
       url.split("/")[0] === "product" &&
@@ -54,18 +66,7 @@ export class Module {
     <${route.components.selector}></${route.components.selector}>
     `;
       this.renderComponent(route.components);
-      if (url === "bucket") {
-        const settings: Settings = {
-          minLengthName: 2,
-          minSymbolName: 3,
-          minLengthTel: 10,
-          minLengthAddress: 3,
-          minSymbolAddress: 5,
-          cardNumberLength: 16,
-          dateLength: 5,
-          dateCardMonth: 12,
-          cvvLength: 3,
-        };
+      if (url === "bucket" || url.split("/")[0] === "product") {
         const startValidation: Validation = new Validation(settings);
       }
     }

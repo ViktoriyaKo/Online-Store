@@ -115,7 +115,23 @@ class Shop extends Component {
         target: ".dropdown_sort",
         event: this.onClickDropDownSort,
       },
+      {
+        eventName: EventTypes.CLICK,
+        target: ".main",
+        event: this.closeSortButton,
+      },
     ];
+  }
+
+  public closeSortButton(event: Event) {
+    const target = event.target as Element;
+    const dropDownMenu = document.querySelector(
+      ".dropdown-menu"
+    ) as HTMLElement;
+    const btnSort = document.querySelector(".btn-sort") as HTMLButtonElement;
+    if (!target.closest(".dropdown-menu") && target !== btnSort) {
+      dropDownMenu.classList.remove("show");
+    }
   }
   public onClickDropDownSort(event: Event) {
     console.log("click");
@@ -372,7 +388,7 @@ export const shop: Shop = new Shop({
               </aside>
             </div>
             <div class="col-lg-8 col-md-7">
-              <div class="row justify-content-start align-items-center gap-2">
+              <div class="row justify-content-start align-items-center gap-2 position-relative">
                 <!-- sort - add js -->
                 <button
                   class="btn btn-secondary dropdown-toggle col-lg-2 btn-sort"
