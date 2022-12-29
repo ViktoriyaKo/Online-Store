@@ -73,6 +73,18 @@ class Shop extends Component {
         `
         )
         .join("\n"),
+      authorMenu: this.productsHandler
+        .getAuthor()
+        .map(
+          (author, index) =>
+            `
+      <div class="item-checkbox">
+        <input class="clickEventAuthor" type="checkbox" id="scales${index}" name="${author}" />
+        <label for="author${index}">${author}</label>
+      </div>
+      `
+        )
+        .join("\n"),
     };
   }
 
@@ -81,33 +93,55 @@ class Shop extends Component {
     //this.setGenres(genres === "" ? undefined : genres);
   }
 
-  private setGenres(genresChecked: string[] | undefined) {
-    this.template = this.template.replace(
-      "{{genresMenu}}",
-      this.productsHandler
-        .getGenres()
-        .map(
-          (genre, index) => `
-        <div class="item-checkbox">
-        <input class=" clickEventGenres" type="checkbox" id="scales${index}" name="scales${index}" />
-        <label for="scales${index}">${genre}</label>
-        </div>
-        `
-        )
-        .join("\n")
-    );
-  }
   public events(): EventsManager[] {
     return [
       {
         eventName: EventTypes.CLICK,
         target: ".clickEventGenres",
-        event: this.onBtnClick,
+        event: this.onBtnClickGenres,
+      },
+      {
+        eventName: EventTypes.CLICK,
+        target: ".clickEventAuthor",
+        event: this.onBtnClickAuthors,
+      },
+      {
+        eventName: EventTypes.CLICK,
+        target: ".btn-sort",
+        event: this.onBtnSort,
+      },
+      {
+        eventName: EventTypes.CLICK,
+        target: ".dropdown_sort",
+        event: this.onClickDropDownSort,
       },
     ];
   }
-
-  public onBtnClick(event: Event) {
+  public onClickDropDownSort(event: Event) {
+    console.log("click");
+    if (event.target instanceof Element) {
+      const label = $(event?.target);
+      if (event?.target) {
+        // window.location.hash = `shop/?genres=${encodeURIComponent(
+        //   event?.target.nextElementSibling?.innerHTML
+        // )}`;
+        console.log(event.target.getAttribute("id"));
+        const test = routerSlicer.routerAdd(
+          "sort",
+          event.target.getAttribute("id") as string
+        );
+        window.location.hash = routerSlicer.getURI(test);
+      }
+    }
+  }
+  public onBtnSort(event: Event) {
+    console.log("onBtnClickGenres");
+    if (event.target instanceof Element) {
+      event.target?.nextElementSibling?.classList.toggle("show");
+    }
+  }
+  public onBtnClickGenres(event: Event) {
+    console.log("onBtnClickGenres");
     if (event.target instanceof Element) {
       const label = $(event?.target);
       if (event?.target.nextElementSibling?.innerHTML) {
@@ -118,31 +152,32 @@ class Shop extends Component {
           "genres",
           event?.target.nextElementSibling?.innerHTML
         );
-        window.location.hash = routerSlicer.routerGetURIProduct(test);
+        window.location.hash = routerSlicer.getURI(test);
       }
     }
   }
-
-  private setAuthors() {
-    this.template = this.template.replace(
-      "{{authorsMenu}}",
-      this.productsHandler
-        .getGenres()
-        .map(
-          (genre, index) => `
-        INDEX AUTHOR
-        `
-        )
-        .join("\n")
-    );
+  public onBtnClickAuthors(event: Event) {
+    console.log("onBtnClickAuthors");
+    if (event.target instanceof Element) {
+      const label = $(event?.target);
+      if (event?.target.nextElementSibling?.innerHTML) {
+        // window.location.hash = `shop/?genres=${encodeURIComponent(
+        //   event?.target.nextElementSibling?.innerHTML
+        // )}`;
+        const test = routerSlicer.routerAdd(
+          "authors",
+          event?.target.nextElementSibling?.innerHTML
+        );
+        window.location.hash = routerSlicer.getURI(test);
+      }
+    }
   }
   public onInit(): void {
     const params = routerSlicer.routerParserProduct();
-    console.log("params", params);
-    if (params) this.productsHandler.applySettings(params["genres"].split("↕"));
+    if (params) this.productsHandler.applySettings(params);
     this.prepareMenu(params);
     routerSlicer.routerParserProduct();
-
+    console.log("forYangTest:", this.productsHandler.getFilteredSorted());
     this.data = {
       contentProd:
         `<p class="found-book text-center py-3 text-uppercase">
@@ -201,22 +236,41 @@ class Shop extends Component {
         `
         )
         .join("\n"),
+      authorMenu: this.productsHandler
+        .getAuthor()
+        .map(
+          (author, index) =>
+            `
+      <div class="item-checkbox">
+        <input class="clickEventAuthor" type="checkbox" id="author${index}" name="${author}" />
+        <label for="author${index}">${author}</label>
+      </div>
+      `
+        )
+        .join("\n"),
     };
   }
 
   public afterInit(): void {
     const params = routerSlicer.routerParserProduct();
     if (params) {
-      const genresChecked = params["genres"].split("↕");
-      const genres = document.querySelectorAll(".clickEventGenres");
-      console.log(".clickEventGenres", genres);
-      genres.forEach((el) => {
-        if (genresChecked.includes(el.getAttribute("name") || ""))
-          el.setAttribute("checked", "false");
-      });
+      if (params["genres"]) {
+        const genresChecked = params["genres"].split("↕");
+        const genres = document.querySelectorAll(".clickEventGenres");
+        genres.forEach((el) => {
+          if (genresChecked.includes(el.getAttribute("name") || ""))
+            el.setAttribute("checked", "false");
+        });
+      }
+      if (params["authors"]) {
+        const genresChecked = params["authors"].split("↕");
+        const genres = document.querySelectorAll(".clickEventAuthor");
+        genres.forEach((el) => {
+          if (genresChecked.includes(el.getAttribute("name") || ""))
+            el.setAttribute("checked", "false");
+        });
+      }
     }
-
-    console.log("after init");
   }
 }
 export const shop: Shop = new Shop({
@@ -253,15 +307,7 @@ export const shop: Shop = new Shop({
                     Автор
                   </legend>
 
-                  <div class="item-checkbox">
-                    <input type="checkbox" id="scales" name="scales" />
-                    <label for="scales">пример1</label>
-                  </div>
-
-                  <div class="item-checkbox">
-                    <input type="checkbox" id="horns" name="horns" />
-                    <label for="horns">пример2</label>
-                  </div>
+                  {{authorMenu}}
                 </fieldset>
               </div>
 
@@ -336,11 +382,10 @@ export const shop: Shop = new Shop({
                 </button>
 
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Цене</a></li>
-                  <li><a class="dropdown-item" href="#">Году издания</a></li>
-                  <li>
-                    <a class="dropdown-item" href="#">Количеству на складе</a>
-                  </li>
+                  <li><div class="dropdown-item dropdown_sort" id="priceASC">Цене ASC</div></li>
+                  <li><div class="dropdown-item dropdown_sort" id="priceDESC">Цене DESC</div></li>
+                  <li><div class="dropdown-item dropdown_sort" id="yearASC">Году издания ASC</div></li>
+                  <li><div class="dropdown-item dropdown_sort" id="yearDESC">Году издания DESC</div></li>
                 </ul>
                 <!-- searh -->
                 <form

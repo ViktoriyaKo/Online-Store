@@ -19,27 +19,34 @@ export const routerSlicer = {
   },
   routerAdd(key: string, value: string) {
     let currentURIObject = this.routerParserProduct();
-    console.log("currentURIObject", currentURIObject);
     if (!currentURIObject) {
       currentURIObject = { [key]: value };
-    } else if (currentURIObject[key]) {
+      console.log("INIT:", currentURIObject);
+    } else if (currentURIObject[key] && key !== "sort") {
       const keys = currentURIObject[key].split("↕");
       if (keys.includes(value)) {
         currentURIObject[key] = keys.filter((el) => el !== value).join("↕");
+        console.log("afterDel:", currentURIObject);
       } else {
         currentURIObject[key] += `↕${value}`;
+        console.log("afterAdd:", currentURIObject);
       }
     } else {
       currentURIObject[key] = value;
+      console.log("afterAddNew:", currentURIObject);
     }
     return currentURIObject;
   },
+  getURI(objectURI: ReduceReturnType) {
+    const partsURI = this.routerGetURIProduct(objectURI);
+    return "shop/?" + partsURI;
+  },
   routerGetURIProduct(objectURI: ReduceReturnType) {
-    let uri = "shop/?";
+    const uri = [];
     for (const key in objectURI) {
-      uri += `${key}=${encodeURIComponent(objectURI[key])}`;
+      uri.push(`${key}=${encodeURIComponent(objectURI[key])}`);
     }
-    return uri;
+    return uri.join("&");
   },
   validationHash(hash: string): boolean {
     if (hash.indexOf("/?") === -1) return false;

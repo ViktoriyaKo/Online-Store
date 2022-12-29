@@ -9,7 +9,11 @@ export interface IComponents extends IConfigComponent {
 export interface ReduceReturnType {
   [index: string]: string;
 }
-
+export interface ParamProduct {
+  genres: string[];
+  authors: string[];
+  sort: string;
+}
 export interface Product {
   id: number;
   title: string;
@@ -23,7 +27,6 @@ export interface Product {
   price: number;
   sale: number;
 }
-
 export interface IConfig {
   components: Array<IConfigComponent>;
   routes: Array<IRoutes>;
