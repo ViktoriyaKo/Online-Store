@@ -1,34 +1,94 @@
 import books from "../../books-content/books.json";
-import { Product } from "../../types";
+import { Product, ReduceReturnType, ParamProduct } from "../../types";
 
 export class ProductsHandler {
-  private params: {
-    genres: string[];
-  };
+  private params: ParamProduct;
   private products: Product[];
   private productsFiltSort: Product[];
   constructor() {
     this.params = {
       genres: [],
+      authors: [],
+      sort: "",
     };
     this.products = books as Product[];
     this.productsFiltSort = this.products;
   }
-  public applySettings(settings: string[]): void {
-    this.params["genres"] = settings;
-    console.log("this.params:", this.params);
+  public applySettings(param: ReduceReturnType): void {
+    console.log("applySettings", param);
+    console.log("before_applySettings", this.params);
+    if (param["genres"] !== undefined)
+      this.params["genres"] = param["genres"].split("↕");
+    if (param["authors"] !== undefined)
+      this.params["authors"] = param["authors"].split("↕");
+    if (param["sort"] !== undefined) this.params["sort"] = param["sort"];
+    console.log("after_applySettings", this.params);
   }
   public getFilteredSorted(): Product[] {
-    console.log("fetfilter", this.products);
-    console.log("fetfilter", this.params["genres"]);
+    console.log("getFilteredSorted", this.params);
     this.params["genres"] = this.params["genres"].filter((el) => el !== "");
+    this.params["authors"] = this.params["authors"].filter((el) => el !== "");
+    return this.sortingType(
+      this.products.filter((prod) => {
+        if (
+          this.params["genres"].length === 0 &&
+          this.params["authors"].length === 0
+        )
+          return true;
+        else if (this.params["authors"].length === 0)
+          return this.params["genres"].includes(prod.terms);
+        else if (this.params["genres"].length === 0)
+          return this.params["authors"].includes(prod.author);
+        return (
+          this.params["genres"].includes(prod.terms) &&
+          this.params["authors"].includes(prod.author)
+        );
+      })
+    );
+  }
+  private sortingType(clearedProducts: Product[]): Product[] {
+    console.log(
+      "forever yang",
+      this.params["sort"],
+      this.params["sort"] === "priceASC"
+    );
+    if (this.params["sort"] === "priceASC")
+      return clearedProducts.sort(
+        (bookL, bookR) => +bookL.price - +bookR.price
+      );
+    if (this.params["sort"] === "priceDESC")
+      return clearedProducts.sort(
+        (bookL, bookR) => +bookR.price - +bookL.price
+      );
+    if (this.params["sort"] === "yearASC")
+      return clearedProducts.sort((bookL, bookR) => +bookL.year - +bookR.year);
+    if (this.params["sort"] === "yearDESC")
+      return clearedProducts.sort((bookL, bookR) => +bookR.year - +bookL.year);
+    return clearedProducts.sort((bookL, bookR) => +bookL.price - +bookR.pages);
+  }
+  public getFilteredParams(): Product[] {
+    console.log("getFilteredSorted", this.params);
+    this.params["genres"] = this.params["genres"].filter((el) => el !== "");
+    this.params["authors"] = this.params["authors"].filter((el) => el !== "");
     return this.products.filter((prod) => {
-      console.log(this.params["genres"].includes(prod.terms));
-      if (this.params["genres"].length === 0) return true;
-      return this.params["genres"].includes(prod.terms);
+      if (
+        this.params["genres"].length === 0 &&
+        this.params["authors"].length === 0
+      )
+        return true;
+      // else if (this.params["authors"].length === 0)
+      //   return this.params["genres"].includes(prod.terms);
+      else if (this.params["genres"].length !== 0)
+        return this.params["genres"].includes(prod.terms);
+      return true; //this.params["genres"].includes(prod.terms);
     });
   }
   public getGenres(): string[] {
-    return [...new Set(this.productsFiltSort.map((book) => book.terms))];
+    return [...new Set(this.productsFiltSort.map((book) => book.terms))].sort();
+  }
+  public getAuthor(): string[] {
+    return [
+      ...new Set(this.getFilteredParams().map((book) => book.author)),
+    ].sort();
   }
 }

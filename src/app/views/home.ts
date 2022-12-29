@@ -18,11 +18,8 @@ class Home extends Component {
     ];
   }
   public onInit(): void {
-    console.log("init Page");
+    console.log("init home Page");
   }
-  // public afterInit(): void {
-  //   console.log("after Page loaded");
-  // }
   private onBtnClick(event: Event) {
     console.log(event);
   }
