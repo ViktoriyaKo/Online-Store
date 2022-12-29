@@ -72,7 +72,7 @@ export class Module {
   }
 
   renderComponent(component: Component) {
-  if (component.onInit !== undefined) component.onInit();
+    if (component.onInit !== undefined) component.onInit();
     component.render();
     if (component.afterInit !== undefined) component.afterInit();
   }

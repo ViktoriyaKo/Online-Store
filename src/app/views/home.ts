@@ -132,17 +132,32 @@ export const home: Home = new Home({
       </div>
     </div>
   </section>
-
-  <!-- footer -->
-
-  <footer class="footer col-12 bg-secondary bg-gradient rounded-top">
-    <a
-      href="#"
-      class="text-decoration-none text-center d-block py-3 nav-link"
-      >Online Store 2022</a
-    >
-    <div class="container"></div>
-  </footer>
 </main>
+  <footer class="footer col-12 bg-secondary bg-gradient rounded-top py-2">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a href="https://rs.school/" class="d-block" target="_blank"
+      ><img
+        src="./assets/logo_rs_text.svg"
+        alt="rs_website"
+        class="logo-rs"
+    /></a>
+
+    <a href="#" class="text-decoration-none d-block nav-link">
+      Online Store 2022</a
+    >
+    <div class="d-flex gap-2">
+      <a
+        href="https://github.com/ViktoriyaKo"
+        class="d-block"
+        target="_blank"
+        ><img src="./assets/github.svg" alt="logo-git" class="git-img1"
+      /></a>
+      <a href="https://github.com/scalette" class="d-block" target="_blank"
+        ><img src="./assets/github.svg" class="git-img2" alt="logo-git"
+      /></a>
+    </div>
+  </div>
+</footer>
+
   `,
 });
