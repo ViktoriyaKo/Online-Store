@@ -19,10 +19,12 @@ export class ProductsHandler {
     console.log("this.params:", this.params);
   }
   public getFilteredSorted(): Product[] {
-    console.log("fetfilter");
-    console.log(this.products);
+    console.log("fetfilter", this.products);
+    console.log("fetfilter", this.params["genres"]);
+    this.params["genres"] = this.params["genres"].filter((el) => el !== "");
     return this.products.filter((prod) => {
       console.log(this.params["genres"].includes(prod.terms));
+      if (this.params["genres"].length === 0) return true;
       return this.params["genres"].includes(prod.terms);
     });
   }
