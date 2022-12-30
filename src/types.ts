@@ -26,6 +26,7 @@ export interface Product {
   stock: number;
   price: number;
   sale: number;
+  count?: number;
 }
 export interface IConfig {
   components: Array<IConfigComponent>;
@@ -103,6 +104,7 @@ export interface ObjectModal {
   date?: string;
   cvv?: string;
 }
+
 // export interface Templates {
 //   [keys: string]: TemplateFunc;
 // }

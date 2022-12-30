@@ -68,6 +68,13 @@ $color-bg: rgba(41, 103, 147, 0.153);
   align-self: center;
 }
 
+.set-card-bucket {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+}
+
 @media (max-width: 520px) {
   .text-products-line {
     display: none;

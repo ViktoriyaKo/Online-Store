@@ -1,16 +1,20 @@
 import { Component } from "../../frameworks/root/component";
 import { IConfigComponent } from "../../types";
+import books from "../../books-content/books.json";
 
 class Bucket extends Component {
   constructor(config: IConfigComponent) {
     super(config);
+  }
+  public afterInit(): void {
+    console.log(books[1].id);
   }
 }
 
 export const bucket: Bucket = new Bucket({
   selector: "polimorph",
   template: `
-  <main>
+  <main>  
   <div class="container wrapper-modal modal-none">
   <div class="row justify-content-center">
     <div class="col-lg-6 col-sm-10 set-modal p-2 rounded-3">
@@ -134,35 +138,9 @@ export const bucket: Bucket = new Bucket({
                 </button>
               </div>
             </div>
-            <div class="products-item p-3 d-flex">
-              <span class="d-block order-number">1</span>
-              <img
-                class="img-thumbnail set-img-bucket d-block"
-                src="./books-content/img-books/16.jpeg"
-                alt=""
-              />
-              <div class="book-info-bucket p-3">
-                <h3 class="title-book-bucket pb-1">Цветы для Элджернона</h3>
-                <h4 class="author-book-bucket">Дэниел Киз</h4>
-              </div>
-              <div class="d-block"></div>
-              <div class="stock-info">
-                <span class="text-success">
-                  <span class="stock-book"></span> На складе: 20</span
-                >
-                <div>
-                  <button class="btn rounded-circle btn-success">
-                    <i class="fas fa-solid fa-minus"></i>
-                  </button>
-                  <span class="counter-page">1</span>
-                  <button class="btn rounded-circle btn-success">
-                    <i class="fas fa-solid fa-plus"></i>
-                  </button>
-                </div>
-                <span class="d-block total-amount"
-                  >100<i class="fa fa-light fa-ruble-sign"></i
-                ></span>
-              </div>
+            <div class="products-item p-3 d-flex flex-wrap">
+
+
             </div>
           </div>
         </div>

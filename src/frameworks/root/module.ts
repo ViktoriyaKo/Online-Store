@@ -6,6 +6,7 @@ import { product } from "../../app/views/product";
 import { Validation } from "../../app/modal";
 import books from "../../books-content/books.json";
 import { shop } from "../../app/views/shop";
+import { Cart } from "../../app/goods/goods";
 
 export class Module {
   public components: Array<IConfigComponent>;
@@ -68,6 +69,10 @@ export class Module {
       this.renderComponent(route.components);
       if (url === "bucket" || url.split("/")[0] === "product") {
         const startValidation: Validation = new Validation(settings);
+      }
+      if (url === "bucket") {
+        const cart = JSON.parse(localStorage.getItem("cart") || "");
+        const dataCartCreate = new Cart(cart);
       }
     }
   }

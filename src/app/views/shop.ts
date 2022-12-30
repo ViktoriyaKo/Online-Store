@@ -9,6 +9,7 @@ import {
 import books from "../../books-content/books.json";
 import { ProductsHandler } from "../handlers/ProductsHandler";
 import { routerSlicer, $ } from "../../frameworks/exporter";
+import { Instance } from "@popperjs/core";
 
 class Shop extends Component {
   private productsHandler: ProductsHandler;
@@ -28,7 +29,7 @@ class Shop extends Component {
             (book) => `
     <div class="product-card">
       <div class="product-thumb">
-        <a class="open-product" href="#product/${book.id}" id="${book.id}"
+        <a class="open-product" href="#product/${book.id}"
           ><img
             class="image-book"
             src="./books-content/img-books/${book.id}.jpeg"
@@ -54,8 +55,8 @@ class Shop extends Component {
             )} <i class="fas fa-light fa-ruble-sign"></i>
           </div>
           <div class="product-links">
-            <a href="#bucket"><i class="fas fa-shopping-cart"></i></a>
-            <a href="#"><i class="far fa-heart"></i></a>
+            <div id="${book.id}" class="icon-bucket"></div>
+            
           </div>
         </div>
       </div>
@@ -233,8 +234,8 @@ class Shop extends Component {
             )} <i class="fas fa-light fa-ruble-sign"></i>
           </div>
           <div class="product-links">
-            <a href="#bucket"><i class="fas fa-shopping-cart"></i></a>
-            <a href="#"><i class="far fa-heart"></i></a>
+            <div id="${book.id}" class="icon-bucket"></div>
+           
           </div>
         </div>
       </div>
@@ -287,7 +288,30 @@ class Shop extends Component {
         });
       }
     }
+    //bucket на стр shop!!!!
+
+    const itemBucket = document.querySelectorAll(".icon-bucket");
+    let itemsToBucket: Product[] = [];
+    itemBucket.forEach((item) => {
+      item.addEventListener("click", (event) => {
+        const target = event.currentTarget as HTMLElement;
+        if (!target.classList.contains("chosen")) {
+          target.classList.add("chosen");
+          itemsToBucket.push(books[+target.id - 1]);
+          itemsToBucket[itemsToBucket.length - 1].count = 1;
+        } else {
+          itemsToBucket = itemsToBucket.filter(
+            (item) => item.id !== +target.id
+          );
+          target.classList.remove("chosen");
+        }
+
+        localStorage.setItem("cart", JSON.stringify(itemsToBucket));
+      });
+    });
   }
+
+  //bucket!!!!
 }
 export const shop: Shop = new Shop({
   selector: "polimorph",

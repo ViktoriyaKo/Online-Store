@@ -1,9 +1,31 @@
 import { Component } from "../../frameworks/root/component";
-import { IConfigComponent } from "../../types";
+import { IConfigComponent, Product } from "../../types";
 
 export class Header extends Component {
   constructor(config: IConfigComponent) {
     super(config);
+  }
+
+  public addBucketCount() {
+    if (localStorage.getItem("cart")) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "");
+      return cart
+        .map((item: Product) => {
+          if (item.count) {
+            return +item.count;
+          }
+        })
+        .reduce((acc: number, item: number) => acc + item);
+    }
+  }
+
+  public updateTotalSum() {
+    if (localStorage.getItem("cart")) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "");
+      return cart
+        .map((item: Product) => +item.price)
+        .reduce((acc: number, item: number) => acc + item);
+    }
   }
 }
 
