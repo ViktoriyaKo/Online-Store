@@ -1,5 +1,5 @@
 import { Component } from "../../frameworks/root/component";
-import { IConfigComponent, Product } from "../../types";
+import { IConfigComponent, ProductWithCount } from "../../types";
 
 export class Header extends Component {
   constructor(config: IConfigComponent) {
@@ -10,7 +10,7 @@ export class Header extends Component {
     if (localStorage.getItem("cart")) {
       const cart = JSON.parse(localStorage.getItem("cart") || "");
       return cart
-        .map((item: Product) => {
+        .map((item: ProductWithCount) => {
           if (item.count) {
             return +item.count;
           }
@@ -23,7 +23,7 @@ export class Header extends Component {
     if (localStorage.getItem("cart")) {
       const cart = JSON.parse(localStorage.getItem("cart") || "");
       return cart
-        .map((item: Product) => +item.price)
+        .map((item: ProductWithCount) => +item.price)
         .reduce((acc: number, item: number) => acc + item);
     }
   }

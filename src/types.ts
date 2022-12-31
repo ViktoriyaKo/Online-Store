@@ -28,6 +28,11 @@ export interface Product {
   sale: number;
   count?: number;
 }
+
+export interface ProductWithCount extends Product {
+  count: number;
+}
+
 export interface IConfig {
   components: Array<IConfigComponent>;
   routes: Array<IRoutes>;

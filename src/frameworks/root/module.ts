@@ -71,8 +71,10 @@ export class Module {
         const startValidation: Validation = new Validation(settings);
       }
       if (url === "bucket") {
-        const cart = JSON.parse(localStorage.getItem("cart") || "");
-        const dataCartCreate = new Cart(cart);
+        if (localStorage.getItem("cart")) {
+          const cart = JSON.parse(localStorage.getItem("cart") || "");
+          const dataCartCreate = new Cart(cart);
+        }
       }
     }
   }

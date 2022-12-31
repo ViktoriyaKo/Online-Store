@@ -75,6 +75,13 @@ $color-bg: rgba(41, 103, 147, 0.153);
   flex-grow: 1;
 }
 
+.set-text-bucket {
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  font-size: 50px;
+}
+
 @media (max-width: 520px) {
   .text-products-line {
     display: none;

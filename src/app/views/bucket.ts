@@ -115,10 +115,11 @@ export const bucket: Bucket = new Bucket({
 </div>
   
   <section class="content-bucket py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-9">
-          <div class="wrapper-products rounded-3 mb-2">
+  <div class="container">
+  <div class="row">
+  <h2 class="set-text-bucket mt-5 d-none">Ваша корзина пуста</h2>
+  <div class="col-lg-9">
+          <div class="wrapper-products rounded-3 mb-2 d-none">
             <div
               class="products-line d-flex justify-content-evenly align-items-center p-1"
             >
@@ -145,7 +146,7 @@ export const bucket: Bucket = new Bucket({
           </div>
         </div>
         <div class="col-lg-3">
-          <div class="rounded-3 set-border">
+          <div class="rounded-3 set-border d-none">
             <div class="products-line p-2">Итого:</div>
             <div class="wrapper-right-bucket gap-3 p-2">
               <div>

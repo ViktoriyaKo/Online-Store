@@ -1,48 +1,114 @@
-import { Product } from "../../types";
-
-// const cart = JSON.parse(localStorage.getItem("cart") || "");
+import { ProductWithCount } from "../../types";
 
 // items из local
 export class Cart {
-  public items: Product[];
-  constructor(items: Product[]) {
+  public items: ProductWithCount[];
+  constructor(items: ProductWithCount[]) {
     this.items = items;
     this.renderCart();
+    this.changeQty();
+    this.checkEmpty();
   }
 
-  goodsPlus(index: number) {
-    this.items[index]["count"]++;
-  }
+  totalAmount = document.querySelector(".total-amount") as HTMLElement;
+  totalGoods = document.querySelector(".total-goods") as HTMLElement;
+  productsItem = document.querySelector(".products-item") as HTMLElement;
+  clickArea = document.querySelector(".wrapper-products") as HTMLElement;
+  setBorder = document.querySelector(".set-border") as HTMLElement;
+  setTextBucket = document.querySelector(".set-text-bucket") as HTMLElement;
+  numberBook = document.querySelector(".number-book") as HTMLElement;
 
-  goodsMinus(index) {
-    if (this.items[index]["count"] - 1 == 0) {
-      this.goodsDelete(index);
-    } else {
-      this.items[index]["count"]--;
+  public addBucketCount() {
+    if (localStorage.getItem("cart")) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "");
+      if (cart.length !== 0) {
+        return cart
+          .map((item: ProductWithCount) => {
+            if (item.count) {
+              return +item.count;
+            }
+          })
+          .reduce((acc: number, item: number) => acc + item);
+      }
     }
   }
-  goodsDelete(index) {
-    delete this.items[index];
+
+  checkEmpty() {
+    if (localStorage.getItem("cart")) {
+      if (localStorage.getItem("cart")?.toString() == "[]") {
+        this.clickArea.classList.add("d-none");
+        this.setBorder.classList.add("d-none");
+        this.setTextBucket.classList.remove("d-none");
+      } else {
+        this.clickArea.classList.remove("d-none");
+        this.setBorder.classList.remove("d-none");
+        this.setTextBucket.classList.add("d-none");
+      }
+    } else {
+      this.clickArea.classList.add("d-none");
+      this.setBorder.classList.add("d-none");
+      this.setTextBucket.classList.remove("d-none");
+    }
+  }
+
+  public changeQty() {
+    this.clickArea.addEventListener("click", (event) => {
+      const target = event.target as HTMLElement;
+      const area = this.items.filter((item) => item.id === +target.id);
+      if (target.closest(".plus")) {
+        let a = area[0].count;
+        a++;
+        area[0].count = a;
+        localStorage.setItem("cart", JSON.stringify(this.items));
+
+        if (target.parentElement) {
+          if (target.parentElement.parentElement) {
+            target.parentElement.parentElement.children[1].innerHTML = `${a}`;
+          }
+        }
+      } else if (target.closest(".minus")) {
+        let a = area[0].count;
+        if (a - 1 === 0) {
+          // delete el;
+          target.parentElement!.parentElement!.parentElement!.parentElement!.remove();
+          this.items = this.items.filter((item) => item.id !== +target.id);
+        } else {
+          a--;
+          area[0].count = a;
+        }
+        localStorage.setItem("cart", JSON.stringify(this.items));
+        if (target.parentElement) {
+          if (target.parentElement.parentElement) {
+            target.parentElement.parentElement.children[1].innerHTML = `${a}`;
+          }
+        }
+      }
+      this.checkEmpty();
+      this.totalAmount.innerHTML = `${this.getTotal()} <i class="fa fa-light fa-ruble-sign"></i
+      >`;
+      this.totalGoods.innerHTML = `${this.addBucketCount()}`;
+      // this.numberBook.innerHTML = `${this.addBucketCount()}`;
+    });
   }
 
   getTotal() {
     let total = 0;
-    for (let key in this.items) {
-      total += this.items[key]["count"] * this.items[key]["price"];
+    for (const key in this.items) {
+      total +=
+        this.items[key]["count"] *
+        Math.floor(this.items[key]["price"] * this.items[key]["sale"]);
     }
+
     return total;
   }
 
   renderCart() {
-    const totalAmount = document.querySelector(".total-amount") as HTMLElement;
-    const productsItem = document.querySelector(
-      ".products-item"
-    ) as HTMLElement;
-    totalAmount.innerHTML = `${this.getTotal()} <i class="fa fa-light fa-ruble-sign"></i
+    this.totalAmount.innerHTML = `${this.getTotal()} <i class="fa fa-light fa-ruble-sign"></i
     >`;
+    this.totalGoods.innerHTML = `${this.addBucketCount()}`;
+    this.totalGoods.innerHTML = `${this.addBucketCount()}`;
+
     this.items.forEach((item) => {
-      //   const totalGoods = document.querySelector(".total-goods") as HTMLElement;
-      //   totalGoods.innerHTML = `${item["count"]}`; //change!
       const newItem = document.createElement("div");
       newItem.classList.add("set-card-bucket");
       newItem.innerHTML = `
@@ -62,20 +128,22 @@ export class Cart {
             <span class="stock-book"></span> На складе: ${item.stock}</span
           >
           <div>
-            <button class="btn rounded-circle btn-success">
-              <i class="fas fa-solid fa-minus"></i>
+            <button class="btn rounded-circle btn-success minus">
+              <i class="fas fa-solid fa-minus" id="${item.id}"></i>
             </button>
             <span class="counter-items">${item["count"]}</span>
-            <button class="btn rounded-circle btn-success">
-              <i class="fas fa-solid fa-plus"></i>
+            <button class="btn rounded-circle btn-success plus">
+              <i class="fas fa-solid fa-plus" id="${item.id}"></i>
             </button>
           </div>
           <span class="d-block total-amount"
-            >${item.price}<i class="fa fa-light fa-ruble-sign"></i
+            >Цена за ед: ${Math.floor(
+              item.price * item.sale
+            )}<i class="fa fa-light fa-ruble-sign"></i
           ></span>
         </div>
       `;
-      productsItem.append(newItem);
+      this.productsItem.append(newItem);
     });
   }
 }
