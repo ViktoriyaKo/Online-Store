@@ -5,6 +5,7 @@ import {
   IConfigComponent,
   Product,
   ReduceReturnType,
+  ProductWithCount,
 } from "../../types";
 import books from "../../books-content/books.json";
 import { ProductsHandler } from "../handlers/ProductsHandler";
@@ -269,6 +270,7 @@ class Shop extends Component {
   }
 
   public afterInit(): void {
+    this.updateHeader();
     const params = routerSlicer.routerParserProduct();
     if (params) {
       if (params["genres"]) {
@@ -291,22 +293,38 @@ class Shop extends Component {
     //bucket на стр shop!!!!
 
     const itemBucket = document.querySelectorAll(".icon-bucket");
-    let itemsToBucket: Product[] = [];
+    if (
+      localStorage.getItem("cart")?.toString() == "[]" ||
+      localStorage.getItem("cart") == null
+    ) {
+      var itemsToBucket: Product[] = []; /* eslint no-var: 0 */
+    } else {
+      itemsToBucket = JSON.parse(localStorage.getItem("cart") || "");
+    }
+
     itemBucket.forEach((item) => {
       item.addEventListener("click", (event) => {
         const target = event.currentTarget as HTMLElement;
         if (!target.classList.contains("chosen")) {
-          target.classList.add("chosen");
-          itemsToBucket.push(books[+target.id - 1]);
-          itemsToBucket[itemsToBucket.length - 1].count = 1;
+          if (itemsToBucket.find((item) => item.id === +target.id)) {
+            itemsToBucket = itemsToBucket.filter(
+              (item) => item.id !== +target.id
+            );
+            target.classList.remove("chosen");
+          } else {
+            target.classList.add("chosen");
+            itemsToBucket.push(books[+target.id - 1]);
+            itemsToBucket[itemsToBucket.length - 1].count = 1;
+          }
         } else {
           itemsToBucket = itemsToBucket.filter(
             (item) => item.id !== +target.id
           );
           target.classList.remove("chosen");
         }
-
         localStorage.setItem("cart", JSON.stringify(itemsToBucket));
+        this.updateHeader();
+        //header-change
       });
     });
   }

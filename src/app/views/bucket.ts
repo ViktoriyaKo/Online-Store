@@ -8,6 +8,7 @@ class Bucket extends Component {
   }
   public afterInit(): void {
     console.log(books[1].id);
+    this.updateHeader();
   }
 }
 
@@ -163,6 +164,7 @@ export const bucket: Bucket = new Bucket({
                 class="form-control"
                 placeholder="Введите промокод"
               />
+              <div class="promo text-secondary">Promo for test: 'RS', 'EPM'</div>
               <button class="btn btn-secondary btn-pay">Перейти к оплате</button>
             </div>
           </div>

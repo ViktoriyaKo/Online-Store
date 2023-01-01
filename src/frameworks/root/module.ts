@@ -74,6 +74,8 @@ export class Module {
         if (localStorage.getItem("cart")) {
           const cart = JSON.parse(localStorage.getItem("cart") || "");
           const dataCartCreate = new Cart(cart);
+        } else {
+          localStorage.setItem("cart", "[]");
         }
       }
     }

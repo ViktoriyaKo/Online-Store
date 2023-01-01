@@ -1,7 +1,12 @@
 import { Component } from "../../frameworks/root/component";
 import { routerSlicer } from "../../frameworks/tools/routerSlicer";
 import books from "../../books-content/books.json";
-import { EventsManager, EventTypes, IConfigComponent } from "../../types";
+import {
+  EventsManager,
+  EventTypes,
+  IConfigComponent,
+  ProductWithCount,
+} from "../../types";
 
 class Product extends Component {
   constructor(config: IConfigComponent) {
@@ -22,7 +27,8 @@ class Product extends Component {
       terms = document.querySelector(".terms-book span") as Element,
       termsName = document.querySelector(".terms-name") as Element,
       priceCross = document.querySelector(".product-price-book") as Element,
-      price = document.querySelector(".price-book-size") as Element;
+      price = document.querySelector(".price-book-size") as Element,
+      btnAddBucket = document.querySelector(".add-item") as Element;
 
     img.src = books[idNumber].image[0];
     imgSmall1.src = books[idNumber].image[0];
@@ -39,6 +45,47 @@ class Product extends Component {
     price.innerHTML = `${Math.floor(
       books[idNumber].price * books[idNumber].sale
     )}<i class="fas fa-light fa-ruble-sign"></i>`;
+    // add element to bucket:
+    if (localStorage.getItem("cart")) {
+      var cart = JSON.parse(
+        localStorage.getItem("cart") || ""
+      ); /* eslint no-var: 0 */
+      const itemInBucket = cart.find(
+        (item: ProductWithCount) => item.id === idNumber + 1
+      );
+      if (itemInBucket) {
+        btnAddBucket.innerHTML = "Удалить из корзины";
+      } else {
+        btnAddBucket.innerHTML = "Добавить в корзину";
+      }
+    } else {
+      localStorage.setItem("cart", "[]");
+    }
+
+    btnAddBucket.addEventListener("click", () => {
+      cart = JSON.parse(localStorage.getItem("cart") || "");
+      if (localStorage.getItem("cart")) {
+        const itemInBucket = cart.find(
+          (item: ProductWithCount) => item.id === idNumber + 1
+        );
+        if (itemInBucket) {
+          btnAddBucket.innerHTML = "Добавить в корзину";
+          cart = cart.filter(
+            (item: ProductWithCount) => item.id !== idNumber + 1
+          );
+        } else {
+          btnAddBucket.innerHTML = "Удалить из корзины";
+          cart.push(books[idNumber]);
+          console.log(cart);
+          cart[cart.length - 1].count = 1;
+          cart.filter((item: ProductWithCount) => item.id !== idNumber + 1);
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        this.updateHeader();
+      }
+    });
+    this.updateHeader();
+    //
   }
 
   public events(): EventsManager[] {
@@ -227,7 +274,7 @@ export const product: Product = new Product({
             <div
               class="wrapper-buttons d-flex justify-content-between mb-2 gap-4"
             >
-              <button class="btn btn-secondary">Добавить в корзину</button>
+              <button class="btn btn-secondary add-item">Добавить в корзину</button>
               <button class="btn btn-secondary btn-pay">Купить сейчас</button>
             </div>
             <span class="d-block"

@@ -16,7 +16,8 @@ export class Cart {
   clickArea = document.querySelector(".wrapper-products") as HTMLElement;
   setBorder = document.querySelector(".set-border") as HTMLElement;
   setTextBucket = document.querySelector(".set-text-bucket") as HTMLElement;
-  numberBook = document.querySelector(".number-book") as HTMLElement;
+  sumHeader = document.querySelector(".sum-card span") as HTMLElement;
+  numberHeader = document.querySelector(".number-book") as HTMLElement;
 
   public addBucketCount() {
     if (localStorage.getItem("cart")) {
@@ -44,10 +45,6 @@ export class Cart {
         this.setBorder.classList.remove("d-none");
         this.setTextBucket.classList.add("d-none");
       }
-    } else {
-      this.clickArea.classList.add("d-none");
-      this.setBorder.classList.add("d-none");
-      this.setTextBucket.classList.remove("d-none");
     }
   }
 
@@ -87,7 +84,16 @@ export class Cart {
       this.totalAmount.innerHTML = `${this.getTotal()} <i class="fa fa-light fa-ruble-sign"></i
       >`;
       this.totalGoods.innerHTML = `${this.addBucketCount()}`;
-      // this.numberBook.innerHTML = `${this.addBucketCount()}`;
+      if (
+        localStorage.getItem("cart")?.toString() == "[]" ||
+        localStorage.getItem("cart") == null
+      ) {
+        this.sumHeader.innerHTML = `0 <i class="fas fa-light fa-ruble-sign"></i>`;
+        this.numberHeader.innerHTML = `0`;
+      } else {
+        this.sumHeader.innerHTML = `${this.getTotal()} <i class="fas fa-light fa-ruble-sign"></i>`;
+        this.numberHeader.innerHTML = `${this.addBucketCount()}`;
+      }
     });
   }
 
@@ -98,7 +104,6 @@ export class Cart {
         this.items[key]["count"] *
         Math.floor(this.items[key]["price"] * this.items[key]["sale"]);
     }
-
     return total;
   }
 
@@ -108,11 +113,11 @@ export class Cart {
     this.totalGoods.innerHTML = `${this.addBucketCount()}`;
     this.totalGoods.innerHTML = `${this.addBucketCount()}`;
 
-    this.items.forEach((item) => {
+    this.items.forEach((item, index) => {
       const newItem = document.createElement("div");
       newItem.classList.add("set-card-bucket");
       newItem.innerHTML = `
-        <span class="d-block order-number">1</span>
+        <span class="d-block order-number">${index + 1}</span>
         <img
           class="img-thumbnail set-img-bucket d-block"
           src=${item.image[0]}
@@ -139,7 +144,7 @@ export class Cart {
           <span class="d-block total-amount"
             >Цена за ед: ${Math.floor(
               item.price * item.sale
-            )}<i class="fa fa-light fa-ruble-sign"></i
+            )} <i class="fa fa-light fa-ruble-sign"></i
           ></span>
         </div>
       `;

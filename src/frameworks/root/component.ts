@@ -1,4 +1,9 @@
-import { ComponentData, EventsManager, IConfigComponent } from "../../types";
+import {
+  ComponentData,
+  EventsManager,
+  IConfigComponent,
+  ProductWithCount,
+} from "../../types";
 import { $, DomHandler } from "../exporter";
 
 export class Component {
@@ -46,6 +51,44 @@ export class Component {
       return data[key];
     });
     return template;
+  }
+  public getTotal() {
+    let total = 0;
+    const cart = JSON.parse(localStorage.getItem("cart") || "");
+    for (const key in cart) {
+      total +=
+        cart[key]["count"] * Math.floor(cart[key]["price"] * cart[key]["sale"]);
+    }
+    return total;
+  }
+
+  public addBucketCount() {
+    if (localStorage.getItem("cart")) {
+      const cart = JSON.parse(localStorage.getItem("cart") || "");
+      if (cart.length !== 0) {
+        return cart
+          .map((item: ProductWithCount) => {
+            if (item.count) {
+              return +item.count;
+            }
+          })
+          .reduce((acc: number, item: number) => acc + item);
+      }
+    }
+  }
+  public updateHeader() {
+    const sumHeader = document.querySelector(".sum-card span") as HTMLElement;
+    const numberHeader = document.querySelector(".number-book") as HTMLElement;
+    if (
+      localStorage.getItem("cart")?.toString() == "[]" ||
+      localStorage.getItem("cart") == null
+    ) {
+      sumHeader.innerHTML = `0 <i class="fas fa-light fa-ruble-sign"></i>`;
+      numberHeader.innerHTML = `0`;
+    } else {
+      sumHeader.innerHTML = `${this.getTotal()} <i class="fas fa-light fa-ruble-sign"></i>`;
+      numberHeader.innerHTML = `${this.addBucketCount()}`;
+    }
   }
 
   events() {
