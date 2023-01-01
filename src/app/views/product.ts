@@ -1,12 +1,15 @@
 import { Component } from "../../frameworks/root/component";
 import { routerSlicer } from "../../frameworks/tools/routerSlicer";
 import books from "../../books-content/books.json";
+import { tools } from "../../frameworks/exporter";
 import {
   EventsManager,
   EventTypes,
   IConfigComponent,
   ProductWithCount,
+  Settings,
 } from "../../types";
+import { Validation } from "../../app/modal";
 
 class Product extends Component {
   constructor(config: IConfigComponent) {
@@ -76,9 +79,26 @@ class Product extends Component {
         } else {
           btnAddBucket.innerHTML = "Удалить из корзины";
           cart.push(books[idNumber]);
-          console.log(cart);
           cart[cart.length - 1].count = 1;
           cart.filter((item: ProductWithCount) => item.id !== idNumber + 1);
+          // openModal:
+          const settings: Settings = {
+            minLengthName: 2,
+            minSymbolName: 3,
+            minLengthTel: 10,
+            minLengthAddress: 3,
+            minSymbolAddress: 5,
+            cardNumberLength: 16,
+            dateLength: 5,
+            dateCardMonth: 12,
+            cvvLength: 3,
+          };
+          window.location.href = "#bucket";
+          tools.delay(0).then(() => {
+            const startValidation: Validation = new Validation(settings);
+            startValidation.openAutomatically();
+          });
+          //
         }
         localStorage.setItem("cart", JSON.stringify(cart));
         this.updateHeader();

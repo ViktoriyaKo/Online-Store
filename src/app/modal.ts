@@ -227,16 +227,21 @@ export class Validation {
   }
 
   public confirmValidation() {
-    //опустошить корзину!!!
     const checkError = Array.from(this.messageError).some(
       (item) => item.textContent === "ERROR"
     );
     if (!checkError) {
       this.setModal.innerHTML = `<h2 class="fs-1 p-5 text-center">Ваш заказ успешно оформлен, спасибо!</h2>`;
       tools.delay(2000).then(() => {
+        localStorage.setItem("cart", "[]");
         loader(app);
         window.location.href = "#";
       });
     }
+  }
+
+  public openAutomatically() {
+    this.wrapperModal.classList.remove("modal-none");
+    this.setModal.classList.add("modal-shadow");
   }
 }

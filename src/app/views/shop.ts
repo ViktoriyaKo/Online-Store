@@ -5,7 +5,6 @@ import {
   IConfigComponent,
   Product,
   ReduceReturnType,
-  ProductWithCount,
 } from "../../types";
 import books from "../../books-content/books.json";
 import { ProductsHandler } from "../handlers/ProductsHandler";
