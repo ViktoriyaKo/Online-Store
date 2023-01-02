@@ -6,9 +6,17 @@ import {
   Product,
   ReduceReturnType,
 } from "../../types";
-import books from "../../books-content/books.json";
 import { ProductsHandler } from "../handlers/ProductsHandler";
 import { routerSlicer, $ } from "../../frameworks/exporter";
+import {
+  controlFromInput,
+  controlFromSlider,
+  controlToInput,
+  controlToSlider,
+  dualSlider,
+  fillSlider,
+  setToggleAccessible,
+} from "../handlers/sliderHandler";
 
 class Shop extends Component {
   private productsHandler: ProductsHandler;
@@ -85,6 +93,24 @@ class Shop extends Component {
       `
         )
         .join("\n"),
+      priceSlider: `
+      <div class="range_container">
+      <div class="sliders_control">
+          <input id="fromSlider" type="range" value="10" min="0" max="100"/>
+          <input id="toSlider" type="range" value="40" min="0" max="100"/>
+      </div>
+      <div class="form_control">
+          <div class="form_control_container">
+              <div class="form_control_container__time">Min</div>
+              <input class="form_control_container__time__input" type="number" id="fromInput" value="10" min="0" max="100"/>
+          </div>
+          <div class="form_control_container">
+              <div class="form_control_container__time">Max</div>
+              <input class="form_control_container__time__input" type="number" id="toInput" value="40" min="0" max="100"/>
+          </div>
+      </div>
+      </div>
+      `,
     };
   }
 
@@ -115,7 +141,38 @@ class Shop extends Component {
         target: ".dropdown_sort",
         event: this.onClickDropDownSort,
       },
+      {
+        eventName: EventTypes.CLICK,
+        target: ".btn-reset",
+        event: this.buttonResetHandler,
+      },
+      {
+        eventName: EventTypes.CLICK,
+        target: ".btn-copy-clipBoard",
+        event: this.buttonCopyClipBoard,
+      },
+      {
+        eventName: EventTypes.INPUT,
+        target: ".input-search",
+        event: this.searchHandler,
+      },
     ];
+  }
+  public searchHandler(event: Event) {
+    console.log(event);
+    const inputEl = document.querySelector(".input-search") as HTMLInputElement;
+    console.log(inputEl.value);
+    const test = routerSlicer.routerAdd("search", inputEl.value);
+    window.location.hash = routerSlicer.getURI(test);
+  }
+  public buttonCopyClipBoard(event: Event) {
+    console.log(window.location.href);
+    const text = window.location.href;
+    navigator.clipboard.writeText(text);
+  }
+  public buttonResetHandler(event: Event) {
+    this.productsHandler.resetSettings();
+    window.location.hash = routerSlicer.getBaseURI();
   }
   public onClickDropDownSort(event: Event) {
     console.log("click");
@@ -172,7 +229,17 @@ class Shop extends Component {
       }
     }
   }
+
   public onInit(): void {
+    if (window.location.hash === "#" + routerSlicer.getBaseURI()) {
+      console.log("@#$#$@#$check");
+      this.productsHandler.resetSettings();
+    }
+    console.log(
+      "@#$#$@#$check",
+      window.location.hash,
+      routerSlicer.getBaseURI()
+    );
     const params = routerSlicer.routerParserProduct();
     if (params) this.productsHandler.applySettings(params);
     this.prepareMenu(params);
@@ -248,10 +315,54 @@ class Shop extends Component {
       `
         )
         .join("\n"),
+      priceSlider: `
+        <div class="range_container">
+        <div class="sliders_control">
+            <input id="fromSlider" type="range" value="${
+              params
+                ? params["price"]?.split("↕")
+                  ? params["price"]?.split("↕")[0]
+                  : 0
+                : 0
+            }" min="0" max="100"/>
+            <input id="toSlider" type="range" value="${
+              params
+                ? params["price"]?.split("↕")
+                  ? params["price"]?.split("↕")[1]
+                  : 100
+                : 100
+            }" min="0" max="100"/>
+        </div>
+        <div class="form_control">
+            <div class="form_control_container">
+                <div class="form_control_container__time">Min</div>
+                <input class="form_control_container__time__input" type="number" id="fromInput" value="${
+                  params
+                    ? params["price"]?.split("↕")
+                      ? params["price"]?.split("↕")[0]
+                      : 0
+                    : 0
+                }" min="0" max="100"/>
+            </div>
+            <div class="form_control_container">
+                <div class="form_control_container__time">Max</div>
+                <input class="form_control_container__time__input" type="number" id="toInput" value="${
+                  params
+                    ? params["price"]?.split("↕")
+                      ? params["price"]?.split("↕")[1]
+                      : 100
+                    : 100
+                }" min="0" max="100"/>
+            </div>
+        </div>
+        </div>
+        `,
     };
   }
 
   public afterInit(): void {
+    dualSlider("#fromSlider", "#toSlider", "#fromInput", "#toInput");
+    dualSlider("#fromSlider2", "#toSlider2", "#fromInput2", "#toInput2");
     const params = routerSlicer.routerParserProduct();
     if (params) {
       if (params["genres"]) {
@@ -270,6 +381,12 @@ class Shop extends Component {
             el.setAttribute("checked", "false");
         });
       }
+      if (params["search"]) {
+        const inputEl = document.querySelector(
+          ".input-search"
+        ) as HTMLInputElement;
+        inputEl.value = params["search"];
+      }
     }
   }
 }
@@ -284,8 +401,8 @@ export const shop: Shop = new Shop({
             <div class="col-lg-4 col-md-5 mt-2">
               <aside class="left-aside rounded-2 py-2 px-3">
                 <div class="d-flex justify-content-evenly gap-2 flex-wrap">
-                  <button class="btn btn-secondary">Сброс фильтров</button>
-                  <button class="btn btn-secondary">Копия поиска</button>
+                  <button class="btn btn-secondary btn-reset">Сброс фильтров</button>
+                  <button class="btn btn-secondary btn-copy-clipBoard">Копия поиска</button>
                 </div>
                 <!-- filter will add automatically-->
                 <div
@@ -315,31 +432,12 @@ export const shop: Shop = new Shop({
                   class="filter-section my-3 bg-secondary bg-gradient rounded-2 p-2"
                 >
                   <!-- будет 2 ползунка -->
+                  
                   <fieldset class="filter-block">
                     <legend class="name-filter position-relative text-center">
                       Цена
                     </legend>
-                    <div class="">
-                      <label
-                        for="customRange2"
-                        class="form-label text-center w-100"
-                        ><span class="min-price"
-                          >0 <i class="fas fa-light fa-ruble-sign"></i
-                        ></span>
-                        -
-                        <span class="max-price"
-                          >1000 <i class="fas fa-light fa-ruble-sign"></i
-                        ></span>
-                      </label>
-                      <input
-                        type="range"
-                        class="form-range"
-                        min="0"
-                        max="5"
-                        step="0.5"
-                        id="customRange2"
-                      />
-                    </div>
+                    {{priceSlider}}
                   </fieldset>
                 </div>
                 <div
@@ -350,23 +448,22 @@ export const shop: Shop = new Shop({
                     <legend class="name-filter position-relative text-center">
                       Количество товаров на складе
                     </legend>
-                    <div>
-                      <label
-                        for="customRange2"
-                        class="form-label text-center w-100"
-                        ><span class="min-price">0</span>
-                        -
-                        <span class="max-price">40</span>
-                      </label>
-                      <input
-                        type="range"
-                        class="form-range"
-                        min="0"
-                        max="5"
-                        step="0.5"
-                        id="customRange2"
-                      />
+                    <div class="range_container">
+                    <div class="sliders_control">
+                        <input id="fromSlider2" type="range" value="10" min="0" max="100"/>
+                        <input id="toSlider2" type="range" value="40" min="0" max="100"/>
                     </div>
+                    <div class="form_control">
+                        <div class="form_control_container">
+                            <div class="form_control_container__time">Min</div>
+                            <input class="form_control_container__time__input" type="number" id="fromInput2" value="10" min="0" max="100"/>
+                        </div>
+                        <div class="form_control_container">
+                            <div class="form_control_container__time">Max</div>
+                            <input class="form_control_container__time__input" type="number" id="toInput2" value="40" min="0" max="100"/>
+                        </div>
+                    </div>
+                </div>
                   </fieldset>
                 </div>
               </aside>

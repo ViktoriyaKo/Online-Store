@@ -22,7 +22,13 @@ export const routerSlicer = {
     if (!currentURIObject) {
       currentURIObject = { [key]: value };
       console.log("INIT:", currentURIObject);
-    } else if (currentURIObject[key] && key !== "sort") {
+    } else if (
+      currentURIObject[key] &&
+      key !== "sort" &&
+      key != "price" &&
+      key != "stock" &&
+      key != "search"
+    ) {
       const keys = currentURIObject[key].split("↕");
       if (keys.includes(value)) {
         currentURIObject[key] = keys.filter((el) => el !== value).join("↕");
@@ -40,6 +46,9 @@ export const routerSlicer = {
   getURI(objectURI: ReduceReturnType) {
     const partsURI = this.routerGetURIProduct(objectURI);
     return "shop/?" + partsURI;
+  },
+  getBaseURI() {
+    return "shop";
   },
   routerGetURIProduct(objectURI: ReduceReturnType) {
     const uri = [];
