@@ -21,13 +21,13 @@ class Shop extends Component {
         `<p class="found-book text-center py-3 text-uppercase">
       Найдено: <span>${this.productsHandler.getFilteredSorted().length}</span>
     </p>
-    <div class="d-flex flex-wrap gap-5 justify-content-around">
+    <div class="row">
       ` +
         this.productsHandler
           .getFilteredSorted()
           .map(
             (book) => `
-    <div class="product-card">
+    <div class="product-card col-md-${3} col-sm-4">
       <div class="product-thumb">
         <a class="open-product" href="#product/${book.id}"
           ><img
@@ -38,11 +38,7 @@ class Shop extends Component {
       </div>
 
       <div class="product-details">
-        <h4>
-          <a href="#product" class="title-book text-black set-fs">${
-            book.title
-          }</a>
-        </h4>
+        <h4 class="title-book text-black set-fs">${book.title}</h4>
         <p class="author-book">${book.author}</p>
         <div
           class="product-bottom-details d-flex justify-content-between"
@@ -200,13 +196,13 @@ class Shop extends Component {
         `<p class="found-book text-center py-3 text-uppercase">
       Найдено: <span>${this.productsHandler.getFilteredSorted().length}</span>
     </p>
-    <div class="d-flex flex-wrap gap-5 justify-content-around">
+    <div class="row">
       ` +
         this.productsHandler
           .getFilteredSorted()
           .map(
             (book) => `
-    <div class="product-card">
+    <div class="product-card col-md-${3} col-sm-4">
       <div class="product-thumb">
         <a class="open-product" href="#product/${book.id}" id="${book.id}"
           ><img
@@ -217,11 +213,7 @@ class Shop extends Component {
       </div>
 
       <div class="product-details">
-        <h4>
-          <a href="#product" class="title-book text-black set-fs">${
-            book.title
-          }</a>
-        </h4>
+        <h4 class="title-book text-black set-fs">${book.title}</h4>
         <p class="author-book">${book.author}</p>
         <div
           class="product-bottom-details d-flex justify-content-between"
@@ -338,7 +330,7 @@ export const shop: Shop = new Shop({
       <section class="main my-3">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-lg-4 col-md-5 mt-2">
+            <div class="col-lg-4 col-md-9 col-sm-9 mx-auto mt-2">
               <aside class="left-aside rounded-2 py-2 px-3">
                 <div class="d-flex justify-content-evenly gap-2 flex-wrap">
                   <button class="btn btn-secondary">Сброс фильтров</button>
@@ -428,7 +420,7 @@ export const shop: Shop = new Shop({
                 </div>
               </aside>
             </div>
-            <div class="col-lg-8 col-md-7">
+            <div class="col-lg-8 col-sm-12">
               <div class="row justify-content-start align-items-center gap-2 position-relative">
                 <!-- sort - add js -->
                 <button
@@ -462,10 +454,10 @@ export const shop: Shop = new Shop({
                 <!-- view window -->
                 <div class="view-book d-flex col-lg-2">
                   <button class="btn">
-                    <img class="btn-set" src="./assets/icons3-3.png" alt="" />
+                    <img class="btn-set displ-3 rounded-2" src="./assets/icons3-3.png" alt="" />
                   </button>
                   <button class="btn">
-                    <img class="btn-set" src="./assets/icons4-4.png" alt="" />
+                    <img class="btn-set displ-4 rounded-2" src="./assets/icons4-4.png" alt="" />
                   </button>
                 </div>
               </div>

@@ -7,7 +7,6 @@ class Bucket extends Component {
     super(config);
   }
   public afterInit(): void {
-    console.log(books[1].id);
     this.updateHeader();
   }
 }
@@ -125,7 +124,7 @@ export const bucket: Bucket = new Bucket({
               class="products-line d-flex justify-content-evenly align-items-center p-1"
             >
               <div class="text-products-line">Список товаров</div>
-              <div class="">
+              <div>
                 Количество:
                 <input type="text" class="form-control set-input-item" />
               </div>
@@ -140,7 +139,7 @@ export const bucket: Bucket = new Bucket({
                 </button>
               </div>
             </div>
-            <div class="products-item p-3 d-flex flex-wrap">
+            <div class="products-item">
 
 
             </div>
@@ -161,10 +160,11 @@ export const bucket: Bucket = new Bucket({
               </div>
               <input
                 type="text"
-                class="form-control"
+                class="form-control input-promo"
                 placeholder="Введите промокод"
-              />
-              <div class="promo text-secondary">Promo for test: 'RS', 'EPM'</div>
+              />              
+              <div class="text-secondary">Promo for test: 'RS', 'EPM'</div>
+              <div class="promo"></div>
               <button class="btn btn-secondary btn-pay">Перейти к оплате</button>
             </div>
           </div>

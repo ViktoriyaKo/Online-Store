@@ -7,6 +7,7 @@ import { Validation } from "../../app/modal";
 import books from "../../books-content/books.json";
 import { shop } from "../../app/views/shop";
 import { Cart } from "../../app/goods/goods";
+import { Promo } from "../../app/goods/promo";
 
 export class Module {
   public components: Array<IConfigComponent>;
@@ -74,6 +75,7 @@ export class Module {
         if (localStorage.getItem("cart")) {
           const cart = JSON.parse(localStorage.getItem("cart") || "");
           const dataCartCreate = new Cart(cart);
+          const promo = new Promo();
         } else {
           localStorage.setItem("cart", "[]");
         }

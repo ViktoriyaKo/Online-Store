@@ -57,17 +57,14 @@ export class Cart {
         a++;
         area[0].count = a;
         localStorage.setItem("cart", JSON.stringify(this.items));
-
         if (target.parentElement) {
-          if (target.parentElement.parentElement) {
-            target.parentElement.parentElement.children[1].innerHTML = `${a}`;
-          }
+          target.parentElement.children[1].innerHTML = `${a}`;
         }
       } else if (target.closest(".minus")) {
         let a = area[0].count;
         if (a - 1 === 0) {
           // delete el;
-          target.parentElement!.parentElement!.parentElement!.parentElement!.remove();
+          target.parentElement!.parentElement!.parentElement!.remove();
           this.items = this.items.filter((item) => item.id !== +target.id);
         } else {
           a--;
@@ -75,11 +72,10 @@ export class Cart {
         }
         localStorage.setItem("cart", JSON.stringify(this.items));
         if (target.parentElement) {
-          if (target.parentElement.parentElement) {
-            target.parentElement.parentElement.children[1].innerHTML = `${a}`;
-          }
+          target.parentElement.children[1].innerHTML = `${a}`;
         }
       }
+
       this.checkEmpty();
       this.totalAmount.innerHTML = `${this.getTotal()} <i class="fa fa-light fa-ruble-sign"></i
       >`;
@@ -115,31 +111,27 @@ export class Cart {
 
     this.items.forEach((item, index) => {
       const newItem = document.createElement("div");
-      newItem.classList.add("set-card-bucket");
+      newItem.classList.add("p-3");
+      newItem.classList.add("row");
       newItem.innerHTML = `
-        <span class="d-block order-number">${index + 1}</span>
+        <span class="col-sm-1 order-number">${index + 1}</span>
         <img
-          class="img-thumbnail set-img-bucket d-block"
+          class="img-thumbnail set-img-bucket d-block col-sm-2"
           src=${item.image[0]}
           alt="book-img"
         />
-        <div class="book-info-bucket p-3">
+        <div class="book-info-bucket p-3 col-sm-5">
           <h3 class="title-book-bucket pb-1">${item.title}</h3>
           <h4 class="author-book-bucket">${item.author}</h4>
-        </div>
-        <div class="d-block"></div>
-        <div class="stock-info">
+        </div>        
+        <div class="stock-info col-sm-4">
           <span class="text-success">
             <span class="stock-book"></span> На складе: ${item.stock}</span
           >
           <div>
-            <button class="btn rounded-circle btn-success minus">
-              <i class="fas fa-solid fa-minus" id="${item.id}"></i>
-            </button>
+            <button class="btn btn-success minus" id="${item.id}">-</button>
             <span class="counter-items">${item["count"]}</span>
-            <button class="btn rounded-circle btn-success plus">
-              <i class="fas fa-solid fa-plus" id="${item.id}"></i>
-            </button>
+            <button class="btn btn-success plus" id="${item.id}">+</button>
           </div>
           <span class="d-block total-amount"
             >Цена за ед: ${Math.floor(
