@@ -13,6 +13,9 @@ export interface ParamProduct {
   genres: string[];
   authors: string[];
   sort: string;
+  price: string;
+  stock: string;
+  search: string;
 }
 export interface Product {
   id: number;
@@ -77,6 +80,7 @@ export function queryElement<T extends typeof Element>(
 
 export enum EventTypes {
   CLICK = "click",
+  INPUT = "input",
 }
 
 export interface EventsManager {
