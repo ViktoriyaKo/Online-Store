@@ -8,6 +8,7 @@ import {
 } from "../../types";
 import { ProductsHandler } from "../handlers/ProductsHandler";
 import { routerSlicer, $ } from "../../frameworks/exporter";
+import { Instance } from "@popperjs/core";
 import {
   controlFromInput,
   controlFromSlider,
@@ -28,15 +29,15 @@ class Shop extends Component {
         `<p class="found-book text-center py-3 text-uppercase">
       Найдено: <span>${this.productsHandler.getFilteredSorted().length}</span>
     </p>
-    <div class="d-flex flex-wrap gap-5 justify-content-around">
+    <div class="row">
       ` +
         this.productsHandler
           .getFilteredSorted()
           .map(
             (book) => `
-    <div class="product-card">
+    <div class="product-card col-md-${3} col-sm-4">
       <div class="product-thumb">
-        <a class="open-product" href="#product/${book.id}" id="${book.id}"
+        <a class="open-product" href="#product/${book.id}"
           ><img
             class="image-book"
             src="./books-content/img-books/${book.id}.jpeg"
@@ -45,11 +46,7 @@ class Shop extends Component {
       </div>
 
       <div class="product-details">
-        <h4>
-          <a href="#product" class="title-book text-black set-fs">${
-            book.title
-          }</a>
-        </h4>
+        <h4 class="title-book text-black set-fs">${book.title}</h4>
         <p class="author-book">${book.author}</p>
         <div
           class="product-bottom-details d-flex justify-content-between"
@@ -62,8 +59,8 @@ class Shop extends Component {
             )} <i class="fas fa-light fa-ruble-sign"></i>
           </div>
           <div class="product-links">
-            <a href="#bucket"><i class="fas fa-shopping-cart"></i></a>
-            <a href="#"><i class="far fa-heart"></i></a>
+            <div id="${book.id}" class="icon-bucket"></div>
+            
           </div>
         </div>
       </div>
@@ -143,6 +140,11 @@ class Shop extends Component {
       },
       {
         eventName: EventTypes.CLICK,
+        target: ".main",
+        event: this.closeSortButton,
+      },
+      {
+        eventName: EventTypes.CLICK,
         target: ".btn-reset",
         event: this.buttonResetHandler,
       },
@@ -157,6 +159,17 @@ class Shop extends Component {
         event: this.searchHandler,
       },
     ];
+  }
+
+  public closeSortButton(event: Event) {
+    const target = event.target as Element;
+    const dropDownMenu = document.querySelector(
+      ".dropdown-menu"
+    ) as HTMLElement;
+    const btnSort = document.querySelector(".btn-sort") as HTMLButtonElement;
+    if (!target.closest(".dropdown-menu") && target !== btnSort) {
+      dropDownMenu.classList.remove("show");
+    }
   }
   public searchHandler(event: Event) {
     console.log(event);
@@ -250,13 +263,13 @@ class Shop extends Component {
         `<p class="found-book text-center py-3 text-uppercase">
       Найдено: <span>${this.productsHandler.getFilteredSorted().length}</span>
     </p>
-    <div class="d-flex flex-wrap gap-5 justify-content-around">
+    <div class="row">
       ` +
         this.productsHandler
           .getFilteredSorted()
           .map(
             (book) => `
-    <div class="product-card">
+    <div class="product-card col-md-${3} col-sm-4">
       <div class="product-thumb">
         <a class="open-product" href="#product/${book.id}" id="${book.id}"
           ><img
@@ -267,11 +280,7 @@ class Shop extends Component {
       </div>
 
       <div class="product-details">
-        <h4>
-          <a href="#product" class="title-book text-black set-fs">${
-            book.title
-          }</a>
-        </h4>
+        <h4 class="title-book text-black set-fs">${book.title}</h4>
         <p class="author-book">${book.author}</p>
         <div
           class="product-bottom-details d-flex justify-content-between"
@@ -284,8 +293,8 @@ class Shop extends Component {
             )} <i class="fas fa-light fa-ruble-sign"></i>
           </div>
           <div class="product-links">
-            <a href="#bucket"><i class="fas fa-shopping-cart"></i></a>
-            <a href="#"><i class="far fa-heart"></i></a>
+            <div id="${book.id}" class="icon-bucket"></div>
+           
           </div>
         </div>
       </div>
@@ -361,6 +370,7 @@ class Shop extends Component {
   }
 
   public afterInit(): void {
+    this.updateHeader();
     dualSlider("#fromSlider", "#toSlider", "#fromInput", "#toInput");
     dualSlider("#fromSlider2", "#toSlider2", "#fromInput2", "#toInput2");
     const params = routerSlicer.routerParserProduct();
@@ -388,7 +398,51 @@ class Shop extends Component {
         inputEl.value = params["search"];
       }
     }
+    //bucket на стр shop!!!!
+
+    const itemBucket = document.querySelectorAll(".icon-bucket");
+    if (
+      localStorage.getItem("cart")?.toString() == "[]" ||
+      localStorage.getItem("cart") == null
+    ) {
+      var itemsToBucket: Product[] = []; /* eslint no-var: 0 */
+    } else {
+      itemsToBucket = JSON.parse(localStorage.getItem("cart") || "");
+    }
+
+    itemBucket.forEach((item) => {
+      item.addEventListener("click", (event) => {
+        const target = event.currentTarget as HTMLElement;
+        if (!target.classList.contains("chosen")) {
+          if (itemsToBucket.find((item) => item.id === +target.id)) {
+            itemsToBucket = itemsToBucket.filter(
+              (item) => item.id !== +target.id
+            );
+            target.classList.remove("chosen");
+          } else {
+            target.classList.add("chosen");
+            itemsToBucket.push(books[+target.id - 1]);
+            itemsToBucket[itemsToBucket.length - 1].count = 1;
+          }
+        } else {
+          itemsToBucket = itemsToBucket.filter(
+            (item) => item.id !== +target.id
+          );
+          target.classList.remove("chosen");
+        }
+        localStorage.setItem("cart", JSON.stringify(itemsToBucket));
+        this.updateHeader();
+      });
+    });
+    //save class chosen:
+    const itemId = itemsToBucket.map((item) => `${item.id}`);
+    const chosenItemId = Array.from(itemBucket).filter((item) => {
+      return itemId.includes(item.id);
+    });
+    chosenItemId.forEach((item) => item.classList.add("chosen"));
   }
+
+  //bucket!!!!
 }
 export const shop: Shop = new Shop({
   selector: "polimorph",
@@ -398,7 +452,7 @@ export const shop: Shop = new Shop({
       <section class="main my-3">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-lg-4 col-md-5 mt-2">
+            <div class="col-lg-4 col-md-9 col-sm-9 mx-auto mt-2">
               <aside class="left-aside rounded-2 py-2 px-3">
                 <div class="d-flex justify-content-evenly gap-2 flex-wrap">
                   <button class="btn btn-secondary btn-reset">Сброс фильтров</button>
@@ -468,8 +522,8 @@ export const shop: Shop = new Shop({
                 </div>
               </aside>
             </div>
-            <div class="col-lg-8 col-md-7">
-              <div class="row justify-content-start align-items-center gap-2">
+            <div class="col-lg-8 col-sm-12">
+              <div class="row justify-content-start align-items-center gap-2 position-relative">
                 <!-- sort - add js -->
                 <button
                   class="btn btn-secondary dropdown-toggle col-lg-2 btn-sort"
@@ -502,10 +556,10 @@ export const shop: Shop = new Shop({
                 <!-- view window -->
                 <div class="view-book d-flex col-lg-2">
                   <button class="btn">
-                    <img class="btn-set" src="./assets/icons3-3.png" alt="" />
+                    <img class="btn-set displ-3 rounded-2" src="./assets/icons3-3.png" alt="" />
                   </button>
                   <button class="btn">
-                    <img class="btn-set" src="./assets/icons4-4.png" alt="" />
+                    <img class="btn-set displ-4 rounded-2" src="./assets/icons4-4.png" alt="" />
                   </button>
                 </div>
               </div>

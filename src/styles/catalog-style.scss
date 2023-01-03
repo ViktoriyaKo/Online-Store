@@ -9,8 +9,6 @@ $color-pink: #ee6e73;
 .product-card {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06);
   transition: all 0.3s;
-  max-width: 240px;
-  width: 100%;
   &:hover {
     box-shadow: 0 14px 30px -15px rgba(0, 0, 0, 0.75);
   }
@@ -52,6 +50,7 @@ $color-pink: #ee6e73;
 .product-bottom-details {
   overflow: hidden;
   border-top: 1px solid #eee;
+  align-items: center;
 }
 
 .price-book {
@@ -184,4 +183,23 @@ input:disabled + label:before {
 }
 .btn-sort {
   min-width: 140px;
+}
+
+.dropdown_sort {
+  cursor: pointer;
+}
+
+.icon-bucket {
+  cursor: pointer;
+  opacity: 0.8;
+  background: center / cover url("./assets/cart-plus.png");
+  width: 40px;
+  height: 40px;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.chosen {
+  background: center / cover url("./assets/cart-minus.png");
 }

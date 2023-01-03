@@ -4,25 +4,25 @@ import { EventsManager, EventTypes, IConfigComponent } from "../../types";
 class Home extends Component {
   constructor(config: IConfigComponent) {
     super(config);
-    this.data = {
-      nameCard: "CARD#1",
-    };
+    // this.data = {
+    //   nameCard: "CARD#1",
+    // };
   }
-  public events(): EventsManager[] {
-    return [
-      {
-        eventName: EventTypes.CLICK,
-        target: ".btn_view-event",
-        event: this.onBtnClick,
-      },
-    ];
-  }
-  public onInit(): void {
-    console.log("init home Page");
-  }
-  private onBtnClick(event: Event) {
-    console.log(event);
-  }
+  // public events(): EventsManager[] {
+  //   return [
+  //     {
+  //       eventName: EventTypes.CLICK,
+  //       target: ".btn_open-shop",
+  //       event: this.onBtnClick,
+  //     },
+  //   ];
+  // }
+  // public onInit(): void {
+  //   console.log("init home Page");
+  // }
+  // private onBtnClick(event: Event) {
+  //   console.log(event);
+  // }
 }
 
 export const home: Home = new Home({
@@ -41,9 +41,9 @@ export const home: Home = new Home({
             "Online-Store!
           </p>
           <div class="d-grid gap-2">
-            <button class="btn btn-dark text-uppercase mb-5" type="button">
+            <a href="#shop" class="btn btn-dark text-uppercase mb-5">
               Перейти к покупкам
-            </button>
+            </a>
           </div>
         </div>
       </div>
