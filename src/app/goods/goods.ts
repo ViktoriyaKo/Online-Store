@@ -1,9 +1,11 @@
 import { ProductWithCount } from "../../types";
+import { Promo } from "../goods/promo";
 
 // items из local
-export class Cart {
+export class Cart extends Promo {
   public items: ProductWithCount[];
   constructor(items: ProductWithCount[]) {
+    super();
     this.items = items;
     this.renderCart();
     this.changeQty();
@@ -66,6 +68,7 @@ export class Cart {
           // delete el;
           target.parentElement!.parentElement!.parentElement!.remove();
           this.items = this.items.filter((item) => item.id !== +target.id);
+          this.renderNumberItems();
         } else {
           a--;
           area[0].count = a;
@@ -77,6 +80,7 @@ export class Cart {
       }
 
       this.checkEmpty();
+      this.renderTextSale();
       this.totalAmount.innerHTML = `${this.getTotal()} <i class="fa fa-light fa-ruble-sign"></i
       >`;
       this.totalGoods.innerHTML = `${this.addBucketCount()}`;
@@ -93,20 +97,14 @@ export class Cart {
     });
   }
 
-  getTotal() {
-    let total = 0;
-    for (const key in this.items) {
-      total +=
-        this.items[key]["count"] *
-        Math.floor(this.items[key]["price"] * this.items[key]["sale"]);
-    }
-    return total;
+  renderNumberItems() {
+    const orderNumber = document.querySelectorAll(".order-number");
+    orderNumber.forEach((item, index) => (item.innerHTML = `${index + 1}`));
   }
 
   renderCart() {
     this.totalAmount.innerHTML = `${this.getTotal()} <i class="fa fa-light fa-ruble-sign"></i
     >`;
-    this.totalGoods.innerHTML = `${this.addBucketCount()}`;
     this.totalGoods.innerHTML = `${this.addBucketCount()}`;
 
     this.items.forEach((item, index) => {

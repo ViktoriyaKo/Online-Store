@@ -110,6 +110,12 @@ export interface ObjectModal {
   cvv?: string;
 }
 
+export interface IPromoCodes {
+  id: number;
+  title: string;
+  namePromo: string;
+  sale: number;
+}
 // export interface Templates {
 //   [keys: string]: TemplateFunc;
 // }

@@ -76,6 +76,13 @@ $color-bg: rgba(41, 103, 147, 0.153);
   border-radius: 50%;
 }
 
+.promo-active {
+  background: #fff;
+  padding: 2px;
+  border-radius: 5px;
+  border: 1px solid green;
+}
+
 @media (max-width: 580px) {
   .text-products-line {
     display: none;

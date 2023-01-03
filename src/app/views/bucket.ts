@@ -152,12 +152,13 @@ export const bucket: Bucket = new Bucket({
               <div>
                 Количество товаров: <span class="total-goods">1</span>
               </div>
-              <div>
+              <div class="set-total-amount">
                 Общая сумма:
                 <span class="total-amount"
                   >100<i class="fa fa-light fa-ruble-sign"></i
                 ></span>
               </div>
+              <div class="block-new-price"></div>
               <input
                 type="text"
                 class="form-control input-promo"

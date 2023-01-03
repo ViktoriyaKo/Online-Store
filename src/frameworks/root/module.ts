@@ -75,9 +75,13 @@ export class Module {
         if (localStorage.getItem("cart")) {
           const cart = JSON.parse(localStorage.getItem("cart") || "");
           const dataCartCreate = new Cart(cart);
-          const promo = new Promo();
         } else {
           localStorage.setItem("cart", "[]");
+          //перенести в другое место:
+          const setTextBucket = document.querySelector(
+            ".set-text-bucket"
+          ) as HTMLElement;
+          setTextBucket.classList.remove("d-none");
         }
       }
     }

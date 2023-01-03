@@ -315,9 +315,14 @@ class Shop extends Component {
         }
         localStorage.setItem("cart", JSON.stringify(itemsToBucket));
         this.updateHeader();
-        //header-change
       });
     });
+    //save class chosen:
+    const itemId = itemsToBucket.map((item) => `${item.id}`);
+    const chosenItemId = Array.from(itemBucket).filter((item) => {
+      return itemId.includes(item.id);
+    });
+    chosenItemId.forEach((item) => item.classList.add("chosen"));
   }
 
   //bucket!!!!
