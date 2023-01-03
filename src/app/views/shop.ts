@@ -9,6 +9,7 @@ import {
 import { ProductsHandler } from "../handlers/ProductsHandler";
 import { routerSlicer, $ } from "../../frameworks/exporter";
 import { Instance } from "@popperjs/core";
+import books from "../../books-content/books.json";
 import {
   controlFromInput,
   controlFromSlider,
