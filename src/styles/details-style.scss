@@ -73,13 +73,24 @@ $color-pink: #ee6e73;
 .wrapper-img-main {
   display: inline-block;
   overflow: hidden;
-  min-height: 336px;
+  min-height: 450px;
 }
 .image-book {
   transition: 1s;
   display: block;
   &:hover {
     transform: scale(1.1);
+  }
+}
+
+@media (max-width: 1400px) {
+  .wrapper-img-main {
+    min-height: 400px;
+  }
+}
+@media (max-width: 1200px) {
+  .wrapper-img-main {
+    min-height: 345px;
   }
 }
 

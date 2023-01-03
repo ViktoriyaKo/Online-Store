@@ -1,16 +1,20 @@
 import { Component } from "../../frameworks/root/component";
 import { IConfigComponent } from "../../types";
+import books from "../../books-content/books.json";
 
 class Bucket extends Component {
   constructor(config: IConfigComponent) {
     super(config);
+  }
+  public afterInit(): void {
+    this.updateHeader();
   }
 }
 
 export const bucket: Bucket = new Bucket({
   selector: "polimorph",
   template: `
-  <main>
+  <main>  
   <div class="container wrapper-modal modal-none">
   <div class="row justify-content-center">
     <div class="col-lg-6 col-sm-10 set-modal p-2 rounded-3">
@@ -111,15 +115,16 @@ export const bucket: Bucket = new Bucket({
 </div>
   
   <section class="content-bucket py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-9">
-          <div class="wrapper-products rounded-3 mb-2">
+  <div class="container">
+  <div class="row">
+  <h2 class="set-text-bucket mt-5 d-none">Ваша корзина пуста</h2>
+  <div class="col-lg-9">
+          <div class="wrapper-products rounded-3 mb-2 d-none">
             <div
               class="products-line d-flex justify-content-evenly align-items-center p-1"
             >
               <div class="text-products-line">Список товаров</div>
-              <div class="">
+              <div>
                 Количество:
                 <input type="text" class="form-control set-input-item" />
               </div>
@@ -134,56 +139,33 @@ export const bucket: Bucket = new Bucket({
                 </button>
               </div>
             </div>
-            <div class="products-item p-3 d-flex">
-              <span class="d-block order-number">1</span>
-              <img
-                class="img-thumbnail set-img-bucket d-block"
-                src="./books-content/img-books/16.jpeg"
-                alt=""
-              />
-              <div class="book-info-bucket p-3">
-                <h3 class="title-book-bucket pb-1">Цветы для Элджернона</h3>
-                <h4 class="author-book-bucket">Дэниел Киз</h4>
-              </div>
-              <div class="d-block"></div>
-              <div class="stock-info">
-                <span class="text-success">
-                  <span class="stock-book"></span> На складе: 20</span
-                >
-                <div>
-                  <button class="btn rounded-circle btn-success">
-                    <i class="fas fa-solid fa-minus"></i>
-                  </button>
-                  <span class="counter-page">1</span>
-                  <button class="btn rounded-circle btn-success">
-                    <i class="fas fa-solid fa-plus"></i>
-                  </button>
-                </div>
-                <span class="d-block total-amount"
-                  >100<i class="fa fa-light fa-ruble-sign"></i
-                ></span>
-              </div>
+            <div class="products-item">
+
+
             </div>
           </div>
         </div>
         <div class="col-lg-3">
-          <div class="rounded-3 set-border">
+          <div class="rounded-3 set-border d-none">
             <div class="products-line p-2">Итого:</div>
             <div class="wrapper-right-bucket gap-3 p-2">
               <div>
                 Количество товаров: <span class="total-goods">1</span>
               </div>
-              <div>
+              <div class="set-total-amount">
                 Общая сумма:
                 <span class="total-amount"
                   >100<i class="fa fa-light fa-ruble-sign"></i
                 ></span>
               </div>
+              <div class="block-new-price"></div>
               <input
                 type="text"
-                class="form-control"
+                class="form-control input-promo"
                 placeholder="Введите промокод"
-              />
+              />              
+              <div class="text-secondary">Promo for test: 'RS', 'EPM'</div>
+              <div class="promo"></div>
               <button class="btn btn-secondary btn-pay">Перейти к оплате</button>
             </div>
           </div>

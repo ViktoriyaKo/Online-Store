@@ -32,21 +32,21 @@ export class Validation {
     this.eventChangeCard();
   }
 
-  public closeModal() {
+  private closeModal() {
     this.btnClose.addEventListener("click", () => {
       this.wrapperModal.classList.add("modal-none");
       this.setModal.classList.remove("modal-shadow");
     });
   }
 
-  public openModal() {
+  private openModal() {
     this.btnPay.addEventListener("click", () => {
       this.wrapperModal.classList.remove("modal-none");
       this.setModal.classList.add("modal-shadow");
     });
   }
 
-  public eventChangeCard() {
+  private eventChangeCard() {
     this.ccNumber.addEventListener("keyup", () => {
       if (this.ccNumber.value.startsWith("3")) {
         this.setCardImg.src = "./assets/мир.png";
@@ -58,7 +58,7 @@ export class Validation {
     });
   }
 
-  public eventKeypress() {
+  private eventKeypress() {
     this.phone.addEventListener("keypress", (event) => {
       if (isNaN(+event.key) && event.key !== "+") {
         event.preventDefault();
@@ -226,17 +226,22 @@ export class Validation {
     }
   }
 
-  public confirmValidation() {
-    //опустошить корзину!!!
+  private confirmValidation() {
     const checkError = Array.from(this.messageError).some(
       (item) => item.textContent === "ERROR"
     );
     if (!checkError) {
       this.setModal.innerHTML = `<h2 class="fs-1 p-5 text-center">Ваш заказ успешно оформлен, спасибо!</h2>`;
       tools.delay(2000).then(() => {
+        localStorage.setItem("cart", "[]");
         loader(app);
         window.location.href = "#";
       });
     }
+  }
+
+  public openAutomatically() {
+    this.wrapperModal.classList.remove("modal-none");
+    this.setModal.classList.add("modal-shadow");
   }
 }

@@ -26,7 +26,13 @@ export interface Product {
   stock: number;
   price: number;
   sale: number;
+  count?: number;
 }
+
+export interface ProductWithCount extends Product {
+  count: number;
+}
+
 export interface IConfig {
   components: Array<IConfigComponent>;
   routes: Array<IRoutes>;
@@ -102,6 +108,13 @@ export interface ObjectModal {
   cardNumber?: string;
   date?: string;
   cvv?: string;
+}
+
+export interface IPromoCodes {
+  id: number;
+  title: string;
+  namePromo: string;
+  sale: number;
 }
 // export interface Templates {
 //   [keys: string]: TemplateFunc;

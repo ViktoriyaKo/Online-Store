@@ -6,6 +6,8 @@ import { product } from "../../app/views/product";
 import { Validation } from "../../app/modal";
 import books from "../../books-content/books.json";
 import { shop } from "../../app/views/shop";
+import { Cart } from "../../app/goods/goods";
+import { Promo } from "../../app/goods/promo";
 
 export class Module {
   public components: Array<IConfigComponent>;
@@ -33,7 +35,19 @@ export class Module {
   }
   renderRoute() {
     const url = routerSlicer.getRoute();
+    const settings: Settings = {
+      minLengthName: 2,
+      minSymbolName: 3,
+      minLengthTel: 10,
+      minLengthAddress: 3,
+      minSymbolAddress: 5,
+      cardNumberLength: 16,
+      dateLength: 5,
+      dateCardMonth: 12,
+      cvvLength: 3,
+    };
     let route = this.routes.find((route) => route.path === url);
+    console.log(url.split("/")[0]);
     if (
       !route &&
       url.split("/")[0] === "product" &&
@@ -54,19 +68,21 @@ export class Module {
     <${route.components.selector}></${route.components.selector}>
     `;
       this.renderComponent(route.components);
-      if (url === "bucket") {
-        const settings: Settings = {
-          minLengthName: 2,
-          minSymbolName: 3,
-          minLengthTel: 10,
-          minLengthAddress: 3,
-          minSymbolAddress: 5,
-          cardNumberLength: 16,
-          dateLength: 5,
-          dateCardMonth: 12,
-          cvvLength: 3,
-        };
+      if (url === "bucket" || url.split("/")[0] === "product") {
         const startValidation: Validation = new Validation(settings);
+      }
+      if (url === "bucket") {
+        if (localStorage.getItem("cart")) {
+          const cart = JSON.parse(localStorage.getItem("cart") || "");
+          const dataCartCreate = new Cart(cart);
+        } else {
+          localStorage.setItem("cart", "[]");
+          //перенести в другое место:
+          const setTextBucket = document.querySelector(
+            ".set-text-bucket"
+          ) as HTMLElement;
+          setTextBucket.classList.remove("d-none");
+        }
       }
     }
   }
