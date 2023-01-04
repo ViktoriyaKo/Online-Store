@@ -126,16 +126,16 @@ export const bucket: Bucket = new Bucket({
               <div class="text-products-line">Список товаров</div>
               <div>
                 Количество:
-                <input type="text" class="form-control set-input-item" />
+                <input type="number" class="form-control set-input-item" value="2"/>
               </div>
-              <div>
+              <div class="block-page-counter">
                 Страница:
-                <button class="btn btn-secondary">
-                  <i class="fas fa-solid fa-arrow-left"></i>
+                <button class="btn btn-secondary p-0">
+                  <i class="fas fa-solid fa-arrow-left p-2"></i>
                 </button>
                 <span class="counter-page">1</span>
-                <button class="btn btn-secondary">
-                  <i class="fas fa-solid fa-arrow-right"></i>
+                <button class="btn btn-secondary p-0">
+                  <i class="fas fa-solid fa-arrow-right p-2"></i>
                 </button>
               </div>
             </div>
