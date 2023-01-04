@@ -81,6 +81,7 @@ export function queryElement<T extends typeof Element>(
 export enum EventTypes {
   CLICK = "click",
   INPUT = "input",
+  CHANGE = "change",
 }
 
 export interface EventsManager {

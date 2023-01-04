@@ -70,6 +70,7 @@ export class ProductsHandler {
         })
     );
   }
+
   private sortingType(clearedProducts: Product[]): Product[] {
     console.log(
       "forever yang",
