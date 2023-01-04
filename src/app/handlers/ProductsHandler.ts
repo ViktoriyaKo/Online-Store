@@ -1,3 +1,4 @@
+import { main } from "@popperjs/core";
 import books from "../../books-content/books.json";
 import { Product, ReduceReturnType, ParamProduct } from "../../types";
 
@@ -5,16 +6,39 @@ export class ProductsHandler {
   private params: ParamProduct;
   private products: Product[];
   private productsFiltSort: Product[];
+  public staticParams: {
+    price: {
+      min: number;
+      max: number;
+    };
+    stock: {
+      min: number;
+      max: number;
+    };
+  };
   constructor() {
+    this.products = books as Product[];
+    this.staticParams = {
+      price: {
+        min: Math.min(
+          ...this.products.map((el) => Math.floor(el.price * el.sale))
+        ),
+        max: Math.max(
+          ...this.products.map((el) => Math.floor(el.price * el.sale))
+        ),
+      },
+      stock: {
+        min: Math.min(...this.products.map((el) => el.stock)),
+        max: Math.max(...this.products.map((el) => el.stock)),
+      },
+    };
     this.params = {
       genres: [],
       authors: [],
       sort: "",
-      price: "",
-      stock: "",
+      ...JSON.parse(JSON.stringify(this.staticParams)),
       search: "",
     };
-    this.products = books as Product[];
     this.productsFiltSort = this.products;
   }
   public resetSettings() {
@@ -22,8 +46,7 @@ export class ProductsHandler {
       genres: [],
       authors: [],
       sort: "",
-      price: "",
-      stock: "",
+      ...JSON.parse(JSON.stringify(this.staticParams)),
       search: "",
     };
   }
@@ -37,8 +60,16 @@ export class ProductsHandler {
     if (param["sort"] !== undefined) this.params["sort"] = param["sort"];
     if (param["search"] !== undefined)
       this.params["search"] = param["search"].toLowerCase();
-    if (param["price"] !== undefined) this.params["price"] = param["price"];
-    if (param["stock"] !== undefined) this.params["stock"] = param["stock"];
+    if (param["price"] !== undefined) {
+      [this.params["price"].min, this.params["price"].max] = param["price"]
+        .split("↕")
+        .map(Number);
+    }
+    if (param["stock"] !== undefined) {
+      [this.params["stock"].min, this.params["stock"].max] = param["stock"]
+        .split("↕")
+        .map(Number);
+    }
     console.log("after_applySettings", this.params);
   }
   public getFilteredSorted(): Product[] {
@@ -67,6 +98,18 @@ export class ProductsHandler {
             ? true
             : prod.author.toLowerCase().includes(this.params["search"]) ||
                 prod.title.toLowerCase().includes(this.params["search"]);
+        })
+        .filter((prod) => {
+          return (
+            Math.floor(prod.price * prod.sale) >= this.params.price.min &&
+            Math.floor(prod.price * prod.sale) <= this.params.price.max
+          );
+        })
+        .filter((prod) => {
+          return (
+            Math.floor(prod.stock) >= this.params.stock.min &&
+            Math.floor(prod.stock) <= this.params.stock.max
+          );
         })
     );
   }
@@ -103,10 +146,21 @@ export class ProductsHandler {
         return true;
       // else if (this.params["authors"].length === 0)
       //   return this.params["genres"].includes(prod.terms);
-      else if (this.params["genres"].length !== 0)
+      else if (this.params["genres"].length !== 0) {
         return this.params["genres"].includes(prod.terms);
+      }
       return true; //this.params["genres"].includes(prod.terms);
     });
+  }
+  public recalculateSliders(): void {
+    this.params["price"] = {
+      max: Math.min(
+        ...this.productsFiltSort.map((el) => Math.floor(el.price * el.sale))
+      ),
+      min: Math.max(
+        ...this.productsFiltSort.map((el) => Math.floor(el.price * el.sale))
+      ),
+    };
   }
   public getGenres(): string[] {
     return [...new Set(this.productsFiltSort.map((book) => book.terms))].sort();
