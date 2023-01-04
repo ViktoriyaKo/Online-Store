@@ -111,6 +111,17 @@ class Shop extends Component {
       `,
     };
   }
+  private checkResultSearch() {
+    const foundBook = document.querySelector(".found-book") as HTMLElement;
+    const newText = document.createElement("div");
+    newText.classList.add("block-search-text");
+    if (this.productsHandler.getFilteredSorted().length == 0) {
+      newText.innerHTML = `по вашему запросу ничего не найдено`;
+      foundBook.append(newText);
+    } else {
+      newText.remove();
+    }
+  }
 
   private prepareMenu(params: ReduceReturnType | undefined) {
     const genres = params && params["genres"] && params["genres"].split("↕");
@@ -155,7 +166,7 @@ class Shop extends Component {
         event: this.buttonCopyClipBoard,
       },
       {
-        eventName: EventTypes.INPUT,
+        eventName: EventTypes.CHANGE,
         target: ".input-search",
         event: this.searchHandler,
       },
@@ -371,6 +382,7 @@ class Shop extends Component {
   }
 
   public afterInit(): void {
+    this.checkResultSearch();
     this.updateHeader();
     dualSlider("#fromSlider", "#toSlider", "#fromInput", "#toInput");
     dualSlider("#fromSlider2", "#toSlider2", "#fromInput2", "#toInput2");
@@ -541,7 +553,6 @@ export const shop: Shop = new Shop({
                 </ul>
                 <!-- searh -->
                 <form
-                  action="#"
                   role="search"
                   class="d-flex align-items-center col-lg-6"
                 >

@@ -203,3 +203,11 @@ input:disabled + label:before {
 .chosen {
   background: center / cover url("./assets/cart-minus.png");
 }
+
+.block-search-text {
+  background-color: $color-basic2;
+  font-weight: 900;
+  font-size: 20px;
+  border-radius: 10px;
+  margin-top: 50px;
+}
