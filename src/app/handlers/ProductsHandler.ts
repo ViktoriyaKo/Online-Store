@@ -97,7 +97,17 @@ export class ProductsHandler {
           return this.params["search"].length === 0
             ? true
             : prod.author.toLowerCase().includes(this.params["search"]) ||
-                prod.title.toLowerCase().includes(this.params["search"]);
+                String(prod.price)
+                  .toLowerCase()
+                  .includes(this.params["search"]) ||
+                String(Math.floor(prod.price * prod.sale))
+                  .toLowerCase()
+                  .includes(this.params["search"]) ||
+                String(prod.stock).includes(this.params["search"]) ||
+                prod.description.includes(this.params["search"]) ||
+                prod.terms.includes(this.params["search"]) ||
+                prod.title.includes(this.params["search"]) ||
+                String(prod.year).includes(this.params["search"]);
         })
         .filter((prod) => {
           return (
