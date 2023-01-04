@@ -6,8 +6,7 @@ import { product } from "../../app/views/product";
 import { Validation } from "../../app/modal";
 import books from "../../books-content/books.json";
 import { shop } from "../../app/views/shop";
-import { Cart } from "../../app/goods/goods";
-import { Promo } from "../../app/goods/promo";
+import { Pagination } from "../../app/goods/pagination";
 
 export class Module {
   public components: Array<IConfigComponent>;
@@ -74,7 +73,7 @@ export class Module {
       if (url === "bucket") {
         if (localStorage.getItem("cart")) {
           const cart = JSON.parse(localStorage.getItem("cart") || "");
-          const dataCartCreate = new Cart(cart);
+          const pagination = new Pagination(cart);
         } else {
           localStorage.setItem("cart", "[]");
           //перенести в другое место:
