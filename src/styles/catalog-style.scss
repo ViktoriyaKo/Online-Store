@@ -175,12 +175,6 @@ input:disabled + label:before {
   color: #aaa;
 }
 
-.btn-set {
-  opacity: 0.8;
-  &:hover {
-    opacity: 1;
-  }
-}
 .btn-sort {
   min-width: 140px;
 }
@@ -200,6 +194,14 @@ input:disabled + label:before {
   }
 }
 
+.displ-3,
+.displ-4 {
+  &:hover {
+    background-color: $color-basic2;
+    transition: 0.5s;
+  }
+}
+
 .chosen {
   background: center / cover url("./assets/cart-minus.png");
 }
@@ -210,4 +212,8 @@ input:disabled + label:before {
   font-size: 20px;
   border-radius: 10px;
   margin-top: 50px;
+}
+
+.border-btn {
+  border: 3px solid $color-basic2;
 }

@@ -170,7 +170,45 @@ class Shop extends Component {
         target: ".input-search",
         event: this.searchHandler,
       },
+      {
+        eventName: EventTypes.CLICK,
+        target: ".displ-4",
+        event: this.switchViewBig,
+      },
+      {
+        eventName: EventTypes.CLICK,
+        target: ".displ-3",
+        event: this.switchViewSmall,
+      },
     ];
+  }
+
+  public switchViewBig() {
+    const test = routerSlicer.routerAdd("view", "3");
+    window.location.hash = routerSlicer.getURI(test);
+  }
+  public switchViewSmall() {
+    const test = routerSlicer.routerAdd("view", "4");
+    window.location.hash = routerSlicer.getURI(test);
+  }
+
+  public changeBtn() {
+    const btnViewBig = document.querySelector(".displ-4") as HTMLButtonElement;
+    const btnViewSmall = document.querySelector(
+      ".displ-3"
+    ) as HTMLButtonElement;
+    const params = routerSlicer.routerParserProduct();
+    if (params && params["view"] !== undefined) {
+      if (+params["view"] == 3) {
+        btnViewBig.classList.add("border-btn");
+        btnViewSmall.classList.remove("border-btn");
+      } else {
+        btnViewBig.classList.remove("border-btn");
+        btnViewSmall.classList.add("border-btn");
+      }
+    } else {
+      btnViewBig.classList.add("border-btn");
+    }
   }
 
   public closeSortButton(event: Event) {
@@ -184,30 +222,36 @@ class Shop extends Component {
     }
   }
   public searchHandler(event: Event) {
-    console.log(event);
     const inputEl = document.querySelector(".input-search") as HTMLInputElement;
-    console.log(inputEl.value);
+    // console.log(inputEl.value);
     const test = routerSlicer.routerAdd("search", inputEl.value);
     window.location.hash = routerSlicer.getURI(test);
   }
   public buttonCopyClipBoard(event: Event) {
-    console.log(window.location.href);
+    const btn = document.querySelector(
+      ".btn-copy-clipBoard"
+    ) as HTMLButtonElement;
+    // console.log(window.location.href);
     const text = window.location.href;
     navigator.clipboard.writeText(text);
+    btn.innerHTML = `Скопировано!`;
+    const showTextBtn = () => {
+      btn.innerHTML = `Копия поиска`;
+    };
+    setTimeout(showTextBtn, 500);
   }
   public buttonResetHandler(event: Event) {
     this.productsHandler.resetSettings();
     window.location.hash = routerSlicer.getBaseURI();
   }
   public onClickDropDownSort(event: Event) {
-    console.log("click");
     if (event.target instanceof Element) {
       const label = $(event?.target);
       if (event?.target) {
         // window.location.hash = `shop/?genres=${encodeURIComponent(
         //   event?.target.nextElementSibling?.innerHTML
         // )}`;
-        console.log(event.target.getAttribute("id"));
+        // console.log(event.target.getAttribute("id"));
         const test = routerSlicer.routerAdd(
           "sort",
           event.target.getAttribute("id") as string
@@ -217,13 +261,11 @@ class Shop extends Component {
     }
   }
   public onBtnSort(event: Event) {
-    console.log("onBtnClickGenres");
     if (event.target instanceof Element) {
       event.target?.nextElementSibling?.classList.toggle("show");
     }
   }
   public onBtnClickGenres(event: Event) {
-    console.log("onBtnClickGenres");
     if (event.target instanceof Element) {
       const label = $(event?.target);
       if (event?.target.nextElementSibling?.innerHTML) {
@@ -239,7 +281,7 @@ class Shop extends Component {
     }
   }
   public onBtnClickAuthors(event: Event) {
-    console.log("onBtnClickAuthors");
+    // console.log("onBtnClickAuthors");
     if (event.target instanceof Element) {
       const label = $(event?.target);
       if (event?.target.nextElementSibling?.innerHTML) {
@@ -257,19 +299,19 @@ class Shop extends Component {
 
   public onInit(): void {
     if (window.location.hash === "#" + routerSlicer.getBaseURI()) {
-      console.log("@#$#$@#$check");
+      // console.log("@#$#$@#$check");
       this.productsHandler.resetSettings();
     }
-    console.log(
-      "@#$#$@#$check",
-      window.location.hash,
-      routerSlicer.getBaseURI()
-    );
+    // console.log(
+    //   "@#$#$@#$check",
+    //   window.location.hash,
+    //   routerSlicer.getBaseURI()
+    // );
     const params = routerSlicer.routerParserProduct();
     if (params) this.productsHandler.applySettings(params);
     this.prepareMenu(params);
     routerSlicer.routerParserProduct();
-    console.log("forYangTest:", this.productsHandler.getFilteredSorted());
+    // console.log("forYangTest:", this.productsHandler.getFilteredSorted());
     this.data = {
       contentProd:
         `<p class="found-book text-center py-3 text-uppercase">
@@ -281,7 +323,13 @@ class Shop extends Component {
           .getFilteredSorted()
           .map(
             (book) => `
-    <div class="product-card col-md-${3} col-sm-4">
+    <div class="product-card col-md-${
+      params
+        ? params["view"]?.split("↕")
+          ? params["view"]?.split("↕")[0]
+          : 3
+        : 3
+    } col-sm-4">
       <div class="product-thumb">
         <a class="open-product" href="#product/${book.id}" id="${book.id}"
           ><img
@@ -383,6 +431,7 @@ class Shop extends Component {
 
   public afterInit(): void {
     this.checkResultSearch();
+    this.changeBtn();
     this.updateHeader();
     dualSlider("#fromSlider", "#toSlider", "#fromInput", "#toInput");
     dualSlider("#fromSlider2", "#toSlider2", "#fromInput2", "#toInput2");
@@ -567,11 +616,11 @@ export const shop: Shop = new Shop({
                 </form>
                 <!-- view window -->
                 <div class="view-book d-flex col-lg-2">
-                  <button class="btn">
-                    <img class="btn-set displ-3 rounded-2" src="./assets/icons3-3.png" alt="" />
+                  <button class="btn displ-3">
+                    <img class="btn-set rounded-2" src="./assets/icons3-3.png" alt="icon" />
                   </button>
-                  <button class="btn">
-                    <img class="btn-set displ-4 rounded-2" src="./assets/icons4-4.png" alt="" />
+                  <button class="btn displ-4">
+                    <img class="btn-set  rounded-2" src="./assets/icons4-4.png" alt="icon" />
                   </button>
                 </div>
               </div>

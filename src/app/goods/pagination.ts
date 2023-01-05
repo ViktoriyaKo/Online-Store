@@ -12,13 +12,14 @@ export class Pagination extends Cart {
       ".set-input-item"
     ) as HTMLInputElement;
     if (setInput !== null) {
-      const currentPage = 1; //fix
+      const currentPage = 1; //fix!!!брать из query
       const rows = this.paginationItemsPerPage(); //количество items на странице!!
       const data = this.paginationGetData(this.items, rows, currentPage);
       this.renderCart(data);
       this.changeQty();
       this.checkEmpty();
       this.displayCountPage();
+      this.updateShowItems();
     }
   }
 
@@ -39,7 +40,21 @@ export class Pagination extends Cart {
         setInput.value = "1";
       }
     });
+    console.log("1");
     return +setInput.value;
+  }
+
+  public updateShowItems() {
+    const setInput = document.querySelector(
+      ".set-input-item"
+    ) as HTMLInputElement;
+    setInput.addEventListener("input", () => {
+      const currentPage = 1; //fix! брать из query!!!
+      const rows = this.paginationItemsPerPage(); //количество items на странице!!
+      const data = this.paginationGetData(this.items, rows, currentPage);
+      this.renderCart(data);
+    });
+    console.log("2");
   }
 
   public updateNumberItem(currentPage: number, row: number) {
@@ -65,6 +80,7 @@ export class Pagination extends Cart {
   public displayCountPage() {
     let count = 1; //current page
     this.blockCounterPage.addEventListener("click", (event) => {
+      console.log("3");
       const rows = this.paginationItemsPerPage(); //количество items на странице!!
       const pagesCount = Math.ceil(this.items.length / rows); //количество страниц total!!
       const target = event.target as HTMLElement;

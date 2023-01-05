@@ -27,7 +27,8 @@ export const routerSlicer = {
       key !== "sort" &&
       key != "price" &&
       key != "stock" &&
-      key != "search"
+      key != "search" &&
+      key != "view"
     ) {
       const keys = currentURIObject[key].split("↕");
       if (keys.includes(value)) {
