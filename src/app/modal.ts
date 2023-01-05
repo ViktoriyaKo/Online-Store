@@ -66,6 +66,9 @@ export class Validation {
     });
 
     this.ccNumber.addEventListener("keypress", (event) => {
+      if (isNaN(+event.key)) {
+        event.preventDefault();
+      }
       if (this.ccNumber.value.length >= this.options.cardNumberLength) {
         event.preventDefault();
       }
@@ -83,6 +86,9 @@ export class Validation {
       }
     });
     this.ccCvv.addEventListener("keypress", (event) => {
+      if (isNaN(+event.key)) {
+        event.preventDefault();
+      }
       if (this.ccCvv.value.length >= 3) {
         event.preventDefault();
       }

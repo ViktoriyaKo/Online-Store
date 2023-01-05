@@ -1,5 +1,6 @@
 import { ProductWithCount } from "../../types";
 import { Cart } from "../goods/goods";
+import { routerSlicer } from "../../frameworks/exporter";
 
 export class Pagination extends Cart {
   constructor(items: ProductWithCount[]) {
@@ -40,7 +41,6 @@ export class Pagination extends Cart {
         setInput.value = "1";
       }
     });
-    console.log("1");
     return +setInput.value;
   }
 
@@ -80,18 +80,16 @@ export class Pagination extends Cart {
   public displayCountPage() {
     let count = 1; //current page
     this.blockCounterPage.addEventListener("click", (event) => {
-      console.log("3");
       const rows = this.paginationItemsPerPage(); //количество items на странице!!
       const pagesCount = Math.ceil(this.items.length / rows); //количество страниц total!!
       const target = event.target as HTMLElement;
       if (target.closest(".right")) {
         count++;
-        if (count <= pagesCount) {
-          this.counterPage.innerHTML = `${count}`;
-        } else {
+        if (count >= pagesCount) {
           count = pagesCount;
-          this.counterPage.innerHTML = `${count}`;
         }
+        this.counterPage.innerHTML = `${count}`;
+
         const data = this.paginationGetData(this.items, rows, count);
         this.renderCart(data);
         this.updateNumberItem(count, rows);

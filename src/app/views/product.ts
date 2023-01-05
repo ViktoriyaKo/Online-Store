@@ -185,7 +185,7 @@ export const product: Product = new Product({
         <div class="d-flex flex-wrap align-items-center">
           <img src="./assets/visa.png" class="d-block set-card me-3" alt="card" />
           <input
-            type="number"
+            type="text"
             class="form-control set-form-width"
             id="cc-number"
             placeholder="номер карты"
@@ -208,7 +208,7 @@ export const product: Product = new Product({
           <div class="col-md-4">
             <label for="cc-cvv" class="form-label">CVV:</label>
             <input
-              type="number"
+              type="text"
               class="form-control"
               id="cc-cvv"
               placeholder=""

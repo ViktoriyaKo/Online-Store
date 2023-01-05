@@ -1,13 +1,25 @@
 import { Component } from "../../frameworks/root/component";
 import { IConfigComponent } from "../../types";
+import { routerSlicer, $ } from "../../frameworks/exporter";
 import books from "../../books-content/books.json";
 
 class Bucket extends Component {
   constructor(config: IConfigComponent) {
     super(config);
   }
+
   public afterInit(): void {
     this.updateHeader();
+    const params = routerSlicer.routerParserProduct();
+    const setInputItem = document.querySelector(
+      ".set-input-item"
+    ) as HTMLInputElement;
+    const counterPage = document.querySelector(
+      ".counter-page"
+    ) as HTMLInputElement;
+    setInputItem.value = params ? params["limit"] : "3";
+    counterPage.innerHTML = params ? params["page"] : "1";
+    console.log(setInputItem.value);
   }
 }
 
@@ -70,7 +82,7 @@ export const bucket: Bucket = new Bucket({
         <div class="d-flex flex-wrap align-items-center">
           <img src="./assets/visa.png" class="d-block set-card me-3" alt="card" />
           <input
-            type="number"
+            type="text"
             class="form-control set-form-width"
             id="cc-number"
             placeholder="номер карты"
@@ -93,7 +105,7 @@ export const bucket: Bucket = new Bucket({
           <div class="col-md-4">
             <label for="cc-cvv" class="form-label">CVV:</label>
             <input
-              type="number"
+              type="text"
               class="form-control"
               id="cc-cvv"
               placeholder=""

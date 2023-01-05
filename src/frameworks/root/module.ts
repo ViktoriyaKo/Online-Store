@@ -6,6 +6,7 @@ import { product } from "../../app/views/product";
 import { Validation } from "../../app/modal";
 import books from "../../books-content/books.json";
 import { shop } from "../../app/views/shop";
+import { bucket } from "../../app/views/bucket";
 import { Pagination } from "../../app/goods/pagination";
 
 export class Module {
@@ -46,7 +47,7 @@ export class Module {
       cvvLength: 3,
     };
     let route = this.routes.find((route) => route.path === url);
-    console.log(url.split("/")[0]);
+
     if (
       !route &&
       url.split("/")[0] === "product" &&
@@ -59,6 +60,10 @@ export class Module {
     if (!route && url.split("/")[0] === "shop" && url.split("/").length === 2) {
       route = { path: `shop`, components: shop };
     }
+    if (!route && url.split("/")[0] === "bucket") {
+      route = { path: `bucket`, components: bucket };
+    }
+
     if (!route) {
       route = this.routes.find((route) => route.path === "error");
     }
@@ -67,10 +72,11 @@ export class Module {
     <${route.components.selector}></${route.components.selector}>
     `;
       this.renderComponent(route.components);
-      if (url === "bucket" || url.split("/")[0] === "product") {
+      if (url.split("/")[0] === "product") {
         const startValidation: Validation = new Validation(settings);
       }
-      if (url === "bucket") {
+      if (url.split("/")[0] === "bucket") {
+        const startValidation: Validation = new Validation(settings);
         if (localStorage.getItem("cart")) {
           const cart = JSON.parse(localStorage.getItem("cart") || "");
           const pagination = new Pagination(cart);
