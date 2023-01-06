@@ -9,7 +9,7 @@ $color-pink: #ee6e73;
 
 .set-img {
   cursor: pointer;
-  transition: 0.5s;
+  transition: all 0.5s;
   &:hover {
     background: $color-basic;
   }
@@ -32,6 +32,12 @@ $color-pink: #ee6e73;
 .img-main-set {
   max-height: 450px;
   height: auto;
+  transition: 1s;
+  cursor: pointer;
+  &:hover {
+    scale: 1.1;
+    transition: 0.5s;
+  }
 }
 
 .stock-book {
