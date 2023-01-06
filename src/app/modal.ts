@@ -39,7 +39,7 @@ export class Validation {
     });
   }
 
-  private openModal() {
+  public openModal() {
     this.btnPay.addEventListener("click", () => {
       this.wrapperModal.classList.remove("modal-none");
       this.setModal.classList.add("modal-shadow");

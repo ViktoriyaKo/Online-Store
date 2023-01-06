@@ -17,8 +17,17 @@ class Bucket extends Component {
     const counterPage = document.querySelector(
       ".counter-page"
     ) as HTMLInputElement;
-    setInputItem.value = params ? params["limit"] : "3";
-    counterPage.innerHTML = params ? params["page"] : "1";
+
+    setInputItem.value = params
+      ? params["limit"]?.split("?")
+        ? params["limit"]?.split("?")[0]
+        : "3"
+      : "3";
+    counterPage.innerHTML = params
+      ? params["page"]?.split("?")
+        ? params["page"]?.split("?")[0]
+        : "1"
+      : "1";
     console.log(setInputItem.value);
   }
 }

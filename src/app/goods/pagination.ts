@@ -9,17 +9,29 @@ export class Pagination extends Cart {
   }
 
   renderPagination() {
+    const params = routerSlicer.routerParserProduct();
     const setInput = document.querySelector(
       ".set-input-item"
     ) as HTMLInputElement;
     if (setInput !== null) {
-      const currentPage = 1; //fix!!!брать из query
-      const rows = this.paginationItemsPerPage(); //количество items на странице!!
+      const currentPage = params
+        ? params["page"]?.split("?")
+          ? +params["page"]?.split("?")[0]
+          : 1
+        : 1; //fix!!!брать из query
+      const rows = params
+        ? +params["limit"]?.split("?")
+          ? +params["limit"]?.split("?")[0]
+          : 3
+        : 3;
+
+      //количество items на странице!!
       const data = this.paginationGetData(this.items, rows, currentPage);
       this.renderCart(data);
       this.changeQty();
       this.checkEmpty();
       this.displayCountPage();
+      this.paginationItemsPerPage();
       this.updateShowItems();
     }
   }
@@ -29,32 +41,53 @@ export class Pagination extends Cart {
   ) as HTMLElement;
   counterPage = document.querySelector(".counter-page") as HTMLElement;
 
+  public addQueryLimit(pageNumber: string) {
+    const test = routerSlicer.routerAdd("limit", pageNumber);
+    window.location.hash = routerSlicer.getURIBucket(test);
+  }
+  public addQueryPage(pageNumber: string) {
+    const test = routerSlicer.routerAdd("page", pageNumber);
+    window.location.hash = routerSlicer.getURIBucket(test);
+  }
+
   public paginationItemsPerPage() {
     //limit
     const setInput = document.querySelector(
       ".set-input-item"
     ) as HTMLInputElement;
     setInput.addEventListener("input", () => {
-      if (+setInput.value > this.items.length) {
-        setInput.value = `${this.items.length}`;
-      } else if (+setInput.value <= 0) {
-        setInput.value = "1";
+      const value = +setInput.value;
+      const min = 1;
+      const max = this.items.length;
+      if (value > max) {
+        setInput.value = String(max);
+      } else if (value < min) {
+        setInput.value = String(min);
       }
     });
+    console.log(setInput.value);
     return +setInput.value;
   }
 
   public updateShowItems() {
+    const params = routerSlicer.routerParserProduct();
     const setInput = document.querySelector(
       ".set-input-item"
     ) as HTMLInputElement;
     setInput.addEventListener("input", () => {
-      const currentPage = 1; //fix! брать из query!!!
-      const rows = this.paginationItemsPerPage(); //количество items на странице!!
+      this.addQueryLimit(String(this.paginationItemsPerPage()));
+      const currentPage = params ? (params["page"] ? +params["page"] : 1) : 1; //fix! брать из query!!!
+      console.log("currentPage", currentPage);
+      const rows = params
+        ? params["limit"]
+          ? +params["limit"]
+          : this.paginationItemsPerPage()
+        : this.paginationItemsPerPage();
+      console.log(rows);
+      //количество items на странице!!
       const data = this.paginationGetData(this.items, rows, currentPage);
       this.renderCart(data);
     });
-    console.log("2");
   }
 
   public updateNumberItem(currentPage: number, row: number) {
@@ -78,7 +111,8 @@ export class Pagination extends Cart {
   }
 
   public displayCountPage() {
-    let count = 1; //current page
+    const params = routerSlicer.routerParserProduct();
+    let count = params ? (params["page"] ? +params["page"] : 1) : 1;
     this.blockCounterPage.addEventListener("click", (event) => {
       const rows = this.paginationItemsPerPage(); //количество items на странице!!
       const pagesCount = Math.ceil(this.items.length / rows); //количество страниц total!!
@@ -88,23 +122,17 @@ export class Pagination extends Cart {
         if (count >= pagesCount) {
           count = pagesCount;
         }
-        this.counterPage.innerHTML = `${count}`;
-
-        const data = this.paginationGetData(this.items, rows, count);
-        this.renderCart(data);
-        this.updateNumberItem(count, rows);
       } else if (target.closest(".left")) {
         count--;
-        if (count > 0) {
-          this.counterPage.innerHTML = `${count}`;
-        } else {
+        if (count <= 0) {
           count = 1;
-          this.counterPage.innerHTML = `${count}`;
         }
-        const data = this.paginationGetData(this.items, rows, count);
-        this.renderCart(data);
-        this.updateNumberItem(count, rows);
       }
+      this.counterPage.innerHTML = `${count}`;
+      // this.addQueryPage(String(count));
+      const data = this.paginationGetData(this.items, rows, count);
+      this.renderCart(data);
+      this.updateNumberItem(count, rows);
     });
   }
 }
