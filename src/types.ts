@@ -13,8 +13,14 @@ export interface ParamProduct {
   genres: string[];
   authors: string[];
   sort: string;
-  price: string;
-  stock: string;
+  price: {
+    min: number;
+    max: number;
+  };
+  stock: {
+    min: number;
+    max: number;
+  };
   search: string;
 }
 export interface Product {

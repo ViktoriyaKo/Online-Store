@@ -94,20 +94,38 @@ class Shop extends Component {
       priceSlider: `
       <div class="range_container">
       <div class="sliders_control">
-          <input id="fromSlider" type="range" value="10" min="0" max="100"/>
-          <input id="toSlider" type="range" value="40" min="0" max="100"/>
+          <input id="fromSlider" type="range" value="10" min="${this.productsHandler.staticParams.price.min}" max="${this.productsHandler.staticParams.price.max}"/>
+          <input id="toSlider" type="range" value="40" min="${this.productsHandler.staticParams.price.min}" max="${this.productsHandler.staticParams.price.max}"/>
       </div>
       <div class="form_control">
           <div class="form_control_container">
               <div class="form_control_container__time">Min</div>
-              <input class="form_control_container__time__input" type="number" id="fromInput" value="10" min="0" max="100"/>
+              <input class="form_control_container__time__input" type="number" id="fromInput" value="10" min="${this.productsHandler.staticParams.price.min}" max="${this.productsHandler.staticParams.price.max}"/>
           </div>
           <div class="form_control_container">
               <div class="form_control_container__time">Max</div>
-              <input class="form_control_container__time__input" type="number" id="toInput" value="40" min="0" max="100"/>
+              <input class="form_control_container__time__input" type="number" id="toInput" value="40" min="${this.productsHandler.staticParams.price.min}" max="${this.productsHandler.staticParams.price.max}"/>
           </div>
       </div>
       </div>
+      `,
+      stockSlider: `
+      <div class="range_container">
+      <div class="sliders_control">
+          <input id="fromSlider2" type="range" value="10" min="${this.productsHandler.staticParams.stock.min}" max="${this.productsHandler.staticParams.stock.max}"/>
+          <input id="toSlider2" type="range" value="40" min="${this.productsHandler.staticParams.stock.min}" max="${this.productsHandler.staticParams.stock.max}"/>
+      </div>
+      <div class="form_control">
+          <div class="form_control_container">
+              <div class="form_control_container__time">Min</div>
+              <input class="form_control_container__time__input" type="number" id="fromInput2" value="10" min="${this.productsHandler.staticParams.stock.min}" max="${this.productsHandler.staticParams.stock.max}">
+          </div>
+          <div class="form_control_container">
+              <div class="form_control_container__time">Max</div>
+              <input class="form_control_container__time__input" type="number" id="toInput2" value="40" min="${this.productsHandler.staticParams.stock.min}" max="${this.productsHandler.staticParams.stock.max}"/>
+          </div>
+      </div>
+  </div>
       `,
     };
   }
@@ -343,16 +361,20 @@ class Shop extends Component {
               params
                 ? params["price"]?.split("↕")
                   ? params["price"]?.split("↕")[0]
-                  : 0
-                : 0
-            }" min="0" max="100"/>
+                  : this.productsHandler.staticParams.price.min
+                : this.productsHandler.staticParams.price.min
+            }" min="${this.productsHandler.staticParams.price.min}" max="${
+        this.productsHandler.staticParams.price.max
+      }"/>
             <input id="toSlider" type="range" value="${
               params
                 ? params["price"]?.split("↕")
                   ? params["price"]?.split("↕")[1]
-                  : 100
-                : 100
-            }" min="0" max="100"/>
+                  : this.productsHandler.staticParams.price.max
+                : this.productsHandler.staticParams.price.max
+            }" min="${this.productsHandler.staticParams.price.min}" max="${
+        this.productsHandler.staticParams.price.max
+      }"/>
         </div>
         <div class="form_control">
             <div class="form_control_container">
@@ -361,9 +383,11 @@ class Shop extends Component {
                   params
                     ? params["price"]?.split("↕")
                       ? params["price"]?.split("↕")[0]
-                      : 0
-                    : 0
-                }" min="0" max="100"/>
+                      : this.productsHandler.staticParams.price.min
+                    : this.productsHandler.staticParams.price.min
+                }" min="${this.productsHandler.staticParams.price.min}" max="${
+        this.productsHandler.staticParams.price.max
+      }"/>
             </div>
             <div class="form_control_container">
                 <div class="form_control_container__time">Max</div>
@@ -371,12 +395,64 @@ class Shop extends Component {
                   params
                     ? params["price"]?.split("↕")
                       ? params["price"]?.split("↕")[1]
-                      : 100
-                    : 100
-                }" min="0" max="100"/>
+                      : this.productsHandler.staticParams.price.max
+                    : this.productsHandler.staticParams.price.max
+                }" min="${this.productsHandler.staticParams.price.min}" max="${
+        this.productsHandler.staticParams.price.max
+      }"/>
             </div>
         </div>
         </div>
+        `,
+      stockSlider: `
+        <div class="range_container">
+        <div class="sliders_control">
+            <input id="fromSlider2" type="range" value="${
+              params
+                ? params["stock"]?.split("↕")
+                  ? params["stock"]?.split("↕")[0]
+                  : this.productsHandler.staticParams.stock.min
+                : this.productsHandler.staticParams.stock.min
+            }" min="${this.productsHandler.staticParams.stock.min}" max="${
+        this.productsHandler.staticParams.stock.max
+      }"/>
+            <input id="toSlider2" type="range" value="${
+              params
+                ? params["stock"]?.split("↕")
+                  ? params["stock"]?.split("↕")[1]
+                  : this.productsHandler.staticParams.stock.max
+                : this.productsHandler.staticParams.stock.max
+            }" min="${this.productsHandler.staticParams.stock.min}" max="${
+        this.productsHandler.staticParams.stock.max
+      }"/>
+        </div>
+        <div class="form_control">
+            <div class="form_control_container">
+                <div class="form_control_container__time">Min</div>
+                <input class="form_control_container__time__input" type="number" id="fromInput2" value="${
+                  params
+                    ? params["stock"]?.split("↕")
+                      ? params["stock"]?.split("↕")[0]
+                      : this.productsHandler.staticParams.stock.min
+                    : this.productsHandler.staticParams.stock.min
+                }" min="${this.productsHandler.staticParams.stock.min}" max="${
+        this.productsHandler.staticParams.stock.max
+      }"/>
+            </div>
+            <div class="form_control_container">
+                <div class="form_control_container__time">Max</div>
+                <input class="form_control_container__time__input" type="number" id="toInput2" value="${
+                  params
+                    ? params["stock"]?.split("↕")
+                      ? params["stock"]?.split("↕")[1]
+                      : this.productsHandler.staticParams.stock.max
+                    : this.productsHandler.staticParams.stock.max
+                }" min="${this.productsHandler.staticParams.stock.min}" max="${
+        this.productsHandler.staticParams.stock.max
+      }"/>
+            </div>
+        </div>
+    </div>
         `,
     };
   }
@@ -384,8 +460,14 @@ class Shop extends Component {
   public afterInit(): void {
     this.checkResultSearch();
     this.updateHeader();
-    dualSlider("#fromSlider", "#toSlider", "#fromInput", "#toInput");
-    dualSlider("#fromSlider2", "#toSlider2", "#fromInput2", "#toInput2");
+    dualSlider("#fromSlider", "#toSlider", "#fromInput", "#toInput", "price");
+    dualSlider(
+      "#fromSlider2",
+      "#toSlider2",
+      "#fromInput2",
+      "#toInput2",
+      "stock"
+    );
     const params = routerSlicer.routerParserProduct();
     if (params) {
       if (params["genres"]) {
@@ -515,22 +597,7 @@ export const shop: Shop = new Shop({
                     <legend class="name-filter position-relative text-center">
                       Количество товаров на складе
                     </legend>
-                    <div class="range_container">
-                    <div class="sliders_control">
-                        <input id="fromSlider2" type="range" value="10" min="0" max="100"/>
-                        <input id="toSlider2" type="range" value="40" min="0" max="100"/>
-                    </div>
-                    <div class="form_control">
-                        <div class="form_control_container">
-                            <div class="form_control_container__time">Min</div>
-                            <input class="form_control_container__time__input" type="number" id="fromInput2" value="10" min="0" max="100"/>
-                        </div>
-                        <div class="form_control_container">
-                            <div class="form_control_container__time">Max</div>
-                            <input class="form_control_container__time__input" type="number" id="toInput2" value="40" min="0" max="100"/>
-                        </div>
-                    </div>
-                </div>
+                    {{stockSlider}}
                   </fieldset>
                 </div>
               </aside>
