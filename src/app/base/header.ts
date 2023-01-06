@@ -1,5 +1,10 @@
 import { Component } from "../../frameworks/root/component";
-import { IConfigComponent, ProductWithCount } from "../../types";
+import {
+  IConfigComponent,
+  ProductWithCount,
+  EventTypes,
+  EventsManager,
+} from "../../types";
 
 export class Header extends Component {
   constructor(config: IConfigComponent) {
@@ -25,6 +30,22 @@ export class Header extends Component {
       return cart
         .map((item: ProductWithCount) => +item.price)
         .reduce((acc: number, item: number) => acc + item);
+    }
+  }
+  public events(): EventsManager[] {
+    return [
+      {
+        eventName: EventTypes.CLICK,
+        target: ".navbar-toggler",
+        event: this.onBtnClick,
+      },
+    ];
+  }
+  onBtnClick(event: Event) {
+    if (event.target instanceof Element) {
+      if (event.target.closest(".navbar-toggler")) {
+        document.querySelector(".collapse")?.classList.toggle("show");
+      }
     }
   }
 }
@@ -65,7 +86,7 @@ export const header: Header = new Header({
           Общая сумма заказа:
           <span>0 <i class="fas fa-light fa-ruble-sign"></i></span>
         </p>
-        <ul class="navbar-nav">
+        <ul class="navbar-nav text-end">
           <li class="nav-item">
             <a class="nav-link position-relative d-block" href="#bucket"
               ><div class="circle"><div class="number-book">0</div></div>
@@ -73,9 +94,7 @@ export const header: Header = new Header({
               <i class="fas fa-shopping-cart"></i
             ></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-search"></i></a>
-          </li>
+          
         </ul>
       </div>
     </div>

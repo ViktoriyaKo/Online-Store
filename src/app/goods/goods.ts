@@ -101,10 +101,10 @@ export class Cart extends Promo {
     let out = ``;
     data.forEach((item, index) => {
       out += `
-        <div class="p-3 row">
-          <span class="col-sm-1 order-number">${index + 1}</span>
+        <div class="p-3 row wrapper-item">
+          <span class="col-sm-1 order-number col-1">${index + 1}</span>
           <img
-            class="img-thumbnail set-img-bucket d-block col-sm-2"
+            class="img-thumbnail set-img-bucket d-block col-sm-2 col-3"
             src=${item.image[0]}
             alt="book-img"
           />
@@ -112,7 +112,7 @@ export class Cart extends Promo {
             <h3 class="title-book-bucket pb-1">${item.title}</h3>
             <h4 class="author-book-bucket">${item.author}</h4>
           </div>        
-          <div class="stock-info col-sm-4">
+          <div class="stock-info col-sm-4 col-5">
             <span class="text-success">
               <span class="stock-book"></span> На складе: ${item.stock}</span
             >
