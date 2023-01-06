@@ -409,8 +409,8 @@ class Shop extends Component {
               params
                 ? params["price"]?.split("↕")
                   ? params["price"]?.split("↕")[0]
-                  : this.productsHandler.staticParams.price.min
-                : this.productsHandler.staticParams.price.min
+                  : this.productsHandler.dynamicParams.price.min
+                : this.productsHandler.dynamicParams.price.min
             }" min="${this.productsHandler.staticParams.price.min}" max="${
         this.productsHandler.staticParams.price.max
       }"/>
@@ -418,8 +418,8 @@ class Shop extends Component {
               params
                 ? params["price"]?.split("↕")
                   ? params["price"]?.split("↕")[1]
-                  : this.productsHandler.staticParams.price.max
-                : this.productsHandler.staticParams.price.max
+                  : this.productsHandler.dynamicParams.price.max
+                : this.productsHandler.dynamicParams.price.max
             }" min="${this.productsHandler.staticParams.price.min}" max="${
         this.productsHandler.staticParams.price.max
       }"/>
@@ -431,8 +431,8 @@ class Shop extends Component {
                   params
                     ? params["price"]?.split("↕")
                       ? params["price"]?.split("↕")[0]
-                      : this.productsHandler.staticParams.price.min
-                    : this.productsHandler.staticParams.price.min
+                      : this.productsHandler.dynamicParams.price.min
+                    : this.productsHandler.dynamicParams.price.min
                 }" min="${this.productsHandler.staticParams.price.min}" max="${
         this.productsHandler.staticParams.price.max
       }"/>
@@ -443,8 +443,8 @@ class Shop extends Component {
                   params
                     ? params["price"]?.split("↕")
                       ? params["price"]?.split("↕")[1]
-                      : this.productsHandler.staticParams.price.max
-                    : this.productsHandler.staticParams.price.max
+                      : this.productsHandler.dynamicParams.price.max
+                    : this.productsHandler.dynamicParams.price.max
                 }" min="${this.productsHandler.staticParams.price.min}" max="${
         this.productsHandler.staticParams.price.max
       }"/>
@@ -459,8 +459,8 @@ class Shop extends Component {
               params
                 ? params["stock"]?.split("↕")
                   ? params["stock"]?.split("↕")[0]
-                  : this.productsHandler.staticParams.stock.min
-                : this.productsHandler.staticParams.stock.min
+                  : this.productsHandler.dynamicParams.stock.min
+                : this.productsHandler.dynamicParams.stock.min
             }" min="${this.productsHandler.staticParams.stock.min}" max="${
         this.productsHandler.staticParams.stock.max
       }"/>
@@ -468,8 +468,8 @@ class Shop extends Component {
               params
                 ? params["stock"]?.split("↕")
                   ? params["stock"]?.split("↕")[1]
-                  : this.productsHandler.staticParams.stock.max
-                : this.productsHandler.staticParams.stock.max
+                  : this.productsHandler.dynamicParams.stock.max
+                : this.productsHandler.dynamicParams.stock.max
             }" min="${this.productsHandler.staticParams.stock.min}" max="${
         this.productsHandler.staticParams.stock.max
       }"/>
@@ -481,8 +481,8 @@ class Shop extends Component {
                   params
                     ? params["stock"]?.split("↕")
                       ? params["stock"]?.split("↕")[0]
-                      : this.productsHandler.staticParams.stock.min
-                    : this.productsHandler.staticParams.stock.min
+                      : this.productsHandler.dynamicParams.stock.min
+                    : this.productsHandler.dynamicParams.stock.min
                 }" min="${this.productsHandler.staticParams.stock.min}" max="${
         this.productsHandler.staticParams.stock.max
       }"/>
@@ -493,8 +493,8 @@ class Shop extends Component {
                   params
                     ? params["stock"]?.split("↕")
                       ? params["stock"]?.split("↕")[1]
-                      : this.productsHandler.staticParams.stock.max
-                    : this.productsHandler.staticParams.stock.max
+                      : this.productsHandler.dynamicParams.stock.max
+                    : this.productsHandler.dynamicParams.stock.max
                 }" min="${this.productsHandler.staticParams.stock.min}" max="${
         this.productsHandler.staticParams.stock.max
       }"/>
