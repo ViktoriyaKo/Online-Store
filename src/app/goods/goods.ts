@@ -54,10 +54,20 @@ export class Cart extends Promo {
       if (target.classList.contains("plus")) {
         let a = area[0].count;
         a++;
+        if (a >= area[0].stock) {
+          a = area[0].stock;
+        }
         area[0].count = a;
         localStorage.setItem("cart", JSON.stringify(this.items));
         if (target.parentElement) {
           target.parentElement.children[1].innerHTML = `${a}`;
+          if (target.parentElement.parentElement) {
+            this.getTotalPerItem(
+              area,
+              target.parentElement.parentElement.children[2],
+              a
+            );
+          }
         }
       } else if (target.classList.contains("minus")) {
         let a = area[0].count;
@@ -72,9 +82,15 @@ export class Cart extends Promo {
         localStorage.setItem("cart", JSON.stringify(this.items));
         if (target.parentElement) {
           target.parentElement.children[1].innerHTML = `${a}`;
+          if (target.parentElement.parentElement) {
+            this.getTotalPerItem(
+              area,
+              target.parentElement.parentElement.children[2],
+              a
+            );
+          }
         }
       }
-
       this.checkEmpty();
       this.renderTextSale();
 
@@ -92,6 +108,14 @@ export class Cart extends Promo {
         this.numberHeader.innerHTML = `${this.addBucketCount()}`;
       }
     });
+  }
+
+  getTotalPerItem(el: ProductWithCount[], elDom: Element, count: number) {
+    const clickEl = el[0];
+    const itemPrice = Math.floor(clickEl.price * clickEl.sale);
+    elDom.innerHTML = `Цена за ед: ${
+      itemPrice * count
+    } <i class="fas fa-light fa-ruble-sign"></i>`;
   }
 
   public renderCart(data: ProductWithCount[]) {
@@ -121,10 +145,10 @@ export class Cart extends Promo {
               <span class="counter-items">${item["count"]}</span>
               <button class="btn btn-success plus" id="${item.id}">+</button>
             </div>
-            <span class="d-block total-amount"
-              >Цена за ед: ${Math.floor(
-                item.price * item.sale
-              )} <i class="fa fa-light fa-ruble-sign"></i
+            <span class="d-block total-amount-unit"
+              >Цена за ед: ${
+                Math.floor(item.price * item.sale) * item.count
+              } <i class="fa fa-light fa-ruble-sign"></i
             ></span>
           </div>
         </div>

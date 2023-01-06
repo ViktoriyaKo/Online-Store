@@ -28,7 +28,6 @@ class Bucket extends Component {
         ? params["page"]?.split("?")[0]
         : "1"
       : "1";
-    console.log(setInputItem.value);
   }
 }
 
