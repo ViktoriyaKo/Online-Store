@@ -106,6 +106,7 @@ export class ProductsHandler {
           );
         })
         .filter((prod) => {
+          console.log(this.params["search"]);
           return this.params["search"].length === 0
             ? true
             : prod.author.toLowerCase().includes(this.params["search"]) ||
@@ -116,9 +117,11 @@ export class ProductsHandler {
                   .toLowerCase()
                   .includes(this.params["search"]) ||
                 String(prod.stock).includes(this.params["search"]) ||
-                prod.description.includes(this.params["search"]) ||
-                prod.terms.includes(this.params["search"]) ||
-                prod.title.includes(this.params["search"]) ||
+                prod.description
+                  .toLowerCase()
+                  .includes(this.params["search"]) ||
+                prod.terms.toLowerCase().includes(this.params["search"]) ||
+                prod.title.toLowerCase().includes(this.params["search"]) ||
                 String(prod.year).includes(this.params["search"]);
         })
         .filter((prod) => {
