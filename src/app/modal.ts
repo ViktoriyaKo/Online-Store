@@ -39,7 +39,7 @@ export class Validation {
     });
   }
 
-  private openModal() {
+  public openModal() {
     this.btnPay.addEventListener("click", () => {
       this.wrapperModal.classList.remove("modal-none");
       this.setModal.classList.add("modal-shadow");
@@ -66,6 +66,9 @@ export class Validation {
     });
 
     this.ccNumber.addEventListener("keypress", (event) => {
+      if (isNaN(+event.key)) {
+        event.preventDefault();
+      }
       if (this.ccNumber.value.length >= this.options.cardNumberLength) {
         event.preventDefault();
       }
@@ -83,6 +86,9 @@ export class Validation {
       }
     });
     this.ccCvv.addEventListener("keypress", (event) => {
+      if (isNaN(+event.key)) {
+        event.preventDefault();
+      }
       if (this.ccCvv.value.length >= 3) {
         event.preventDefault();
       }

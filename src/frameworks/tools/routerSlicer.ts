@@ -27,7 +27,10 @@ export const routerSlicer = {
       key !== "sort" &&
       key != "price" &&
       key != "stock" &&
-      key != "search"
+      key != "search" &&
+      key != "view" &&
+      key != "page" &&
+      key != "limit"
     ) {
       const keys = currentURIObject[key].split("↕");
       if (keys.includes(value)) {
@@ -61,5 +64,10 @@ export const routerSlicer = {
     if (hash.indexOf("/?") === -1) return false;
     if (hash.split("/?").length !== 2) return false;
     return true;
+  },
+
+  getURIBucket(objectURI: ReduceReturnType) {
+    const partsURI = this.routerGetURIProduct(objectURI);
+    return "bucket/?" + partsURI;
   },
 };

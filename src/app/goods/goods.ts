@@ -7,9 +7,6 @@ export class Cart extends Promo {
   constructor(items: ProductWithCount[]) {
     super();
     this.items = items;
-    this.renderCart();
-    this.changeQty();
-    this.checkEmpty();
   }
 
   totalAmount = document.querySelector(".total-amount") as HTMLElement;
@@ -36,7 +33,7 @@ export class Cart extends Promo {
     }
   }
 
-  checkEmpty() {
+  public checkEmpty() {
     if (localStorage.getItem("cart")) {
       if (localStorage.getItem("cart")?.toString() == "[]") {
         this.clickArea.classList.add("d-none");
@@ -54,7 +51,7 @@ export class Cart extends Promo {
     this.clickArea.addEventListener("click", (event) => {
       const target = event.target as HTMLElement;
       const area = this.items.filter((item) => item.id === +target.id);
-      if (target.closest(".plus")) {
+      if (target.classList.contains("plus")) {
         let a = area[0].count;
         a++;
         area[0].count = a;
@@ -62,13 +59,12 @@ export class Cart extends Promo {
         if (target.parentElement) {
           target.parentElement.children[1].innerHTML = `${a}`;
         }
-      } else if (target.closest(".minus")) {
+      } else if (target.classList.contains("minus")) {
         let a = area[0].count;
         if (a - 1 === 0) {
           // delete el;
-          target.parentElement!.parentElement!.parentElement!.remove();
           this.items = this.items.filter((item) => item.id !== +target.id);
-          this.renderNumberItems();
+          this.renderCart(this.items); //с пагинацией не работает!
         } else {
           a--;
           area[0].count = a;
@@ -81,6 +77,7 @@ export class Cart extends Promo {
 
       this.checkEmpty();
       this.renderTextSale();
+
       this.totalAmount.innerHTML = `${this.getTotal()} <i class="fa fa-light fa-ruble-sign"></i
       >`;
       this.totalGoods.innerHTML = `${this.addBucketCount()}`;
@@ -97,48 +94,42 @@ export class Cart extends Promo {
     });
   }
 
-  renderNumberItems() {
-    const orderNumber = document.querySelectorAll(".order-number");
-    orderNumber.forEach((item, index) => (item.innerHTML = `${index + 1}`));
-  }
-
-  renderCart() {
+  public renderCart(data: ProductWithCount[]) {
     this.totalAmount.innerHTML = `${this.getTotal()} <i class="fa fa-light fa-ruble-sign"></i
-    >`;
+      >`;
     this.totalGoods.innerHTML = `${this.addBucketCount()}`;
-
-    this.items.forEach((item, index) => {
-      const newItem = document.createElement("div");
-      newItem.classList.add("p-3");
-      newItem.classList.add("row");
-      newItem.innerHTML = `
-        <span class="col-sm-1 order-number">${index + 1}</span>
-        <img
-          class="img-thumbnail set-img-bucket d-block col-sm-2"
-          src=${item.image[0]}
-          alt="book-img"
-        />
-        <div class="book-info-bucket p-3 col-sm-5">
-          <h3 class="title-book-bucket pb-1">${item.title}</h3>
-          <h4 class="author-book-bucket">${item.author}</h4>
-        </div>        
-        <div class="stock-info col-sm-4">
-          <span class="text-success">
-            <span class="stock-book"></span> На складе: ${item.stock}</span
-          >
-          <div>
-            <button class="btn btn-success minus" id="${item.id}">-</button>
-            <span class="counter-items">${item["count"]}</span>
-            <button class="btn btn-success plus" id="${item.id}">+</button>
+    let out = ``;
+    data.forEach((item, index) => {
+      out += `
+        <div class="p-3 row">
+          <span class="col-sm-1 order-number">${index + 1}</span>
+          <img
+            class="img-thumbnail set-img-bucket d-block col-sm-2"
+            src=${item.image[0]}
+            alt="book-img"
+          />
+          <div class="book-info-bucket p-3 col-sm-5">
+            <h3 class="title-book-bucket pb-1">${item.title}</h3>
+            <h4 class="author-book-bucket">${item.author}</h4>
+          </div>        
+          <div class="stock-info col-sm-4">
+            <span class="text-success">
+              <span class="stock-book"></span> На складе: ${item.stock}</span
+            >
+            <div>
+              <button class="btn btn-success minus" id="${item.id}">-</button>
+              <span class="counter-items">${item["count"]}</span>
+              <button class="btn btn-success plus" id="${item.id}">+</button>
+            </div>
+            <span class="d-block total-amount"
+              >Цена за ед: ${Math.floor(
+                item.price * item.sale
+              )} <i class="fa fa-light fa-ruble-sign"></i
+            ></span>
           </div>
-          <span class="d-block total-amount"
-            >Цена за ед: ${Math.floor(
-              item.price * item.sale
-            )} <i class="fa fa-light fa-ruble-sign"></i
-          ></span>
         </div>
-      `;
-      this.productsItem.append(newItem);
+        `;
     });
+    this.productsItem.innerHTML = out;
   }
 }

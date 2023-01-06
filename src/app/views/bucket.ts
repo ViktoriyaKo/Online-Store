@@ -1,13 +1,34 @@
 import { Component } from "../../frameworks/root/component";
 import { IConfigComponent } from "../../types";
+import { routerSlicer, $ } from "../../frameworks/exporter";
 import books from "../../books-content/books.json";
 
 class Bucket extends Component {
   constructor(config: IConfigComponent) {
     super(config);
   }
+
   public afterInit(): void {
     this.updateHeader();
+    const params = routerSlicer.routerParserProduct();
+    const setInputItem = document.querySelector(
+      ".set-input-item"
+    ) as HTMLInputElement;
+    const counterPage = document.querySelector(
+      ".counter-page"
+    ) as HTMLInputElement;
+
+    setInputItem.value = params
+      ? params["limit"]?.split("?")
+        ? params["limit"]?.split("?")[0]
+        : "3"
+      : "3";
+    counterPage.innerHTML = params
+      ? params["page"]?.split("?")
+        ? params["page"]?.split("?")[0]
+        : "1"
+      : "1";
+    console.log(setInputItem.value);
   }
 }
 
@@ -70,7 +91,7 @@ export const bucket: Bucket = new Bucket({
         <div class="d-flex flex-wrap align-items-center">
           <img src="./assets/visa.png" class="d-block set-card me-3" alt="card" />
           <input
-            type="number"
+            type="text"
             class="form-control set-form-width"
             id="cc-number"
             placeholder="номер карты"
@@ -93,7 +114,7 @@ export const bucket: Bucket = new Bucket({
           <div class="col-md-4">
             <label for="cc-cvv" class="form-label">CVV:</label>
             <input
-              type="number"
+              type="text"
               class="form-control"
               id="cc-cvv"
               placeholder=""
@@ -126,15 +147,15 @@ export const bucket: Bucket = new Bucket({
               <div class="text-products-line">Список товаров</div>
               <div>
                 Количество:
-                <input type="text" class="form-control set-input-item" />
+                <input type="number" class="form-control set-input-item" value="3"/>
               </div>
-              <div>
+              <div class="block-page-counter">
                 Страница:
-                <button class="btn btn-secondary">
+                <button class="btn btn-secondary left">
                   <i class="fas fa-solid fa-arrow-left"></i>
                 </button>
                 <span class="counter-page">1</span>
-                <button class="btn btn-secondary">
+                <button class="btn btn-secondary right">
                   <i class="fas fa-solid fa-arrow-right"></i>
                 </button>
               </div>
