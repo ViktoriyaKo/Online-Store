@@ -16,6 +16,16 @@ export class ProductsHandler {
       max: number;
     };
   };
+  public dynamicParams: {
+    price: {
+      min: number;
+      max: number;
+    };
+    stock: {
+      min: number;
+      max: number;
+    };
+  };
   constructor() {
     this.products = books as Product[];
     this.staticParams = {
@@ -32,6 +42,7 @@ export class ProductsHandler {
         max: Math.max(...this.products.map((el) => el.stock)),
       },
     };
+    this.dynamicParams = JSON.parse(JSON.stringify(this.staticParams));
     this.params = {
       genres: [],
       authors: [],
@@ -49,6 +60,7 @@ export class ProductsHandler {
       ...JSON.parse(JSON.stringify(this.staticParams)),
       search: "",
     };
+    this.dynamicParams = JSON.parse(JSON.stringify(this.staticParams));
   }
   public applySettings(param: ReduceReturnType): void {
     console.log("applySettings", param);
@@ -76,7 +88,7 @@ export class ProductsHandler {
     console.log("getFilteredSorted", this.params);
     this.params["genres"] = this.params["genres"].filter((el) => el !== "");
     this.params["authors"] = this.params["authors"].filter((el) => el !== "");
-    return this.sortingType(
+    const result = this.sortingType(
       this.products
         .filter((prod) => {
           if (
@@ -94,6 +106,7 @@ export class ProductsHandler {
           );
         })
         .filter((prod) => {
+          console.log(this.params["search"]);
           return this.params["search"].length === 0
             ? true
             : prod.author.toLowerCase().includes(this.params["search"]) ||
@@ -104,9 +117,11 @@ export class ProductsHandler {
                   .toLowerCase()
                   .includes(this.params["search"]) ||
                 String(prod.stock).includes(this.params["search"]) ||
-                prod.description.includes(this.params["search"]) ||
-                prod.terms.includes(this.params["search"]) ||
-                prod.title.includes(this.params["search"]) ||
+                prod.description
+                  .toLowerCase()
+                  .includes(this.params["search"]) ||
+                prod.terms.toLowerCase().includes(this.params["search"]) ||
+                prod.title.toLowerCase().includes(this.params["search"]) ||
                 String(prod.year).includes(this.params["search"]);
         })
         .filter((prod) => {
@@ -122,6 +137,18 @@ export class ProductsHandler {
           );
         })
     );
+
+    this.dynamicParams = {
+      price: {
+        min: Math.min(...result.map((el) => Math.floor(el.price * el.sale))),
+        max: Math.max(...result.map((el) => Math.floor(el.price * el.sale))),
+      },
+      stock: {
+        min: Math.min(...result.map((el) => el.stock)),
+        max: Math.max(...result.map((el) => el.stock)),
+      },
+    };
+    return result;
   }
 
   private sortingType(clearedProducts: Product[]): Product[] {
