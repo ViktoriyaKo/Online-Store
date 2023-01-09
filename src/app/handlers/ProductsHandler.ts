@@ -188,6 +188,15 @@ export class ProductsHandler {
       ),
     };
   }
+  public getSorting(): string {
+    return this.params["sort"]
+      ? `
+    Сорт: ${this.params["sort"]
+      .replace("price", "цена ")
+      .replace("year", "год ")}
+    `
+      : "Сортировать";
+  }
   public getGenres(): string[] {
     return [...new Set(this.productsFiltSort.map((book) => book.terms))].sort();
   }

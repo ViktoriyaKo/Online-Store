@@ -118,6 +118,7 @@ class Shop extends Component {
       </div>
   </div>
       `,
+      dropDown: `${this.productsHandler.getSorting()}`,
     };
   }
   private checkResultSearch() {
@@ -493,6 +494,7 @@ class Shop extends Component {
         </div>
     </div>
         `,
+      dropDown: `${this.productsHandler.getSorting()}`,
     };
   }
 
@@ -648,7 +650,7 @@ export const shop: Shop = new Shop({
                   class="btn btn-secondary dropdown-toggle col-lg-2 btn-sort"
                   role="button"
                 >
-                  Сортировать
+                  {{dropDown}}
                 </button>
 
                 <ul class="dropdown-menu">
