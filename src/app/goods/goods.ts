@@ -1,7 +1,7 @@
 import { ProductWithCount } from "../../types";
 import { Promo } from "../goods/promo";
 
-// items из local
+// items from local
 export class Cart extends Promo {
   public items: ProductWithCount[];
   constructor(items: ProductWithCount[]) {
@@ -74,7 +74,7 @@ export class Cart extends Promo {
         if (a - 1 === 0) {
           // delete el;
           this.items = this.items.filter((item) => item.id !== +target.id);
-          this.renderCart(this.items); //с пагинацией не работает!
+          this.renderCart(this.items);
         } else {
           a--;
           area[0].count = a;

@@ -1,7 +1,6 @@
 import { Component } from "../../frameworks/root/component";
 import { IConfigComponent } from "../../types";
-import { routerSlicer, $ } from "../../frameworks/exporter";
-import books from "../../books-content/books.json";
+import { routerSlicer } from "../../frameworks/exporter";
 
 class Bucket extends Component {
   constructor(config: IConfigComponent) {

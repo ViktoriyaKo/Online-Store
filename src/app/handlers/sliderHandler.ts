@@ -60,7 +60,6 @@ export function controlFromSlider(
   } else {
     fromInput.value = String(from);
   }
-  console.log("contrFromSlider", from, to);
   const test = routerSlicer.routerAdd(
     affectedParam,
     `${String(from)}↕${String(to)}`
@@ -148,19 +147,15 @@ export function dualSlider(
   setToggleAccessible(toSlider, toSliderId);
 
   fromSlider.onchange = () => {
-    console.log("onSl");
     controlFromSlider(fromSlider, toSlider, fromInput, affectedParam);
   };
   toSlider.onchange = () => {
-    console.log("toSl");
     controlToSlider(fromSlider, toSlider, toInput, toSliderId, affectedParam);
   };
   fromInput.onchange = () => {
-    console.log("onInp");
     controlFromInput(fromSlider, fromInput, toInput, toSlider, affectedParam);
   };
   toInput.onchange = () => {
-    console.log("toInp");
     controlToInput(
       toSlider,
       fromInput,

@@ -41,9 +41,12 @@ describe("Checking class Header", () => {
   ];
   localStorage.setItem("cart", JSON.stringify(books));
 
-  test("Methods updateTotalSum and addBucketCount should return correct values", () => {
-    expect(header.addBucketCount()).toBe(7);
+  test("Method updateTotalSum should return correct values", () => {
     expect(header.updateTotalSum()).toBe(618);
+  });
+
+  test("Method addBucketCount should return correct values", () => {
+    expect(header.addBucketCount()).toBe(7);
   });
 });
 
@@ -63,14 +66,9 @@ describe("Checking class Header", () => {
 //   });
 // });
 
-// #3 Promo
-
-// describe("Checking Promo", () => {
-//   beforeEach(() => {
-//     tools.delay(700).then(() => {
-//       loader(app);
-//     });
-//   });
-//   const promo = new Promo();
-//   test("Method getPromo should work", () => {});
-// });
+// #3
+describe("Checking ??", () => {
+  test("Method tools should be defined", () => {
+    // expect(modal.validateName()).toBe("kkkk");
+  });
+});

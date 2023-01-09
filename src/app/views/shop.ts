@@ -8,17 +8,8 @@ import {
 } from "../../types";
 import { ProductsHandler } from "../handlers/ProductsHandler";
 import { routerSlicer, $ } from "../../frameworks/exporter";
-import { Instance } from "@popperjs/core";
 import books from "../../books-content/books.json";
-import {
-  controlFromInput,
-  controlFromSlider,
-  controlToInput,
-  controlToSlider,
-  dualSlider,
-  fillSlider,
-  setToggleAccessible,
-} from "../handlers/sliderHandler";
+import { dualSlider } from "../handlers/sliderHandler";
 
 class Shop extends Component {
   private productsHandler: ProductsHandler;

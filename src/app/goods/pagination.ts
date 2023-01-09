@@ -18,14 +18,13 @@ export class Pagination extends Cart {
         ? params["page"]?.split("?")
           ? +params["page"]?.split("?")[0]
           : 1
-        : 1; //fix!!!брать из query
+        : 1;
       const rows = params
         ? +params["limit"]?.split("?")
           ? +params["limit"]?.split("?")[0]
           : 3
         : 3;
 
-      //количество items на странице!!
       const data = this.paginationGetData(this.items, rows, currentPage);
       this.renderCart(data);
       this.changeQty();
@@ -65,7 +64,6 @@ export class Pagination extends Cart {
         setInput.value = String(min);
       }
     });
-    console.log(setInput.value);
     return +setInput.value;
   }
 
@@ -76,15 +74,14 @@ export class Pagination extends Cart {
     ) as HTMLInputElement;
     setInput.addEventListener("input", () => {
       this.addQueryLimit(String(this.paginationItemsPerPage()));
-      const currentPage = params ? (params["page"] ? +params["page"] : 1) : 1; //fix! брать из query!!!
-      console.log("currentPage", currentPage);
+      const currentPage = params ? (params["page"] ? +params["page"] : 1) : 1;
+
       const rows = params
         ? params["limit"]
           ? +params["limit"]
           : this.paginationItemsPerPage()
         : this.paginationItemsPerPage();
-      console.log(rows);
-      //количество items на странице!!
+
       const data = this.paginationGetData(this.items, rows, currentPage);
       this.renderCart(data);
     });
@@ -114,8 +111,8 @@ export class Pagination extends Cart {
     const params = routerSlicer.routerParserProduct();
     let count = params ? (params["page"] ? +params["page"] : 1) : 1;
     this.blockCounterPage.addEventListener("click", (event) => {
-      const rows = this.paginationItemsPerPage(); //количество items на странице!!
-      const pagesCount = Math.ceil(this.items.length / rows); //количество страниц total!!
+      const rows = this.paginationItemsPerPage();
+      const pagesCount = Math.ceil(this.items.length / rows);
       const target = event.target as HTMLElement;
       if (target.closest(".right")) {
         count++;

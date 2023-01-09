@@ -1,5 +1,5 @@
 import { Component } from "../../frameworks/root/component";
-import { EventsManager, EventTypes, IConfigComponent } from "../../types";
+import { IConfigComponent } from "../../types";
 
 class Home extends Component {
   constructor(config: IConfigComponent) {

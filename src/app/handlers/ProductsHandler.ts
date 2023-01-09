@@ -1,4 +1,4 @@
-import { main } from "@popperjs/core";
+// import { main } from "@popperjs/core";
 import books from "../../books-content/books.json";
 import { Product, ReduceReturnType, ParamProduct } from "../../types";
 
@@ -63,8 +63,6 @@ export class ProductsHandler {
     this.dynamicParams = JSON.parse(JSON.stringify(this.staticParams));
   }
   public applySettings(param: ReduceReturnType): void {
-    console.log("applySettings", param);
-    console.log("before_applySettings", this.params);
     if (param["genres"] !== undefined)
       this.params["genres"] = param["genres"].split("↕");
     if (param["authors"] !== undefined)
@@ -82,10 +80,8 @@ export class ProductsHandler {
         .split("↕")
         .map(Number);
     }
-    console.log("after_applySettings", this.params);
   }
   public getFilteredSorted(): Product[] {
-    console.log("getFilteredSorted", this.params);
     this.params["genres"] = this.params["genres"].filter((el) => el !== "");
     this.params["authors"] = this.params["authors"].filter((el) => el !== "");
     const result = this.sortingType(
@@ -106,7 +102,6 @@ export class ProductsHandler {
           );
         })
         .filter((prod) => {
-          console.log(this.params["search"]);
           return this.params["search"].length === 0
             ? true
             : prod.author.toLowerCase().includes(this.params["search"]) ||
@@ -152,11 +147,6 @@ export class ProductsHandler {
   }
 
   private sortingType(clearedProducts: Product[]): Product[] {
-    console.log(
-      "forever yang",
-      this.params["sort"],
-      this.params["sort"] === "priceASC"
-    );
     if (this.params["sort"] === "priceASC")
       return clearedProducts.sort(
         (bookL, bookR) => +bookL.price - +bookR.price
@@ -172,7 +162,6 @@ export class ProductsHandler {
     return clearedProducts.sort((bookL, bookR) => +bookL.price - +bookR.pages);
   }
   public getFilteredParams(): Product[] {
-    console.log("getFilteredSorted", this.params);
     this.params["genres"] = this.params["genres"].filter((el) => el !== "");
     this.params["authors"] = this.params["authors"].filter((el) => el !== "");
     return this.products.filter((prod) => {
