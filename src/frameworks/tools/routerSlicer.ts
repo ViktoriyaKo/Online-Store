@@ -21,7 +21,6 @@ export const routerSlicer = {
     let currentURIObject = this.routerParserProduct();
     if (!currentURIObject) {
       currentURIObject = { [key]: value };
-      console.log("INIT:", currentURIObject);
     } else if (
       currentURIObject[key] &&
       key !== "sort" &&
@@ -35,14 +34,11 @@ export const routerSlicer = {
       const keys = currentURIObject[key].split("↕");
       if (keys.includes(value)) {
         currentURIObject[key] = keys.filter((el) => el !== value).join("↕");
-        console.log("afterDel:", currentURIObject);
       } else {
         currentURIObject[key] += `↕${value}`;
-        console.log("afterAdd:", currentURIObject);
       }
     } else {
       currentURIObject[key] = value;
-      console.log("afterAddNew:", currentURIObject);
     }
     return currentURIObject;
   },

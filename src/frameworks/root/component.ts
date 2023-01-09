@@ -20,13 +20,11 @@ export class Component {
   render(): void {
     this.el = $(document.querySelector(this.selector) as Element);
     if (!this.el) throw new Error(`component ${this.template} not found!`);
-    //fixthis!
     this.el.html(this.compiledTemplate(this.template, this.data) as string);
     this._mountEvent();
   }
 
   protected _mountEvent() {
-    //probably we call function 2 times, not shure how to resolve it
     if (this.events() !== undefined) {
       const events = (this.events() as unknown) as EventsManager[];
       events.forEach((event) => {

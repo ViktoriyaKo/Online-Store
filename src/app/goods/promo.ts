@@ -39,7 +39,6 @@ export class Promo {
       newBtn.addEventListener("click", () => {
         promoList.push(code);
         localStorage.setItem("promo", JSON.stringify(promoList));
-        console.log(code);
         this.renderSale(code);
         this.promo.innerHTML = "";
         this.renderTextSale();
@@ -67,7 +66,6 @@ export class Promo {
       let promoList = JSON.parse(localStorage.getItem("promo") || "[]");
       promoList = promoList.filter((item: IPromoCodes) => item.id !== code.id);
       localStorage.setItem("promo", JSON.stringify(promoList));
-      console.log(promoList);
       this.renderTextSale();
     });
   }

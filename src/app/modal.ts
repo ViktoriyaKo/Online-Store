@@ -95,7 +95,7 @@ export class Validation {
     });
   }
 
-  getObject(): void {
+  private getObject(): void {
     this.btnSubmit.addEventListener("click", () => {
       this.obj.name = this.firstName.value;
       this.obj.number = this.phone.value;
@@ -115,7 +115,7 @@ export class Validation {
     });
   }
 
-  validateName(): void {
+  public validateName(): void {
     if (this.obj.name) {
       const valueName = this.obj.name.split(" ");
       const lengthEveryName = valueName.find(
@@ -133,7 +133,7 @@ export class Validation {
     }
   }
 
-  validationTel(): void {
+  private validationTel(): void {
     if (this.obj.number) {
       if (!this.obj.number.toString().startsWith("+")) {
         this.createError(this.phone);
@@ -147,7 +147,7 @@ export class Validation {
     }
   }
 
-  validationEmail(): void {
+  private validationEmail(): void {
     if (this.obj.email) {
       if (!this.EMAIL_REGEXP.test(this.obj.email)) {
         this.createError(this.email);
@@ -159,7 +159,7 @@ export class Validation {
     }
   }
 
-  validationAddress(): void {
+  private validationAddress(): void {
     if (this.obj.delivery) {
       const valueAddress = this.obj.delivery.split(" ");
       const lengthEveryAddress = valueAddress.find(
@@ -177,7 +177,7 @@ export class Validation {
     }
   }
 
-  validationCardNumber(): void {
+  private validationCardNumber(): void {
     if (this.obj.cardNumber) {
       if (this.obj.cardNumber.length !== this.options.cardNumberLength) {
         this.createError(this.ccNumber);
@@ -189,7 +189,7 @@ export class Validation {
     }
   }
 
-  validationDateCard(): void {
+  private validationDateCard(): void {
     if (this.obj.date) {
       const cardMonth = this.obj.date.split("/")[1];
       if (
@@ -205,7 +205,7 @@ export class Validation {
     }
   }
 
-  validationCvv(): void {
+  private validationCvv(): void {
     if (this.obj.cvv) {
       if (this.obj.cvv.length !== this.options.cvvLength) {
         this.createError(this.ccCvv);
@@ -217,14 +217,14 @@ export class Validation {
     }
   }
 
-  createError(el: HTMLElement): void {
+  private createError(el: HTMLElement): void {
     const messageError = el.nextElementSibling;
     if (messageError) {
       el.style.border = "2px solid red";
       messageError.innerHTML = "ERROR";
     }
   }
-  successValidation(el: HTMLElement): void {
+  private successValidation(el: HTMLElement): void {
     const messageError = el.nextElementSibling;
     if (messageError) {
       messageError.innerHTML = "";

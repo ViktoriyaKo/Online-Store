@@ -73,16 +73,15 @@ export class Module {
     `;
       this.renderComponent(route.components);
       if (url.split("/")[0] === "product") {
-        const startValidation: Validation = new Validation(settings);
+        new Validation(settings);
       }
       if (url.split("/")[0] === "bucket") {
-        const startValidation: Validation = new Validation(settings);
+        new Validation(settings);
         if (localStorage.getItem("cart")) {
           const cart = JSON.parse(localStorage.getItem("cart") || "");
-          const pagination = new Pagination(cart);
+          new Pagination(cart);
         } else {
           localStorage.setItem("cart", "[]");
-          //перенести в другое место:
           const setTextBucket = document.querySelector(
             ".set-text-bucket"
           ) as HTMLElement;
