@@ -140,26 +140,28 @@ describe("Checking RouterSlicer.getRoute(): ", () => {
     {
       hash: "#shop",
       baseUri: "shop",
-      negativeTest: false 
+      negativeTest: false,
     },
     {
       hash: "#home",
       baseUri: "home",
-      negativeTest: false 
+      negativeTest: false,
     },
     {
       hash: "#home",
       baseUri: "home123",
-      negativeTest: true 
-    }
+      negativeTest: true,
+    },
   ];
-  testCases.forEach( (el) => {
+  testCases.forEach((el) => {
     test(`Checking routerSlicer.getRoute() with hash : ${el.hash} `, () => {
       window.location.hash = el.hash;
-      el.negativeTest ? expect(routerSlicer.getRoute()).not.toMatch(el.baseUri) : expect(routerSlicer.getRoute()).toMatch(el.baseUri)
-    })
-  })
-})
+      el.negativeTest
+        ? expect(routerSlicer.getRoute()).not.toMatch(el.baseUri)
+        : expect(routerSlicer.getRoute()).toMatch(el.baseUri);
+    });
+  });
+});
 
 describe("Checking RouterSlicer.routerParserProduct(): ", () => {
   // beforeEach(() => {
@@ -170,166 +172,233 @@ describe("Checking RouterSlicer.routerParserProduct(): ", () => {
       outObj: {
         genres: "Графические романы",
         price: "636↕787",
-        sort: "priceDESC"
-      }
+        sort: "priceDESC",
+      },
     },
     {
-      hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал&price=636↕787&sort=priceDESC&authors=Кристи%20Агата",
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал&price=636↕787&sort=priceDESC&authors=Кристи%20Агата",
       outObj: {
         genres: "Графические романы↕Боевик и криминал",
         price: "636↕787",
         sort: "priceDESC",
-        authors: "Кристи Агата"
-      }
+        authors: "Кристи Агата",
+      },
     },
     {
-      hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза↕Биографии.%20Мемуары&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза↕Биографии.%20Мемуары&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
       outObj: {
-        genres: "Графические романы↕Боевик и криминал↕Классическая зарубежная проза↕Биографии. Мемуары",
+        genres:
+          "Графические романы↕Боевик и криминал↕Классическая зарубежная проза↕Биографии. Мемуары",
         price: "82↕1156",
         sort: "priceDESC",
         authors: "",
-        stock:"2↕45",
-        search:"Гэм"
-      }
+        stock: "2↕45",
+        search: "Гэм",
+      },
     },
     {
-      hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза↕Биографии.%20Мемуары&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=",
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза↕Биографии.%20Мемуары&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=",
       outObj: {
-        genres: "Графические романы↕Боевик и криминал↕Классическая зарубежная проза↕Биографии. Мемуары",
+        genres:
+          "Графические романы↕Боевик и криминал↕Классическая зарубежная проза↕Биографии. Мемуары",
         price: "82↕1156",
         sort: "priceDESC",
         authors: "",
-        stock:"2↕45",
-        search:""
-      }
+        stock: "2↕45",
+        search: "",
+      },
     },
     {
-      hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза↕Биографии.%20Мемуары&price=0↕1156&sort=priceDESC&authors=&stock=2↕45&search=",
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза↕Биографии.%20Мемуары&price=0↕1156&sort=priceDESC&authors=&stock=2↕45&search=",
       outObj: {
-        genres: "Графические романы↕Боевик и криминал↕Классическая зарубежная проза↕Биографии. Мемуары",
+        genres:
+          "Графические романы↕Боевик и криминал↕Классическая зарубежная проза↕Биографии. Мемуары",
         price: "0↕1156",
         sort: "priceDESC",
         authors: "",
-        stock:"2↕45",
-        search:""
-      }
+        stock: "2↕45",
+        search: "",
+      },
     },
     {
-      hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза↕Биографии.%20Мемуары&price=82↕1156&sort=priceASC&authors=&stock=2↕45&search=",
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза↕Биографии.%20Мемуары&price=82↕1156&sort=priceASC&authors=&stock=2↕45&search=",
       outObj: {
-        genres: "Графические романы↕Боевик и криминал↕Классическая зарубежная проза↕Биографии. Мемуары",
+        genres:
+          "Графические романы↕Боевик и криминал↕Классическая зарубежная проза↕Биографии. Мемуары",
         price: "82↕1156",
         sort: "priceASC",
         authors: "",
-        stock:"2↕45",
-        search:""
-      }
+        stock: "2↕45",
+        search: "",
+      },
     },
     {
-      hash: "#shop/?genres=&price=0↕1156&sort=priceDESC&authors=&stock=2↕45&search=",
+      hash:
+        "#shop/?genres=&price=0↕1156&sort=priceDESC&authors=&stock=2↕45&search=",
       outObj: {
         genres: "",
         price: "0↕1156",
         sort: "priceDESC",
         authors: "",
-        stock:"2↕45",
-        search:""
-      }
+        stock: "2↕45",
+        search: "",
+      },
     },
     {
-      hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза↕Биографии.%20Мемуары&price=82↕1156&sort=&authors=&stock=2↕45&search=",
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза↕Биографии.%20Мемуары&price=82↕1156&sort=&authors=&stock=2↕45&search=",
       outObj: {
-        genres: "Графические романы↕Боевик и криминал↕Классическая зарубежная проза↕Биографии. Мемуары",
+        genres:
+          "Графические романы↕Боевик и криминал↕Классическая зарубежная проза↕Биографии. Мемуары",
         price: "82↕1156",
         sort: "",
         authors: "",
-        stock:"2↕45",
-        search:""
-      }
-    }
+        stock: "2↕45",
+        search: "",
+      },
+    },
   ];
-  testCases.forEach( (el) => {
+  testCases.forEach((el) => {
     test(`Checking routerSlicer.routerParserProduct() with hash : ${el.hash} `, () => {
       window.location.hash = el.hash;
-      expect(JSON.stringify(routerSlicer.routerParserProduct())).toMatch(JSON.stringify(el.outObj))
-    })
-  })
-})
+      expect(JSON.stringify(routerSlicer.routerParserProduct())).toMatch(
+        JSON.stringify(el.outObj)
+      );
+    });
+  });
+});
 describe("Checking RouterSlicer.routerAdd(): ", () => {
   // beforeEach(() => {
   // });
   const defaultObj = {
-    genres: "Графические романы↕Боевик и криминал↕Классическая зарубежная проза",
+    genres:
+      "Графические романы↕Боевик и криминал↕Классическая зарубежная проза",
     price: "82↕1156",
     sort: "priceDESC",
     authors: "",
-    stock:"2↕45",
-    search:"Гэм"
-  }
+    stock: "2↕45",
+    search: "Гэм",
+  };
   const testCases = [
     {
-      hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
       key: "genres",
       value: "Биографии. Мемуары",
       outObj: {
         ...defaultObj,
-        genres: "Графические романы↕Боевик и криминал↕Классическая зарубежная проза↕Биографии. Мемуары"
-      }},
-      {
-        hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
-        key: "sort",
-        value: "priceASC",
-        outObj: {
-          ...defaultObj,
-          sort: "priceASC",
-        }},
-      {
-        hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
-        key: "price",
-        value: "82↕1155",
-        outObj: {
-          ...defaultObj,
-          price: "82↕1155",
-        }},
-      {
-        hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
-        key: "search",
-        value: "Лего",
-        outObj: {
-          ...defaultObj,
-          search: "Лего",
-        }},
-      {
-        hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
-        key: "search",
-        value: "",
-        outObj: {
-          ...defaultObj,
-          search: "",
-        }},
-      {
-        hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
-        key: "search",
-        value: "123",
-        outObj: {
-          ...defaultObj,
-          search: "123",
-        }},
-      {
-        hash: "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
-        key: "authors",
-        value: "Айн Рэнд",
-        outObj: {
-          ...defaultObj,
-          authors: "Айн Рэнд",
-        }},
-      
+        genres:
+          "Графические романы↕Боевик и криминал↕Классическая зарубежная проза↕Биографии. Мемуары",
+      },
+    },
+    {
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
+      key: "sort",
+      value: "priceASC",
+      outObj: {
+        ...defaultObj,
+        sort: "priceASC",
+      },
+    },
+    {
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
+      key: "price",
+      value: "82↕1155",
+      outObj: {
+        ...defaultObj,
+        price: "82↕1155",
+      },
+    },
+    {
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
+      key: "search",
+      value: "Лего",
+      outObj: {
+        ...defaultObj,
+        search: "Лего",
+      },
+    },
+    {
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
+      key: "search",
+      value: "",
+      outObj: {
+        ...defaultObj,
+        search: "",
+      },
+    },
+    {
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
+      key: "search",
+      value: "123",
+      outObj: {
+        ...defaultObj,
+        search: "123",
+      },
+    },
+    {
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
+      key: "authors",
+      value: "Айн Рэнд",
+      outObj: {
+        ...defaultObj,
+        authors: "Айн Рэнд",
+      },
+    },
   ];
-  testCases.forEach( (el) => {
+  testCases.forEach((el) => {
     test(`Checking routerSlicer.routerParserProduct() with hash : ${el.hash} `, () => {
       window.location.hash = el.hash;
-      expect(JSON.stringify(routerSlicer.routerAdd(el.key, el.value))).toMatch(JSON.stringify(el.outObj))
-    })
-  })
-})
+      expect(JSON.stringify(routerSlicer.routerAdd(el.key, el.value))).toMatch(
+        JSON.stringify(el.outObj)
+      );
+    });
+  });
+});
+
+describe("Checking RouterSlicer.getBaseURI(): ", () => {
+  test("Checking routerSlicer.getBaseURI()", () => {
+    expect(routerSlicer.getBaseURI()).toMatch("shop");
+  });
+});
+
+describe("Checking RouterSlicer.validationHash(): ", () => {
+  const testCases = [
+    {
+      hash:
+        "#shop/?genres=Графические%20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
+      out: true,
+    },
+    {
+      hash: "#shop/?genres=Графические%20романы↕Боевик",
+      out: true,
+    },
+    {
+      hash:
+        "shop/genres=Графические%/20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
+      out: false,
+    },
+    {
+      hash:
+        "#shop/?genres=Графические%/?20романы↕Боевик%20и%20криминал↕Классическая%20зарубежная%20проза&price=82↕1156&sort=priceDESC&authors=&stock=2↕45&search=Гэм",
+      out: false,
+    },
+  ];
+  testCases.forEach((el) => {
+    test(`Checking routerSlicer.validationHash() with hash : ${el.hash} `, () => {
+      window.location.hash = el.hash;
+      expect(routerSlicer.validationHash(el.hash)).toEqual(el.out);
+    });
+  });
+});
