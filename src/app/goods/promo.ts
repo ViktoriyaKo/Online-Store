@@ -95,7 +95,6 @@ export class Promo {
       .map((item: IPromoCodes) => item.sale)
       .reduce((acc: number, item: number) => acc + item);
     const finalPrice = Math.round(this.getTotal() * (1 - sumSale / 100));
-    console.log(finalPrice);
     return finalPrice;
   }
 

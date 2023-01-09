@@ -244,7 +244,7 @@ export const product: Product = new Product({
         <div class="col-lg-3 col-sm-6">
           <div class="wrapper-img-main mb-3">
             <img
-              class="img-thumbnail img-main-set image-book"
+              class="img-thumbnail img-main-set"
               src=""
               alt="book"
             />

@@ -36,7 +36,7 @@ class Shop extends Component {
           .getFilteredSorted()
           .map(
             (book) => `
-    <div class="product-card col-md-${3} col-sm-4">
+    <div class="product-card col-md-${3} col-sm-4 col-6">
       <div class="product-thumb">
         <a class="open-product" href="#product/${book.id}"
           ><img
@@ -347,7 +347,7 @@ class Shop extends Component {
           ? params["view"]?.split("↕")[0]
           : 3
         : 3
-    } col-sm-4">
+    } col-sm-4 col-6">
       <div class="product-thumb">
         <a class="open-product" href="#product/${book.id}" id="${book.id}"
           ><img
@@ -628,12 +628,11 @@ export const shop: Shop = new Shop({
 
                 <div
                   class="filter-section my-3 bg-secondary bg-gradient rounded-2 p-2"
-                >
-                  <!-- будет 2 ползунка -->
+                >                
                   
                   <fieldset class="filter-block">
                     <legend class="name-filter position-relative text-center">
-                      Цена
+                      Цена (<i class="fas fa-light fa-ruble-sign"></i>)
                     </legend>
                     {{priceSlider}}
                   </fieldset>
@@ -641,7 +640,7 @@ export const shop: Shop = new Shop({
                 <div
                   class="filter-section my-3 bg-secondary bg-gradient rounded-2 p-2"
                 >
-                  <!-- будет 2 ползунка -->
+                 
                   <fieldset class="filter-block">
                     <legend class="name-filter position-relative text-center">
                       Количество товаров на складе
@@ -682,7 +681,7 @@ export const shop: Shop = new Shop({
                   </button>
                 </form>
                 <!-- view window -->
-                <div class="view-book d-flex col-lg-2">
+                <div class="view-book col-lg-2">
                   <button class="btn displ-3">
                     <img class="btn-set rounded-2" src="./assets/icons3-3.png" alt="icon" />
                   </button>

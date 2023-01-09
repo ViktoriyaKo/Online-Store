@@ -54,10 +54,20 @@ export class Cart extends Promo {
       if (target.classList.contains("plus")) {
         let a = area[0].count;
         a++;
+        if (a >= area[0].stock) {
+          a = area[0].stock;
+        }
         area[0].count = a;
         localStorage.setItem("cart", JSON.stringify(this.items));
         if (target.parentElement) {
           target.parentElement.children[1].innerHTML = `${a}`;
+          if (target.parentElement.parentElement) {
+            this.getTotalPerItem(
+              area,
+              target.parentElement.parentElement.children[2],
+              a
+            );
+          }
         }
       } else if (target.classList.contains("minus")) {
         let a = area[0].count;
@@ -72,9 +82,15 @@ export class Cart extends Promo {
         localStorage.setItem("cart", JSON.stringify(this.items));
         if (target.parentElement) {
           target.parentElement.children[1].innerHTML = `${a}`;
+          if (target.parentElement.parentElement) {
+            this.getTotalPerItem(
+              area,
+              target.parentElement.parentElement.children[2],
+              a
+            );
+          }
         }
       }
-
       this.checkEmpty();
       this.renderTextSale();
 
@@ -94,6 +110,14 @@ export class Cart extends Promo {
     });
   }
 
+  getTotalPerItem(el: ProductWithCount[], elDom: Element, count: number) {
+    const clickEl = el[0];
+    const itemPrice = Math.floor(clickEl.price * clickEl.sale);
+    elDom.innerHTML = `Цена за ед: ${
+      itemPrice * count
+    } <i class="fas fa-light fa-ruble-sign"></i>`;
+  }
+
   public renderCart(data: ProductWithCount[]) {
     this.totalAmount.innerHTML = `${this.getTotal()} <i class="fa fa-light fa-ruble-sign"></i
       >`;
@@ -101,10 +125,10 @@ export class Cart extends Promo {
     let out = ``;
     data.forEach((item, index) => {
       out += `
-        <div class="p-3 row">
-          <span class="col-sm-1 order-number">${index + 1}</span>
+        <div class="p-3 row wrapper-item">
+          <span class="col-sm-1 order-number col-1">${index + 1}</span>
           <img
-            class="img-thumbnail set-img-bucket d-block col-sm-2"
+            class="img-thumbnail set-img-bucket d-block col-sm-2 col-3"
             src=${item.image[0]}
             alt="book-img"
           />
@@ -112,7 +136,7 @@ export class Cart extends Promo {
             <h3 class="title-book-bucket pb-1">${item.title}</h3>
             <h4 class="author-book-bucket">${item.author}</h4>
           </div>        
-          <div class="stock-info col-sm-4">
+          <div class="stock-info col-sm-4 col-5">
             <span class="text-success">
               <span class="stock-book"></span> На складе: ${item.stock}</span
             >
@@ -121,10 +145,10 @@ export class Cart extends Promo {
               <span class="counter-items">${item["count"]}</span>
               <button class="btn btn-success plus" id="${item.id}">+</button>
             </div>
-            <span class="d-block total-amount"
-              >Цена за ед: ${Math.floor(
-                item.price * item.sale
-              )} <i class="fa fa-light fa-ruble-sign"></i
+            <span class="d-block total-amount-unit"
+              >Цена за ед: ${
+                Math.floor(item.price * item.sale) * item.count
+              } <i class="fa fa-light fa-ruble-sign"></i
             ></span>
           </div>
         </div>

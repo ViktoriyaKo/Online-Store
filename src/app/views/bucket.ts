@@ -28,7 +28,6 @@ class Bucket extends Component {
         ? params["page"]?.split("?")[0]
         : "1"
       : "1";
-    console.log(setInputItem.value);
   }
 }
 
@@ -185,7 +184,7 @@ export const bucket: Bucket = new Bucket({
                 class="form-control input-promo"
                 placeholder="Введите промокод"
               />              
-              <div class="text-secondary">Promo for test: 'RS', 'EPM'</div>
+              <div class="text-secondary text-center">Promo for test: 'RS', 'EPM'</div>
               <div class="promo"></div>
               <button class="btn btn-secondary btn-pay">Перейти к оплате</button>
             </div>

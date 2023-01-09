@@ -8,6 +8,11 @@ $color-pink: #ee6e73;
 
 .product-card {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0;
   transition: all 0.3s;
   &:hover {
     box-shadow: 0 14px 30px -15px rgba(0, 0, 0, 0.75);
@@ -216,4 +221,28 @@ input:disabled + label:before {
 
 .border-btn {
   border: 3px solid $color-basic2;
+}
+.view-book {
+  display: flex;
+}
+
+@media (max-width: 1360px) {
+  .set-fs,
+  .price-book,
+  .author-book {
+    font-size: 14px;
+  }
+
+  .image-book {
+    max-width: 120px;
+  }
+  .price-book span {
+    display: block;
+  }
+}
+
+@media (max-width: 800px) {
+  .view-book {
+    display: none;
+  }
 }

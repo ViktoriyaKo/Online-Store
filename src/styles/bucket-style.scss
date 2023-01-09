@@ -1,6 +1,7 @@
 $color-basic: rgba(41, 103, 147, 0.867);
 $color-basic2: rgba(179, 186, 192, 0.537);
 $color-bg: rgba(41, 103, 147, 0.153);
+$color-pink: #ee6e73;
 
 .products-line {
   background-color: rgba(215, 223, 235, 0.523);
@@ -34,6 +35,7 @@ $color-bg: rgba(41, 103, 147, 0.153);
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  text-align: center;
 }
 
 .wrapper-right-bucket {
@@ -78,11 +80,33 @@ $color-bg: rgba(41, 103, 147, 0.153);
 
 .promo-active {
   background: #fff;
+  display: flex;
+  align-items: center;
   padding: 2px;
   border-radius: 5px;
   border: 1px solid green;
+  text-align: center;
 }
 
+.wrapper-item {
+  flex-wrap: nowrap;
+}
+@media (max-width: 993px) {
+  .sum-card {
+    margin: 0;
+    text-align: center;
+    color: $color-pink;
+  }
+}
+@media (max-width: 780px) {
+  .wrapper-item {
+    flex-wrap: wrap;
+  }
+
+  .book-info-bucket {
+    order: 3;
+  }
+}
 @media (max-width: 580px) {
   .text-products-line {
     display: none;
@@ -93,5 +117,14 @@ $color-bg: rgba(41, 103, 147, 0.153);
 
   .products-item {
     flex-wrap: wrap;
+  }
+  .set-img-bucket {
+    max-width: 120px;
+  }
+}
+@media (max-width: 400px) {
+  .minus,
+  .plus {
+    width: 36px;
   }
 }
