@@ -1,0 +1,130 @@
+$color-basic: rgba(41, 103, 147, 0.867);
+$color-basic2: rgba(179, 186, 192, 0.537);
+$color-bg: rgba(41, 103, 147, 0.153);
+$color-pink: #ee6e73;
+
+.products-line {
+  background-color: rgba(215, 223, 235, 0.523);
+}
+
+.wrapper-products {
+  border: 3px solid $color-basic2;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.set-input-item {
+  width: 30px;
+  display: inline;
+  padding: 0.25rem;
+}
+
+.set-img-bucket {
+  max-width: 150px;
+  width: 100%;
+}
+.title-book-bucket {
+  font-size: 20px;
+  border-bottom: 1px solid $color-basic2;
+}
+
+.author-book-bucket {
+  font-size: 16px;
+  color: $color-basic;
+}
+.stock-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+}
+
+.wrapper-right-bucket {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.set-border {
+  border: 3px solid $color-basic2;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.content-bucket {
+  min-height: calc(100vh - 120px);
+  background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.7)),
+    url("./assets/img-books.jpg");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-top: 50px;
+}
+
+.order-number {
+  padding: 1rem;
+  align-self: center;
+}
+
+.set-text-bucket {
+  margin: 0 auto;
+  text-align: center;
+  color: white;
+  font-size: 50px;
+}
+
+.minus,
+.plus {
+  font: bold 23px Arial;
+  width: 40px;
+  border-radius: 50%;
+}
+
+.promo-active {
+  background: #fff;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  border-radius: 5px;
+  border: 1px solid green;
+  text-align: center;
+}
+
+.wrapper-item {
+  flex-wrap: nowrap;
+}
+@media (max-width: 993px) {
+  .sum-card {
+    margin: 0;
+    text-align: center;
+    color: $color-pink;
+  }
+}
+@media (max-width: 780px) {
+  .wrapper-item {
+    flex-wrap: wrap;
+  }
+
+  .book-info-bucket {
+    order: 3;
+  }
+}
+@media (max-width: 580px) {
+  .text-products-line {
+    display: none;
+  }
+  .products-line {
+    flex-wrap: wrap;
+  }
+
+  .products-item {
+    flex-wrap: wrap;
+  }
+  .set-img-bucket {
+    max-width: 120px;
+  }
+}
+@media (max-width: 400px) {
+  .minus,
+  .plus {
+    width: 36px;
+  }
+}
