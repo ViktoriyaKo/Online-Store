@@ -31,7 +31,8 @@ class Product extends Component {
       termsName = document.querySelector(".terms-name") as Element,
       priceCross = document.querySelector(".product-price-book") as Element,
       price = document.querySelector(".price-book-size") as Element,
-      btnAddBucket = document.querySelector(".add-item") as Element;
+      btnAddBucket = document.querySelector(".add-item") as Element,
+      btnPay = document.querySelector(".btn-pay") as HTMLButtonElement;
 
     img.src = books[idNumber].image[0];
     imgSmall1.src = books[idNumber].image[0];
@@ -81,28 +82,44 @@ class Product extends Component {
           cart.push(books[idNumber]);
           cart[cart.length - 1].count = 1;
           cart.filter((item: ProductWithCount) => item.id !== idNumber + 1);
-          // openModal:
-          const settings: Settings = {
-            minLengthName: 2,
-            minSymbolName: 3,
-            minLengthTel: 10,
-            minLengthAddress: 3,
-            minSymbolAddress: 5,
-            cardNumberLength: 16,
-            dateLength: 5,
-            dateCardMonth: 12,
-            cvvLength: 3,
-          };
-          window.location.href = "#bucket";
-          tools.delay(0).then(() => {
-            const startValidation: Validation = new Validation(settings);
-            startValidation.openAutomatically();
-          });
-          //
         }
         localStorage.setItem("cart", JSON.stringify(cart));
         this.updateHeader();
       }
+    });
+
+    btnPay.addEventListener("click", () => {
+      cart = JSON.parse(localStorage.getItem("cart") || "");
+      if (localStorage.getItem("cart")) {
+        const itemInBucket = cart.find(
+          (item: ProductWithCount) => item.id === idNumber + 1
+        );
+        if (!itemInBucket) {
+          cart.push(books[idNumber]);
+          cart[cart.length - 1].count = 1;
+          cart.filter((item: ProductWithCount) => item.id !== idNumber + 1);
+        }
+        localStorage.setItem("cart", JSON.stringify(cart));
+        this.updateHeader();
+      }
+      // openModal:
+      const settings: Settings = {
+        minLengthName: 2,
+        minSymbolName: 3,
+        minLengthTel: 10,
+        minLengthAddress: 3,
+        minSymbolAddress: 5,
+        cardNumberLength: 16,
+        dateLength: 5,
+        dateCardMonth: 12,
+        cvvLength: 3,
+      };
+      window.location.href = "#bucket";
+      tools.delay(0).then(() => {
+        const startValidation: Validation = new Validation(settings);
+        startValidation.openAutomatically();
+      });
+      //
     });
     this.updateHeader();
     //
@@ -200,7 +217,7 @@ export const product: Product = new Product({
               type="text"
               class="form-control"
               id="cc-expiration"
-              placeholder=""
+              placeholder="MM/YY"
               required
             />
             <span class="text-danger"></span>

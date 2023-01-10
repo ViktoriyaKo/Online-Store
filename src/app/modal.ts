@@ -191,7 +191,7 @@ export class Validation {
 
   private validationDateCard(): void {
     if (this.obj.date) {
-      const cardMonth = this.obj.date.split("/")[1];
+      const cardMonth = this.obj.date.split("/")[0];
       if (
         +cardMonth > this.options.dateCardMonth ||
         this.obj.date.length !== this.options.dateLength
