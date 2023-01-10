@@ -104,7 +104,7 @@ export const bucket: Bucket = new Bucket({
               type="text"
               class="form-control"
               id="cc-expiration"
-              placeholder=""
+              placeholder="MM/YY"
               required
             />
             <span class="text-danger"></span>
